@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | View</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome pro ikony -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Roboto & Google Sans styl -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Roboto', 'Arial', 'sans-serif'] },
+                    colors: {
+                        /* Zelená z vašeho loga */
+                        view: {
+                            green: '#2c9c48',
+                            light: '#e6f4ea'
+                        },
+                        /* Oficiální Google Barvy */
+                        google: {
+                            blue: '#1a73e8',
+                            blueBg: '#e8f0fe',
+                            red: '#ea4335',
+                            yellow: '#fbbc04',
+                            green: '#1e8e3e',
+                            text: '#202124',
+                            textLight: '#5f6368',
+                            border: '#dadce0',
+                            bg: '#f8f9fa'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Skrytí scrollbaru pro čistší vzhled */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #dadce0; border-radius: 10px; }
+        
+        body { background-color: #f8f9fa; }
+        
+        /* Animace pro levé menu */
+        #sidebar { transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .nav-text { transition: opacity 0.2s ease, width 0.3s ease; white-space: nowrap; }
+        .sidebar-collapsed { width: 72px; }
+        .sidebar-collapsed .nav-text { opacity: 0; width: 0; overflow: hidden; pointer-events: none; }
+        .sidebar-collapsed .logo-full { display: none; }
+        .sidebar-collapsed .logo-small { display: flex; }
+
+        /* Vzhled karet podle Google Material 3 */
+        .g-card {
+            background-color: white;
+            border: 1px solid #dadce0;
+            border-radius: 24px; /* Větší zakulacení ve stylu Material 3 */
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 1px 2px 0 rgba(60,64,67,0.1), 0 1px 3px 1px rgba(60,64,67,0.05); /* Originální Google stín */
+        }
+        .g-card:hover {
+            box-shadow: 0 1px 3px 0 rgba(60,64,67,0.3), 0 4px 8px 3px rgba(60,64,67,0.15); /* Hover stín */
+        }
+        
+        /* Půlkruhový graf (Gauge) */
+        .gauge-circle {
+            transition: stroke-dashoffset 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* Zamčené/Neaktivní služby */
+        .locked-service {
+            background: #f8f9fa;
+            border: 1px dashed #dadce0;
+            box-shadow: none;
+        }
+        .locked-service:hover {
+            border-color: #1a73e8;
+            background: white;
+        }
+    </style>
+</head>
+<body class="font-sans text-google-text h-screen flex overflow-hidden">
+
+    <!-- ZASOUVACÍ LEVÉ MENU -->
+    <aside id="sidebar" class="bg-white border-r border-google-border w-64 flex flex-col flex-shrink-0 z-30">
+        
+        <!-- Hlavička menu (Logo) -->
+        <div class="h-16 flex items-center px-4 border-b border-google-border shrink-0 gap-3">
+            <!-- Tlačítko pro menu (Hamburger) -->
+            <button onclick="toggleSidebar()" class="w-10 h-10 rounded-full hover:bg-google-bg flex items-center justify-center text-google-textLight transition shrink-0">
+                <i class="fa-solid fa-bars text-lg"></i>
+            </button>
+            
+            <!-- LOGO VIEW -->
+            <div class="logo-full overflow-hidden flex items-center h-full">
+                <!-- Zkusíme načíst originál -->
+                <img src="logo.jpg" alt="View Logo" class="h-8 object-contain" onerror="this.style.display='none'; document.getElementById('logo-svg-fallback').style.display='flex';">
+                
+                <!-- Záložní SVG nakódované tak, aby vypadalo jako vaše logo (Zobrazí se, pokud selže obrázek) -->
+                <div id="logo-svg-fallback" class="hidden items-center text-view-green font-bold text-[28px] tracking-tight">
+                    <svg class="h-7 w-7 mr-0.5" viewBox="0 0 24 24" fill="currentColor">
+                        <!-- Tvar mapové slzičky stylizovaný do "V" -->
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                    </svg>
+                    iew
+                </div>
+            </div>
+            
+            <!-- Ikonka loga pro sbalené menu -->
+            <div class="logo-small hidden items-center justify-center w-full">
+                <svg class="h-6 w-6 text-view-green" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Položky navigace (Styl Google Workspace) -->
+        <nav class="flex-1 overflow-y-auto py-3 px-3 flex flex-col gap-1">
+            <a href="#" class="flex items-center gap-4 bg-google-blueBg text-google-blue px-3 py-2.5 rounded-full font-medium transition" title="Přehled">
+                <i class="fa-solid fa-house w-6 text-center text-lg"></i>
+                <span class="nav-text text-sm">Domů</span>
+            </a>
+            
+            <a href="#" onclick="showToast('Otevírám Google Moje Firma')" class="flex items-center gap-4 text-google-text hover:bg-google-bg px-3 py-2.5 rounded-full font-medium transition group" title="Google Moje Firma">
+                <i class="fa-brands fa-google w-6 text-center text-lg text-google-textLight group-hover:text-google-blue transition"></i>
+                <span class="nav-text text-sm">Google Moje Firma</span>
+            </a>
+            
+            <a href="#" onclick="showToast('Otevírám Virtuální prohlídku')" class="flex items-center gap-4 text-google-text hover:bg-google-bg px-3 py-2.5 rounded-full font-medium transition group" title="Street View">
+                <i class="fa-solid fa-street-view w-6 text-center text-lg text-google-textLight transition"></i>
+                <span class="nav-text text-sm">Virtuální prohlídka</span>
+            </a>
+            
+            <a href="#" onclick="showToast('Otevírám NFC produkty')" class="flex items-center gap-4 text-google-text hover:bg-google-bg px-3 py-2.5 rounded-full font-medium transition group" title="NFC Produkty">
+                <i class="fa-solid fa-wifi w-6 text-center text-lg text-google-textLight transition"></i>
+                <span class="nav-text text-sm">NFC Produkty</span>
+            </a>
+
+            <!-- GOOGLE ADS -->
+            <a href="#" onclick="showToast('Otevírám Google Ads')" class="flex items-center gap-4 text-google-text hover:bg-google-bg px-3 py-2.5 rounded-full font-medium transition group" title="Google Ads">
+                <i class="fa-solid fa-bullhorn w-6 text-center text-lg text-google-textLight transition"></i>
+                <span class="nav-text text-sm">Google Ads</span>
+            </a>
+
+            <div class="h-px bg-google-border my-2 mx-3"></div>
+            
+            <a href="#" onclick="showToast('Otevírám Fakturaci')" class="flex items-center gap-4 text-google-text hover:bg-google-bg px-3 py-2.5 rounded-full font-medium transition" title="Fakturace">
+                <i class="fa-solid fa-file-invoice w-6 text-center text-lg text-google-textLight"></i>
+                <span class="nav-text text-sm">Fakturace a údaje</span>
+            </a>
+        </nav>
+
+        <!-- Kontakt na obchodníka (ve spodní části menu) -->
+        <div class="p-3">
+            <div class="flex items-center gap-3 p-3 rounded-xl bg-google-bg border border-google-border">
+                <img src="https://ui-avatars.com/api/?name=Petr+Novak&background=dadce0&color=202124" alt="Obchodník" class="w-8 h-8 rounded-full shrink-0">
+                <div class="overflow-hidden">
+                    <p class="text-[10px] font-bold text-google-textLight uppercase tracking-wider">Váš obchodník</p>
+                    <p class="font-medium text-sm text-google-text truncate">Petr Novák</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- HLAVNÍ OBSAH -->
+    <div class="flex-1 flex flex-col h-screen overflow-hidden">
+        
+        <!-- HORNÍ LIŠTA -->
+        <header class="h-16 bg-white border-b border-google-border flex items-center justify-between px-6 z-20 shrink-0">
+            <div class="flex items-center gap-4">
+                <h1 class="text-xl font-normal text-google-text">Přehled služeb</h1>
+            </div>
+            
+            <!-- Pravá strana: Profil a upozornění -->
+            <div class="flex items-center gap-2">
+                <button class="w-10 h-10 rounded-full hover:bg-google-bg flex items-center justify-center text-google-textLight transition">
+                    <i class="fa-regular fa-bell text-lg"></i>
+                </button>
+                <button class="w-10 h-10 rounded-full hover:bg-google-bg flex items-center justify-center text-google-textLight transition mr-2">
+                    <i class="fa-regular fa-circle-question text-lg"></i>
+                </button>
+                
+                <!-- PROFIL KLIENTA -->
+                <button onclick="showToast('Otevírám detail firmy a IČO')" class="flex items-center gap-2 hover:bg-google-bg p-1 pr-3 rounded-full transition border border-transparent hover:border-google-border" title="AZ Stavební s.r.o.">
+                    <div class="w-8 h-8 bg-google-blue text-white rounded-full flex items-center justify-center text-sm font-bold">
+                        AZ
+                    </div>
+                    <div class="text-left hidden sm:block">
+                        <p class="text-sm font-medium text-google-text leading-tight">AZ Stavební s.r.o.</p>
+                        <p class="text-[11px] text-google-textLight">12345678</p>
+                    </div>
+                </button>
+            </div>
+        </header>
+
+        <!-- OBSAH DASHBOARDU -->
+        <main class="flex-1 overflow-y-auto p-4 md:p-8 bg-[#f8f9fa]">
+            <div class="max-w-[1200px] mx-auto space-y-8">
+                
+                <!-- 1. GAMIFIKACE HERO (Půlkruhový graf ve stylu Google Analytics/PageSpeed) -->
+                <div class="g-card overflow-hidden relative">
+                    <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-google-red via-google-yellow to-view-green"></div>
+                    <div class="p-8 flex flex-col md:flex-row items-center gap-10">
+                        
+                        <!-- Graf -->
+                        <div class="relative w-48 h-24 shrink-0">
+                            <!-- SVG Půlkruh -->
+                            <svg class="w-full h-full overflow-visible" viewBox="0 0 200 100">
+                                <!-- Pozadí stopy (šedá) -->
+                                <path d="M 10,100 A 90,90 0 0,1 190,100" fill="none" stroke="#f1f3f4" stroke-width="18" stroke-linecap="round" />
+                                <!-- Aktivní stopa (dynamická barva přes JS, výchozí žlutá pro 50%) -->
+                                <path id="gauge-path" class="gauge-circle" d="M 10,100 A 90,90 0 0,1 190,100" fill="none" stroke="#fbbc04" stroke-width="18" stroke-linecap="round" stroke-dasharray="283" stroke-dashoffset="141.5" />
+                            </svg>
+                            <div class="absolute bottom-0 left-0 w-full flex flex-col items-center justify-end pb-2">
+                                <span id="gauge-score" class="text-4xl font-bold text-google-text tracking-tighter">50%</span>
+                            </div>
+                        </div>
+
+                        <!-- Texty ke gamifikaci -->
+                        <div class="flex-1 text-center md:text-left">
+                            <h2 id="gamification-title" class="text-2xl font-normal text-google-text mb-2">Poloviční viditelnost</h2>
+                            <p id="gamification-desc" class="text-google-textLight mb-5 max-w-xl">Váš profil již generuje zájem, ale chybí mu klíčové vizuální prvky. Konkurence může aktuálně působit na mapách důvěryhodněji.</p>
+                            
+                            <div class="flex flex-wrap items-center justify-center md:justify-start gap-3">
+                                <div class="flex items-center gap-2 text-sm font-medium text-google-text bg-google-bg px-3 py-1.5 rounded-full border border-google-border">
+                                    <i class="fa-solid fa-circle-check text-view-green"></i> GMF Profil
+                                </div>
+                                <div class="flex items-center gap-2 text-sm font-medium text-google-text bg-google-bg px-3 py-1.5 rounded-full border border-google-border">
+                                    <i class="fa-solid fa-circle-check text-view-green"></i> NFC Vizitky
+                                </div>
+                                <div id="badge-sv" class="flex items-center gap-2 text-sm font-medium text-google-textLight px-2 py-1 transition-all">
+                                    <i class="fa-regular fa-circle"></i> Street View
+                                </div>
+                                <div id="badge-ads" class="flex items-center gap-2 text-sm font-medium text-google-textLight px-2 py-1 transition-all">
+                                    <i class="fa-regular fa-circle"></i> Google Ads
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. AKTIVNÍ SLUŽBY (Plně barevné) -->
+                <div>
+                    <h2 class="text-sm font-bold text-google-textLight tracking-wider uppercase mb-4 px-2">Vaše aktivní služby</h2>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+                        <!-- KARTA GMF -->
+                        <div class="g-card p-6 flex flex-col">
+                            <div class="flex justify-between items-start mb-6">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-full border border-google-border flex items-center justify-center p-2.5 bg-white shadow-sm">
+                                        <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="G">
+                                    </div>
+                                    <div>
+                                        <h3 class="text-lg font-medium text-google-text">Google Moje Firma</h3>
+                                        <span class="inline-flex items-center gap-1.5 text-view-green bg-view-light px-2 py-0.5 rounded text-[10px] font-bold uppercase mt-1">
+                                            Aktivní
+                                        </span>
+                                    </div>
+                                </div>
+                                
+                                <!-- Specialista profilu -->
+                                <div class="flex items-center gap-3 bg-google-bg px-3 py-2 rounded-xl border border-google-border cursor-pointer hover:bg-gray-100 transition" onclick="showToast('Otevírám chat se správcem')">
+                                    <img src="https://ui-avatars.com/api/?name=Martin+Kova%C5%99&background=e8f0fe&color=1a73e8" alt="Správce" class="w-8 h-8 rounded-full">
+                                    <div class="hidden sm:block text-right">
+                                        <p class="text-[9px] text-google-textLight uppercase tracking-wide font-bold">Váš správce</p>
+                                        <p class="text-xs font-medium text-google-text">Martin Kovář</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex gap-6 mb-8 border-y border-google-border py-5">
+                                <div>
+                                    <p class="text-3xl font-normal text-google-blue">12,4k</p>
+                                    <p class="text-xs text-google-textLight mt-1">Zobrazení ve vyhledávání</p>
+                                </div>
+                                <div class="w-px bg-google-border"></div>
+                                <div>
+                                    <p class="text-3xl font-normal text-google-text flex items-center gap-2">4.8 <i class="fa-solid fa-star text-google-yellow text-xl"></i></p>
+                                    <p class="text-xs text-google-textLight mt-1">Průměrné hodnocení</p>
+                                </div>
+                            </div>
+
+                            <div class="mt-auto flex gap-3">
+                                <button class="bg-google-blue text-white px-5 py-2.5 rounded-full text-sm font-medium hover:bg-blue-700 transition">Upravit profil</button>
+                                <button class="text-google-blue hover:bg-google-blueBg px-5 py-2.5 rounded-full text-sm font-medium transition">Detailní statistiky</button>
+                            </div>
+                        </div>
+
+                        <!-- KARTA NFC -->
+                        <div class="g-card p-6 flex flex-col">
+                            <div class="flex justify-between items-start mb-6">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-full border border-google-border flex items-center justify-center text-google-blue text-xl bg-google-blueBg">
+                                        <i class="fa-solid fa-wifi"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-lg font-medium text-google-text">NFC Vizitky a Štítky</h3>
+                                        <span class="inline-flex items-center gap-1.5 text-view-green bg-view-light px-2 py-0.5 rounded text-[10px] font-bold uppercase mt-1">
+                                            Aktivní
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex gap-6 mb-8 border-y border-google-border py-5">
+                                <div>
+                                    <p class="text-3xl font-normal text-google-text">3 <span class="text-lg text-google-textLight">ks</span></p>
+                                    <p class="text-xs text-google-textLight mt-1">Aktivní NFC produkty</p>
+                                </div>
+                                <div class="w-px bg-google-border"></div>
+                                <div>
+                                    <p class="text-3xl font-normal text-view-green flex items-center gap-2">
+                                        <i class="fa-solid fa-arrow-trend-up text-xl"></i> 42
+                                    </p>
+                                    <p class="text-xs text-google-textLight mt-1">Nových recenzí (tento měsíc)</p>
+                                </div>
+                            </div>
+
+                            <div class="mt-auto flex gap-3">
+                                <button class="border border-google-border text-google-blue px-5 py-2.5 rounded-full text-sm font-medium hover:bg-google-bg transition">Moje produkty</button>
+                                <button class="text-google-blue hover:bg-google-blueBg px-5 py-2.5 rounded-full text-sm font-medium transition">Přiobjednat z katalogu</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- 3. DOSTUPNÉ SLUŽBY (Zamčené / Upsell) -->
+                <div>
+                    <h2 class="text-sm font-bold text-google-textLight tracking-wider uppercase mb-4 px-2">Posuňte svůj byznys dál (Získejte 100 %)</h2>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+                        <!-- KARTA STREET VIEW -->
+                        <div id="card-sv" class="g-card locked-service p-6 flex flex-col relative transition-all duration-500">
+                            <!-- Upsell Tag -->
+                            <div id="tag-sv" class="absolute top-0 right-6 -translate-y-1/2 bg-view-green text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full shadow-sm">
+                                + 35 % Ke skóre
+                            </div>
+
+                            <div class="flex items-center gap-4 mb-4">
+                                <div id="icon-sv" class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 text-xl transition-colors">
+                                    <i class="fa-solid fa-street-view"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-medium text-google-text">Virtuální prohlídka</h3>
+                                    <p class="text-sm text-google-textLight">Street View vaší provozovny</p>
+                                </div>
+                            </div>
+                            
+                            <div id="content-sv" class="mb-6 flex-1">
+                                <p class="text-sm text-google-text mb-2">Zákazníci stráví na vašem profilu více času. Ukážte jim své prostory v 360° formátu přímo z Google Map.</p>
+                                <ul class="text-xs text-google-textLight space-y-1.5 mt-4">
+                                    <li><i class="fa-solid fa-check text-view-green mr-1"></i> Profesionální focení v ceně</li>
+                                    <li><i class="fa-solid fa-check text-view-green mr-1"></i> Integrace přímo do vašeho profilu</li>
+                                </ul>
+                            </div>
+
+                            <div class="mt-auto">
+                                <button id="btn-sv" onclick="activateStreetView()" class="w-full bg-white border border-google-border text-google-blue px-5 py-2.5 rounded-full text-sm font-medium hover:bg-google-blueBg transition shadow-sm">
+                                    Zobrazit nabídku a aktivovat
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- KARTA ADS -->
+                        <div class="g-card locked-service p-6 flex flex-col relative">
+                            <!-- Upsell Tag -->
+                            <div class="absolute top-0 right-6 -translate-y-1/2 bg-google-blue text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full shadow-sm">
+                                + 15 % Ke skóre
+                            </div>
+
+                            <div class="flex items-center gap-4 mb-4">
+                                <div class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 text-xl">
+                                    <i class="fa-solid fa-bullhorn"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-medium text-google-text">Google Ads Kampaně</h3>
+                                    <p class="text-sm text-google-textLight">Dostaňte se na první místo</p>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-6 flex-1">
+                                <p class="text-sm text-google-text mb-2">Získejte okamžitou návštěvnost. Cílená reklama osloví lidi, kteří právě teď hledají vaše služby.</p>
+                                <ul class="text-xs text-google-textLight space-y-1.5 mt-4">
+                                    <li><i class="fa-solid fa-check text-google-blue mr-1"></i> Platíte pouze za proklik</li>
+                                    <li><i class="fa-solid fa-check text-google-blue mr-1"></i> Okamžité výsledky</li>
+                                </ul>
+                            </div>
+
+                            <div class="mt-auto">
+                                <button onclick="showToast('Odesílám žádost o konzultaci')" class="w-full bg-white border border-google-border text-google-textLight px-5 py-2.5 rounded-full text-sm font-medium hover:bg-google-bg transition shadow-sm">
+                                    Vyžádat si nezávaznou konzultaci
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Plovoucí ikona podpory (Live chat) -->
+    <button onclick="showToast('Otevírám chat s podporou')" class="fixed bottom-6 right-6 w-14 h-14 bg-view-green text-white rounded-full shadow-lg flex items-center justify-center text-2xl hover:opacity-90 transition transform hover:scale-105 z-50">
+        <i class="fa-solid fa-comment-dots"></i>
+    </button>
+
+    <!-- TOAST NOTIFIKACE -->
+    <div id="toast" class="fixed bottom-6 left-6 bg-[#323232] text-white px-6 py-3 rounded shadow-md opacity-0 pointer-events-none transition-all duration-200 z-50 flex items-center gap-4">
+        <span id="toast-message" class="text-sm font-medium">Akce byla úspěšná</span>
+        <button class="text-[#8ab4f8] text-sm font-medium uppercase hover:underline" onclick="document.getElementById('toast').classList.replace('opacity-100', 'opacity-0')">Zavřít</button>
+    </div>
+
+    <script>
+        // Logika zasouvacího menu
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('sidebar-collapsed');
+        }
+
+        // Toasty (Notifikace)
+        let toastTimeout;
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-message').innerText = message;
+            toast.classList.remove('opacity-0', 'translate-y-2'); 
+            toast.classList.add('opacity-100', 'translate-y-0');
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('opacity-100', 'translate-y-0'); 
+                toast.classList.add('opacity-0', 'translate-y-2');
+            }, 3000);
+        }
+
+        // Gamifikace (Logika vizuálního updatu po zakoupení)
+        function activateStreetView() {
+            // 1. Změna grafu nahoře (z 50% na 85%)
+            // Obvod SVG kruhu je 283 (půlkruh). Změníme dashoffset pro 85%
+            const gaugePath = document.getElementById('gauge-path');
+            gaugePath.style.strokeDashoffset = '42.45'; // Pro 85% zaplnění
+            gaugePath.style.stroke = '#2c9c48'; // Změní barvu ze žluté na zelenou View
+
+            document.getElementById('gauge-score').innerText = '85%';
+            document.getElementById('gamification-title').innerText = 'Skvělá práce! Téměř dokonalé';
+            document.getElementById('gamification-desc').innerText = 'Díky prohlídce se váš profil zásadně odlišil od konkurence. K 100% dominanci na trhu vám chybí už jen Ads kampaně.';
+            
+            // Obarvení pilulky nahoře v seznamu
+            const badgeSv = document.getElementById('badge-sv');
+            badgeSv.className = 'flex items-center gap-2 text-sm font-medium text-google-text bg-google-bg px-3 py-1.5 rounded-full border border-google-border transition-all';
+            badgeSv.innerHTML = '<i class="fa-solid fa-circle-check text-view-green"></i> Street View';
+
+            // 2. Přeměna zamčené karty na aktivní kartu
+            const card = document.getElementById('card-sv');
+            card.className = 'g-card p-6 flex flex-col relative transition-all duration-500'; // Odebrání 'locked-service'
+            
+            document.getElementById('tag-sv').className = 'absolute top-6 right-6 inline-flex items-center gap-1.5 text-view-green bg-view-light px-2 py-0.5 rounded text-[10px] font-bold uppercase';
+            document.getElementById('tag-sv').innerHTML = 'Aktivní';
+            
+            document.getElementById('icon-sv').className = 'w-12 h-12 rounded-full border border-google-border flex items-center justify-center text-google-yellow text-xl bg-[#fef7e0]';
+
+            document.getElementById('content-sv').innerHTML = `
+                <div class="flex items-center gap-4 p-3 bg-google-bg border border-google-border rounded-xl mt-2">
+                    <img src="https://ui-avatars.com/api/?name=Filip+Fotograf&background=fbbc04&color=fff" class="w-10 h-10 rounded-full">
+                    <div>
+                        <p class="text-[10px] text-google-textLight uppercase tracking-wider font-bold">Přidělený fotograf</p>
+                        <p class="text-sm font-medium text-google-text">Filip Novotný</p>
+                    </div>
+                </div>
+                <p class="text-xs text-google-textLight mt-4"><i class="fa-regular fa-clock"></i> Focení naplánováno na 14. 8. 2026</p>
+            `;
+
+            const btn = document.getElementById('btn-sv');
+            btn.innerText = 'Spravovat prohlídku';
+            btn.className = 'w-full bg-google-blue text-white px-5 py-2.5 rounded-full text-sm font-medium hover:bg-blue-700 transition';
+            btn.onclick = () => showToast('Otevírám administraci prohlídky');
+
+            showToast('Služba Street View přidána! Skóre profilu vzrostlo.');
+            
+            // Posun nahoru k novému skóre
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
