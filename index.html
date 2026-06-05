@@ -55,13 +55,20 @@
 </head>
 <body class="font-sans text-gray-900 h-screen flex overflow-hidden antialiased">
 
+    <!-- Mobilní overlay (tmavé pozadí při otevřeném menu) -->
+    <div id="mobile-overlay" onclick="toggleMobileMenu()" class="fixed inset-0 bg-gray-900 bg-opacity-50 z-30 hidden md:hidden transition-opacity opacity-0 duration-300"></div>
+
     <!-- LEVÉ MENU (Čisté, s důrazem na typografii) -->
-    <aside class="w-64 bg-surface border-r border-border flex flex-col flex-shrink-0 z-30">
+    <aside id="sidebar" class="w-64 bg-surface border-r border-border flex flex-col flex-shrink-0 z-40 fixed inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition-transform duration-300">
         
         <!-- Logo -->
-        <div class="h-16 flex items-center px-6 border-b border-border shrink-0">
+        <div class="h-16 flex items-center justify-between px-6 border-b border-border shrink-0">
             <!-- PŘESNĚ ZADANÉ LOGO Z URL -->
             <img src="https://viewcz.com/images/svg/head-logo.svg" alt="View Logo" class="h-8 object-contain">
+            <!-- Zavírací křížek pro mobil -->
+            <button onclick="toggleMobileMenu()" class="md:hidden text-gray-400 hover:text-gray-600">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
         </div>
 
         <!-- Navigace -->
@@ -158,13 +165,19 @@
     </aside>
 
     <!-- HLAVNÍ OBSAH -->
-    <div class="flex-1 flex flex-col h-screen overflow-hidden">
+    <div class="flex-1 flex flex-col h-screen overflow-hidden min-w-0">
         
         <!-- HORNÍ LIŠTA -->
-        <header class="h-16 bg-surface border-b border-border flex items-center justify-between px-8 z-20 shrink-0">
-            <h1 class="text-xl font-semibold text-gray-900 tracking-tight">Přehled služeb</h1>
+        <header class="h-16 bg-surface border-b border-border flex items-center justify-between px-4 sm:px-8 z-20 shrink-0">
+            <div class="flex items-center gap-3">
+                <!-- Hamburger menu pro mobil -->
+                <button onclick="toggleMobileMenu()" class="md:hidden text-gray-500 hover:text-gray-700 transition">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+                <h1 class="text-lg sm:text-xl font-semibold text-gray-900 tracking-tight truncate">Přehled služeb</h1>
+            </div>
             
-            <div class="flex items-center gap-6">
+            <div class="flex items-center gap-4 sm:gap-6">
                 <!-- Zvoneček notifikací -->
                 <button onclick="showToast('Zatím nemáte žádné nové notifikace')" class="relative text-gray-400 hover:text-gray-600 transition">
                     <i class="fa-regular fa-bell text-xl"></i>
@@ -186,7 +199,7 @@
         </header>
 
         <!-- OBSAH DASHBOARDU -->
-        <main class="flex-1 overflow-y-auto p-8">
+        <main class="flex-1 overflow-y-auto p-4 sm:p-8">
             <div class="max-w-6xl mx-auto space-y-8">
                 
                 <!-- 3. AKTIVNÍ SLUŽBY -->
@@ -422,6 +435,23 @@
 
             showToast('Street View úspěšně aktivováno.');
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Mobilní menu logika
+        function toggleMobileMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('mobile-overlay');
+            
+            sidebar.classList.toggle('-translate-x-full');
+            
+            if (overlay.classList.contains('hidden')) {
+                overlay.classList.remove('hidden');
+                // Malé zpoždění pro plynulou animaci
+                setTimeout(() => overlay.classList.remove('opacity-0'), 10);
+            } else {
+                overlay.classList.add('opacity-0');
+                setTimeout(() => overlay.classList.add('hidden'), 300);
+            }
         }
     </script>
 </body>
