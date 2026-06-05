@@ -341,6 +341,60 @@
         <span id="toast-message" class="text-sm font-medium">Akce byla úspěšná</span>
     </div>
 
+    <!-- PLOVOUCÍ TLAČÍTKO CHATU -->
+    <button onclick="toggleChat()" class="fixed bottom-6 right-6 w-14 h-14 bg-brand-500 text-white rounded-full shadow-lg flex items-center justify-center text-2xl hover:bg-brand-600 transition transform hover:scale-105 z-40">
+        <i class="fa-regular fa-comment-dots"></i>
+    </button>
+
+    <!-- CHAT OKNO (Skryté v základu) -->
+    <div id="chat-window" class="fixed bottom-24 right-6 w-80 bg-white border border-border rounded-xl shadow-2xl flex flex-col overflow-hidden z-50 opacity-0 pointer-events-none transform translate-y-4 transition-all duration-300">
+        
+        <!-- Hlavička chatu -->
+        <div class="bg-brand-500 p-4 text-white flex justify-between items-start">
+            <div class="flex gap-3 items-center">
+                <img src="https://iili.io/BgTGFs4.png" alt="Michaela Dlouhá" class="w-12 h-12 rounded-full border-2 border-white/30 object-cover shrink-0 bg-white">
+                <div>
+                    <h4 class="font-bold text-sm">Michaela Dlouhá</h4>
+                    <p class="text-xs text-white/80">Váš osobní správce</p>
+                </div>
+            </div>
+            <button onclick="toggleChat()" class="text-white/80 hover:text-white transition">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+        </div>
+
+        <!-- Kontakty (Rychlé volby) -->
+        <div class="bg-gray-50 border-b border-border p-3 flex justify-center gap-6">
+            <a href="tel:+420777666555" class="flex flex-col items-center gap-1 text-gray-500 hover:text-brand-600 transition group" title="Zavolat">
+                <div class="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center group-hover:border-brand-500">
+                    <i class="fa-solid fa-phone text-xs"></i>
+                </div>
+                <span class="text-[10px] font-medium">+420 777 666 555</span>
+            </a>
+            <a href="mailto:dlouha@viewcz.com" class="flex flex-col items-center gap-1 text-gray-500 hover:text-brand-600 transition group" title="Napsat e-mail">
+                <div class="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center group-hover:border-brand-500">
+                    <i class="fa-solid fa-envelope text-xs"></i>
+                </div>
+                <span class="text-[10px] font-medium">dlouha@viewcz.com</span>
+            </a>
+        </div>
+
+        <!-- Tělo chatu (Zprávy) -->
+        <div class="flex-1 p-4 overflow-y-auto h-64 bg-white flex flex-col gap-3">
+            <div class="self-start max-w-[85%] bg-gray-100 rounded-2xl rounded-tl-sm px-4 py-2 text-sm text-gray-800">
+                Dobrý den, jsem Michaela. S čím vám mohu dnes pomoci?
+            </div>
+        </div>
+
+        <!-- Vstup pro zprávu -->
+        <div class="p-3 border-t border-border bg-gray-50 flex items-center gap-2">
+            <input type="text" placeholder="Napište zprávu..." class="flex-1 bg-white border border-gray-300 rounded-full px-4 py-2 text-sm focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition">
+            <button onclick="showToast('Odesílám zprávu...')" class="w-9 h-9 bg-brand-500 text-white rounded-full flex items-center justify-center hover:bg-brand-600 transition shrink-0">
+                <i class="fa-solid fa-paper-plane text-xs -ml-0.5"></i>
+            </button>
+        </div>
+    </div>
+
     <script>
         // Rozbalovací menu pro GMB
         function toggleGmbMenu() {
@@ -400,41 +454,24 @@
 
         // Gamifikace: Odemknutí Street View
         function activateStreetView() {
-            // 1. Progress Bar (Setup guide)
-            document.getElementById('progress-bar').style.width = '75%';
-            document.getElementById('progress-text').innerText = '3 / 4 Dokončeno';
-            
-            // Obarvení kroku 3
-            const stepSv = document.getElementById('step-sv');
-            stepSv.classList.remove('opacity-50');
-            const stepSvIcon = document.getElementById('step-sv-icon');
-            stepSvIcon.className = 'w-6 h-6 rounded-full bg-brand-500 text-white flex items-center justify-center text-xs';
-            stepSvIcon.innerHTML = '<i class="fa-solid fa-check"></i>';
-
-            // 2. Přeměna karty
-            const card = document.getElementById('card-sv');
-            card.classList.remove('bg-gray-50/50', 'border-dashed');
-            card.classList.add('bg-white');
-
-            document.getElementById('badge-sv').className = 'px-2.5 py-1 rounded bg-green-50 text-brand-600 text-[10px] font-bold uppercase tracking-wider';
-            document.getElementById('badge-sv').innerText = 'Aktivní';
-
-            document.getElementById('icon-bg-sv').className = 'w-10 h-10 rounded border border-gray-200 bg-white flex items-center justify-center text-gray-800';
-
-            document.getElementById('content-sv').innerHTML = `
-                <div class="p-3 bg-gray-50 border border-gray-200 rounded text-sm">
-                    <p class="font-semibold text-gray-900 mb-1">Focení objednáno</p>
-                    <p class="text-gray-600 text-xs">Fotograf se vám ozve pro dohodnutí termínu.</p>
-                </div>
-            `;
-
-            const btn = document.getElementById('btn-sv');
-            btn.className = 'w-full bg-brand-500 text-white py-2 rounded-lg text-sm font-medium hover:bg-brand-600 transition shadow-sm';
-            btn.innerText = 'Spravovat prohlídku';
-            btn.onclick = () => showToast('Otevírám správu');
-
+            // ZMĚNA ZDE: Odstraněn kód odkazující na neexistující progress-bar
             showToast('Street View úspěšně aktivováno.');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Logika pro okno Chatu
+        let isChatOpen = false;
+        function toggleChat() {
+            const chatWindow = document.getElementById('chat-window');
+            if (isChatOpen) {
+                // Zavřít
+                chatWindow.classList.add('opacity-0', 'pointer-events-none', 'translate-y-4');
+                chatWindow.classList.remove('opacity-100', 'translate-y-0');
+            } else {
+                // Otevřít
+                chatWindow.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-4');
+                chatWindow.classList.add('opacity-100', 'translate-y-0');
+            }
+            isChatOpen = !isChatOpen;
         }
 
         // Mobilní menu logika
