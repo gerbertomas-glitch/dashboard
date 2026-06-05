@@ -60,8 +60,8 @@
         
         <!-- Logo -->
         <div class="h-16 flex items-center px-6 border-b border-border shrink-0">
-            <!-- PŘESNĚ ZADANÉ LOGO -->
-            <img src="logo_3.jpg" alt="View Logo" class="h-8 object-contain">
+            <!-- PŘESNĚ ZADANÉ LOGO Z URL -->
+            <img src="https://viewcz.com/images/svg/head-logo.svg" alt="View Logo" class="h-8 object-contain">
         </div>
 
         <!-- Navigace -->
@@ -69,8 +69,8 @@
             <p class="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Menu</p>
             
             <!-- Aktivní položka -->
-            <a href="#" class="flex items-center gap-3 bg-gray-100 text-gray-900 px-3 py-2.5 rounded-lg font-medium transition">
-                <i class="fa-solid fa-layer-group w-5 text-center text-gray-600"></i> Přehled
+            <a href="#" class="flex items-center gap-3 bg-green-50 text-brand-600 px-3 py-2.5 rounded-lg font-medium transition">
+                <i class="fa-solid fa-layer-group w-5 text-center text-brand-600"></i> Přehled
             </a>
             <a href="#" onclick="showToast('Otevírám GMB')" class="flex items-center gap-3 text-gray-600 hover:bg-gray-50 hover:text-gray-900 px-3 py-2.5 rounded-lg font-medium transition">
                 <i class="fa-brands fa-google w-5 text-center"></i> GMB Profily
@@ -147,7 +147,7 @@
                     <div class="card-minimal flex flex-col p-6">
                         <div class="flex justify-between items-start mb-8">
                             <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded border border-gray-200 flex items-center justify-center text-gray-800">
+                                <div class="w-10 h-10 rounded border border-green-200 bg-green-50 flex items-center justify-center text-brand-600">
                                     <i class="fa-brands fa-google text-xl"></i>
                                 </div>
                                 <h3 class="font-bold text-gray-900 text-lg">Google My Business</h3>
@@ -167,7 +167,7 @@
                         </div>
 
                         <div class="mt-auto flex gap-3">
-                            <button class="flex-1 bg-gray-900 text-white py-2 rounded-lg text-sm font-medium hover:bg-gray-800 transition">Spravovat</button>
+                            <button class="flex-1 bg-brand-500 text-white py-2 rounded-lg text-sm font-medium hover:bg-brand-600 transition shadow-sm">Spravovat</button>
                             <button class="flex-1 bg-white border border-gray-300 text-gray-700 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 transition">Statistiky</button>
                         </div>
                     </div>
@@ -176,7 +176,7 @@
                     <div class="card-minimal flex flex-col p-6">
                         <div class="flex justify-between items-start mb-8">
                             <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded border border-gray-200 flex items-center justify-center text-gray-800">
+                                <div class="w-10 h-10 rounded border border-green-200 bg-green-50 flex items-center justify-center text-brand-600">
                                     <i class="fa-solid fa-wifi text-xl"></i>
                                 </div>
                                 <h3 class="font-bold text-gray-900 text-lg">NFC Produkty</h3>
@@ -197,7 +197,7 @@
 
                         <div class="mt-auto flex gap-3">
                             <button class="flex-1 border border-gray-300 text-gray-700 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 transition">Nastavení</button>
-                            <button class="flex-1 border border-gray-300 text-gray-700 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 transition">Doobjednat</button>
+                            <button class="flex-1 bg-brand-500 border border-transparent text-white py-2 rounded-lg text-sm font-medium hover:bg-brand-600 transition shadow-sm">Doobjednat</button>
                         </div>
                     </div>
 
@@ -224,7 +224,7 @@
                         </div>
 
                         <div class="mt-auto">
-                            <button id="btn-sv" onclick="activateStreetView()" class="w-full bg-white border border-gray-300 text-gray-900 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 transition shadow-sm">
+                            <button id="btn-sv" onclick="activateStreetView()" class="w-full bg-brand-500 border border-transparent text-white py-2 rounded-lg text-sm font-medium hover:bg-brand-600 transition shadow-sm">
                                 Zjistit více a objednat
                             </button>
                         </div>
@@ -247,7 +247,7 @@
                         </div>
 
                         <div class="mt-auto">
-                            <button onclick="showToast('Odesílám žádost')" class="w-full bg-white border border-gray-300 text-gray-900 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 transition shadow-sm">
+                            <button onclick="showToast('Odesílám žádost')" class="w-full bg-brand-500 border border-transparent text-white py-2 rounded-lg text-sm font-medium hover:bg-brand-600 transition shadow-sm">
                                 Vyžádat konzultaci
                             </button>
                         </div>
@@ -312,7 +312,7 @@
             `;
 
             const btn = document.getElementById('btn-sv');
-            btn.className = 'w-full bg-gray-900 text-white py-2 rounded-lg text-sm font-medium hover:bg-gray-800 transition';
+            btn.className = 'w-full bg-brand-500 text-white py-2 rounded-lg text-sm font-medium hover:bg-brand-600 transition shadow-sm';
             btn.innerText = 'Spravovat prohlídku';
             btn.onclick = () => showToast('Otevírám správu');
 
