@@ -869,13 +869,105 @@
                     <i class="fa-solid fa-circle-info text-blue-500 mt-0.5"></i>
                     <div>
                         <p class="text-sm font-bold text-blue-900">Aplikuje se na vybrané pobočky</p>
-                        <p class="text-xs text-blue-700 mt-1">Zadaná hodnota přepíše současná data u všech profilů, které jste označili zaškrtávacím políčkem v tabulce.</p>
+                        <p class="text-xs text-blue-700 mt-1">Vyberte v seznamu níže pobočky, u kterých chcete zadanou hodnotu hromadně přepsat.</p>
                     </div>
                 </div>
 
                 <!-- Dynamický obsah se vloží sem pomocí JS -->
-                <div id="bulk-modal-input-area" class="space-y-4">
+                <div id="bulk-modal-input-area" class="space-y-4 border-b border-gray-100 pb-6">
                     <!-- Zde bude input/textarea/select -->
+                </div>
+
+                <!-- NAŠEPTÁVAČ A SEZNAM POBOČEK -->
+                <div>
+                    <label class="label-minimal">Pobočky k úpravě</label>
+                    <div class="relative mb-3 mt-1">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm"></i>
+                        <input type="text" id="branch-search" onkeyup="filterBranches()" class="input-minimal pl-9" placeholder="Vyhledat pobočku (např. Praha, Business Power)...">
+                    </div>
+                    
+                    <div class="border border-gray-200 rounded-lg max-h-48 overflow-y-auto bg-gray-50/50" id="branch-list">
+                        <!-- Pobočka 1 -->
+                        <label class="flex items-center gap-3 p-3 hover:bg-green-50 border-b border-gray-100 cursor-pointer transition branch-item">
+                            <input type="checkbox" class="w-4 h-4 rounded border-gray-300 text-brand-600 focus:ring-brand-500" checked>
+                            <div>
+                                <p class="text-sm font-medium text-gray-900">Business Power - 1</p>
+                                <p class="text-xs text-gray-500">Bucharova 1314/8, Praha 13</p>
+                            </div>
+                        </label>
+                        <!-- Pobočka 2 -->
+                        <label class="flex items-center gap-3 p-3 hover:bg-green-50 border-b border-gray-100 cursor-pointer transition branch-item">
+                            <input type="checkbox" class="w-4 h-4 rounded border-gray-300 text-brand-600 focus:ring-brand-500" checked>
+                            <div>
+                                <p class="text-sm font-medium text-gray-900">Business Power - 2</p>
+                                <p class="text-xs text-gray-500">Sokolovská 394/17, Praha 8</p>
+                            </div>
+                        </label>
+                        <!-- Pobočka 3 -->
+                        <label class="flex items-center gap-3 p-3 hover:bg-green-50 border-b border-gray-100 cursor-pointer transition branch-item">
+                            <input type="checkbox" class="w-4 h-4 rounded border-gray-300 text-brand-600 focus:ring-brand-500">
+                            <div>
+                                <p class="text-sm font-medium text-gray-900">Business Power - 3</p>
+                                <p class="text-xs text-gray-500">Václavské náměstí 802/56, Praha 1</p>
+                            </div>
+                        </label>
+                        <!-- Pobočka 4 -->
+                        <label class="flex items-center gap-3 p-3 hover:bg-green-50 border-b border-gray-100 cursor-pointer transition branch-item">
+                            <input type="checkbox" class="w-4 h-4 rounded border-gray-300 text-brand-600 focus:ring-brand-500">
+                            <div>
+                                <p class="text-sm font-medium text-gray-900">Business Power - 4</p>
+                                <p class="text-xs text-gray-500">Masarykova 412/32, Brno</p>
+                            </div>
+                        </label>
+                        <!-- Pobočka 5 -->
+                        <label class="flex items-center gap-3 p-3 hover:bg-green-50 border-b border-gray-100 cursor-pointer transition branch-item">
+                            <input type="checkbox" class="w-4 h-4 rounded border-gray-300 text-brand-600 focus:ring-brand-500">
+                            <div>
+                                <p class="text-sm font-medium text-gray-900">Business Power - 5</p>
+                                <p class="text-xs text-gray-500">Nádražní 545/12, Ostrava</p>
+                            </div>
+                        </label>
+                        <!-- Pobočka 6 -->
+                        <label class="flex items-center gap-3 p-3 hover:bg-green-50 border-b border-gray-100 cursor-pointer transition branch-item">
+                            <input type="checkbox" class="w-4 h-4 rounded border-gray-300 text-brand-600 focus:ring-brand-500">
+                            <div>
+                                <p class="text-sm font-medium text-gray-900">Business Power - 6</p>
+                                <p class="text-xs text-gray-500">Klatovská třída 200, Plzeň</p>
+                            </div>
+                        </label>
+                        <!-- Pobočka 7 -->
+                        <label class="flex items-center gap-3 p-3 hover:bg-green-50 border-b border-gray-100 cursor-pointer transition branch-item">
+                            <input type="checkbox" class="w-4 h-4 rounded border-gray-300 text-brand-600 focus:ring-brand-500">
+                            <div>
+                                <p class="text-sm font-medium text-gray-900">Business Power - 7</p>
+                                <p class="text-xs text-gray-500">Pražská 15/2, Liberec</p>
+                            </div>
+                        </label>
+                        <!-- Pobočka 8 -->
+                        <label class="flex items-center gap-3 p-3 hover:bg-green-50 border-b border-gray-100 cursor-pointer transition branch-item">
+                            <input type="checkbox" class="w-4 h-4 rounded border-gray-300 text-brand-600 focus:ring-brand-500">
+                            <div>
+                                <p class="text-sm font-medium text-gray-900">Business Power - 8</p>
+                                <p class="text-xs text-gray-500">Palackého třída 123, Pardubice</p>
+                            </div>
+                        </label>
+                        <!-- Pobočka 9 -->
+                        <label class="flex items-center gap-3 p-3 hover:bg-green-50 border-b border-gray-100 cursor-pointer transition branch-item">
+                            <input type="checkbox" class="w-4 h-4 rounded border-gray-300 text-brand-600 focus:ring-brand-500">
+                            <div>
+                                <p class="text-sm font-medium text-gray-900">Business Power - 9</p>
+                                <p class="text-xs text-gray-500">Třída Míru 55, Olomouc</p>
+                            </div>
+                        </label>
+                        <!-- Pobočka 10 -->
+                        <label class="flex items-center gap-3 p-3 hover:bg-green-50 border-none cursor-pointer transition branch-item">
+                            <input type="checkbox" class="w-4 h-4 rounded border-gray-300 text-brand-600 focus:ring-brand-500">
+                            <div>
+                                <p class="text-sm font-medium text-gray-900">Business Power - 10</p>
+                                <p class="text-xs text-gray-500">Velké Náměstí 1, Hradec Králové</p>
+                            </div>
+                        </label>
+                    </div>
                 </div>
             </div>
 
@@ -1171,6 +1263,13 @@
             const modalTitle = document.getElementById('bulk-modal-title');
             const modalInputArea = document.getElementById('bulk-modal-input-area');
 
+            // Vymazat našeptávač a resetovat seznam při otevření nového modálu
+            const searchInput = document.getElementById('branch-search');
+            if (searchInput) {
+                searchInput.value = '';
+                filterBranches(); 
+            }
+
             let title = '';
             let inputHtml = '';
 
@@ -1273,6 +1372,22 @@
         function submitBulkEdit() {
             showToast('Změny se nyní hromadně propisují do vybraných profilů');
             toggleBulkEditModal();
+        }
+
+        // Našeptávač (hledání v seznamu poboček v modálním okně)
+        function filterBranches() {
+            const input = document.getElementById('branch-search');
+            const filter = input.value.toLowerCase();
+            const nodes = document.querySelectorAll('.branch-item');
+            
+            nodes.forEach(node => {
+                const text = node.innerText.toLowerCase();
+                if (text.includes(filter)) {
+                    node.style.display = "flex";
+                } else {
+                    node.style.display = "none";
+                }
+            });
         }
     </script>
 </body>
