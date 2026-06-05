@@ -75,29 +75,60 @@
             
             <!-- GMB Rozbalovací menu -->
             <div>
-                <button onclick="toggleGmbMenu()" class="w-full flex items-center justify-between text-gray-600 hover:bg-gray-50 hover:text-gray-900 px-3 py-2.5 rounded-lg font-medium transition group">
+                <button onclick="toggleGmbMenu()" class="w-full flex items-center text-gray-600 hover:bg-gray-50 hover:text-gray-900 px-3 py-2.5 rounded-lg font-medium transition group">
                     <div class="flex items-center gap-3">
-                        <i class="fa-brands fa-google w-5 text-center"></i> GMB Profily
+                        <i class="fa-brands fa-google w-5 text-center"></i> Firemní Google profil
                     </div>
-                    <i id="gmb-chevron" class="fa-solid fa-chevron-down text-[10px] text-gray-400 transition-transform duration-200"></i>
                 </button>
                 <!-- Podmenu -->
-                <div id="gmb-submenu" class="hidden flex-col gap-1 pl-11 pr-3 py-1">
+                <div id="gmb-submenu" class="flex flex-col gap-1 pl-11 pr-3 max-h-0 overflow-hidden opacity-0 transition-all duration-300">
                     <a href="#" onclick="showToast('Otevírám Seznam profilů')" class="block py-1.5 text-sm text-gray-500 hover:text-gray-900 transition font-medium">Seznam profilů</a>
                     <a href="#" onclick="showToast('Otevírám Google příspěvky')" class="block py-1.5 text-sm text-gray-500 hover:text-gray-900 transition font-medium">Google příspěvky</a>
                     <a href="#" onclick="showToast('Otevírám Statistiky')" class="block py-1.5 text-sm text-gray-500 hover:text-gray-900 transition font-medium">Statistiky</a>
                 </div>
             </div>
 
-            <a href="#" onclick="showToast('Otevírám Google Street View')" class="flex items-center gap-3 text-gray-600 hover:bg-gray-50 hover:text-gray-900 px-3 py-2.5 rounded-lg font-medium transition">
-                <i class="fa-solid fa-street-view w-5 text-center"></i> Google Street View
-            </a>
-            <a href="#" onclick="showToast('Otevírám NFC produkty')" class="flex items-center gap-3 text-gray-600 hover:bg-gray-50 hover:text-gray-900 px-3 py-2.5 rounded-lg font-medium transition">
-                <i class="fa-solid fa-wifi w-5 text-center"></i> NFC Produkty
-            </a>
-            <a href="#" onclick="showToast('Otevírám Google Ads')" class="flex items-center gap-3 text-gray-600 hover:bg-gray-50 hover:text-gray-900 px-3 py-2.5 rounded-lg font-medium transition">
-                <i class="fa-solid fa-bullhorn w-5 text-center"></i> Google Ads
-            </a>
+            <!-- Street View Rozbalovací menu -->
+            <div>
+                <button onclick="toggleSvMenu()" class="w-full flex items-center text-gray-600 hover:bg-gray-50 hover:text-gray-900 px-3 py-2.5 rounded-lg font-medium transition group">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-street-view w-5 text-center"></i> Google Street View
+                    </div>
+                </button>
+                <!-- Podmenu -->
+                <div id="sv-submenu" class="flex flex-col gap-1 pl-11 pr-3 max-h-0 overflow-hidden opacity-0 transition-all duration-300">
+                    <a href="#" onclick="showToast('Otevírám Moji virtuální prohlídku')" class="block py-1.5 text-sm text-gray-500 hover:text-gray-900 transition font-medium">Moje virtuální prohlídka</a>
+                    <a href="#" onclick="showToast('Otevírám Statistiku Street View')" class="block py-1.5 text-sm text-gray-500 hover:text-gray-900 transition font-medium">Statistika</a>
+                </div>
+            </div>
+            
+            <!-- NFC Rozbalovací menu -->
+            <div>
+                <button onclick="toggleNfcMenu()" class="w-full flex items-center text-gray-600 hover:bg-gray-50 hover:text-gray-900 px-3 py-2.5 rounded-lg font-medium transition group">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-wifi w-5 text-center"></i> NFC Produkty
+                    </div>
+                </button>
+                <!-- Podmenu -->
+                <div id="nfc-submenu" class="flex flex-col gap-1 pl-11 pr-3 max-h-0 overflow-hidden opacity-0 transition-all duration-300">
+                    <a href="#" onclick="showToast('Otevírám Seznam produktů')" class="block py-1.5 text-sm text-gray-500 hover:text-gray-900 transition font-medium">Seznam produktů</a>
+                    <a href="#" onclick="showToast('Otevírám Statistiky NFC')" class="block py-1.5 text-sm text-gray-500 hover:text-gray-900 transition font-medium">Statistika</a>
+                </div>
+            </div>
+
+            <!-- Google Ads Rozbalovací menu -->
+            <div>
+                <button onclick="toggleAdsMenu()" class="w-full flex items-center text-gray-600 hover:bg-gray-50 hover:text-gray-900 px-3 py-2.5 rounded-lg font-medium transition group">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-bullhorn w-5 text-center"></i> Google Ads
+                    </div>
+                </button>
+                <!-- Podmenu -->
+                <div id="ads-submenu" class="flex flex-col gap-1 pl-11 pr-3 max-h-0 overflow-hidden opacity-0 transition-all duration-300">
+                    <a href="#" onclick="showToast('Otevírám Moje kampaně')" class="block py-1.5 text-sm text-gray-500 hover:text-gray-900 transition font-medium">Moje kampaně</a>
+                    <a href="#" onclick="showToast('Otevírám Statistiku Ads')" class="block py-1.5 text-sm text-gray-500 hover:text-gray-900 transition font-medium">Statistika</a>
+                </div>
+            </div>
 
             <div class="h-px bg-border my-4 mx-3"></div>
             
@@ -111,17 +142,16 @@
 
         <!-- Kontakt na obchodníka -->
         <div class="p-4 border-t border-border bg-gray-50">
-            <p class="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-3">Váš osobní správce</p>
+            <p class="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-3">Váš obchodník</p>
             <div class="flex items-center gap-3 mb-3">
-                <div class="w-10 h-10 rounded-full bg-gray-200 border border-gray-300 flex items-center justify-center text-gray-600 font-bold text-sm">
-                    PK
-                </div>
+                <img src="https://iili.io/2iP8d1p.png" alt="Tomáš Gerber" class="w-10 h-10 rounded-full object-cover border border-gray-300 shrink-0">
                 <div class="overflow-hidden">
-                    <p class="font-medium text-sm text-gray-900 truncate">Petr Kovář</p>
-                    <p class="text-xs text-gray-500">+420 123 456 789</p>
+                    <p class="font-medium text-sm text-gray-900 truncate">Tomáš Gerber</p>
+                    <p class="text-xs text-gray-500 mt-0.5">+420 728 414 452</p>
+                    <p class="text-xs text-gray-500 truncate hover:text-brand-600 transition">gerber@viewcz.com</p>
                 </div>
             </div>
-            <button onclick="showToast('Otevírám chat')" class="w-full bg-white border border-gray-300 text-gray-700 py-1.5 rounded text-xs font-semibold hover:bg-gray-50 transition shadow-sm">
+            <button onclick="showToast('Otevírám chat')" class="w-full bg-white border border-gray-300 text-gray-700 py-1.5 rounded text-xs font-semibold hover:bg-gray-50 transition shadow-sm mt-1">
                 Napsat zprávu
             </button>
         </div>
@@ -282,17 +312,41 @@
         // Rozbalovací menu pro GMB
         function toggleGmbMenu() {
             const submenu = document.getElementById('gmb-submenu');
-            const chevron = document.getElementById('gmb-chevron');
-            
-            if (submenu.classList.contains('hidden')) {
-                submenu.classList.remove('hidden');
-                submenu.classList.add('flex');
-                chevron.classList.add('rotate-180');
-            } else {
-                submenu.classList.add('hidden');
-                submenu.classList.remove('flex');
-                chevron.classList.remove('rotate-180');
-            }
+            submenu.classList.toggle('max-h-0');
+            submenu.classList.toggle('opacity-0');
+            submenu.classList.toggle('max-h-40');
+            submenu.classList.toggle('opacity-100');
+            submenu.classList.toggle('py-1');
+        }
+
+        // Rozbalovací menu pro NFC
+        function toggleNfcMenu() {
+            const submenu = document.getElementById('nfc-submenu');
+            submenu.classList.toggle('max-h-0');
+            submenu.classList.toggle('opacity-0');
+            submenu.classList.toggle('max-h-40');
+            submenu.classList.toggle('opacity-100');
+            submenu.classList.toggle('py-1');
+        }
+
+        // Rozbalovací menu pro Street View
+        function toggleSvMenu() {
+            const submenu = document.getElementById('sv-submenu');
+            submenu.classList.toggle('max-h-0');
+            submenu.classList.toggle('opacity-0');
+            submenu.classList.toggle('max-h-40');
+            submenu.classList.toggle('opacity-100');
+            submenu.classList.toggle('py-1');
+        }
+
+        // Rozbalovací menu pro Google Ads
+        function toggleAdsMenu() {
+            const submenu = document.getElementById('ads-submenu');
+            submenu.classList.toggle('max-h-0');
+            submenu.classList.toggle('opacity-0');
+            submenu.classList.toggle('max-h-40');
+            submenu.classList.toggle('opacity-100');
+            submenu.classList.toggle('py-1');
         }
 
         // Minimalistické toasty
