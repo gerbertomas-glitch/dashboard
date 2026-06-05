@@ -73,6 +73,18 @@
             letter-spacing: 0.05em;
             margin-bottom: 6px;
         }
+        
+        /* Radio button styling */
+        .role-radio:checked + div {
+            border-color: #16a34a;
+            background-color: #f0fdf4;
+        }
+        .role-radio:checked + div .role-icon {
+            color: #16a34a;
+        }
+        .role-radio:checked + div .role-check {
+            opacity: 1;
+        }
     </style>
 </head>
 <body class="font-sans text-gray-900 h-screen flex overflow-hidden antialiased">
@@ -428,7 +440,7 @@
                             <h3 class="font-bold text-gray-900 text-base">Seznam kontaktů</h3>
                             <p class="text-sm text-gray-500">Správa osob s oprávněním přistupovat k účtu.</p>
                         </div>
-                        <button onclick="showToast('Otevírám formulář pro přidání')" class="bg-brand-500 text-white py-1.5 px-4 rounded-lg text-sm font-medium hover:bg-brand-600 transition shadow-sm">
+                        <button onclick="openAddPersonModal()" class="bg-brand-500 text-white py-1.5 px-4 rounded-lg text-sm font-medium hover:bg-brand-600 transition shadow-sm">
                             <i class="fa-solid fa-plus mr-1"></i> Přidat osobu
                         </button>
                     </div>
@@ -440,6 +452,8 @@
                                     <tr class="bg-gray-50 border-b border-gray-200">
                                         <th class="py-3 px-6 text-xs font-semibold text-gray-500 uppercase tracking-wider">Jméno a Role</th>
                                         <th class="py-3 px-6 text-xs font-semibold text-gray-500 uppercase tracking-wider">Kontakt</th>
+                                        <th class="py-3 px-6 text-xs font-semibold text-gray-500 uppercase tracking-wider">Přidáno</th>
+                                        <th class="py-3 px-6 text-xs font-semibold text-gray-500 uppercase tracking-wider">Zadal</th>
                                         <th class="py-3 px-6 text-xs font-semibold text-gray-500 uppercase tracking-wider text-right">Akce</th>
                                     </tr>
                                 </thead>
@@ -447,19 +461,97 @@
                                     <tr class="hover:bg-gray-50/50 transition">
                                         <td class="py-4 px-6">
                                             <div class="flex items-center gap-3">
-                                                <div class="w-8 h-8 rounded-full bg-brand-100 text-brand-600 flex items-center justify-center font-bold text-xs shrink-0">JN</div>
+                                                <div class="w-8 h-8 rounded-full bg-green-100 text-brand-600 flex items-center justify-center font-bold text-xs shrink-0 relative">
+                                                    JN
+                                                    <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-brand-500 rounded-full flex items-center justify-center border-2 border-white" title="Primární vlastník">
+                                                        <i class="fa-solid fa-crown text-[8px] text-white"></i>
+                                                    </div>
+                                                </div>
                                                 <div>
                                                     <p class="font-medium text-sm text-gray-900">Jan Novák</p>
-                                                    <p class="text-[11px] text-gray-500">Jednatel (Hlavní účet)</p>
+                                                    <span class="inline-block mt-1 px-2 py-0.5 bg-gray-50 border border-gray-200 rounded text-[10px] font-bold text-brand-600 uppercase tracking-wider whitespace-nowrap">Primární vlastník</span>
                                                 </div>
                                             </div>
                                         </td>
                                         <td class="py-4 px-6">
-                                            <p class="text-sm text-gray-600"><i class="fa-solid fa-envelope text-gray-400 w-4"></i> jan.novak@businesspower.cz</p>
-                                            <p class="text-sm text-gray-600 mt-1"><i class="fa-solid fa-phone text-gray-400 w-4"></i> +420 123 456 789</p>
+                                            <p class="text-sm text-gray-600 whitespace-nowrap"><i class="fa-solid fa-envelope text-gray-400 w-4"></i> jan.novak@businesspower.cz</p>
+                                            <p class="text-sm text-gray-600 mt-1 whitespace-nowrap"><i class="fa-solid fa-phone text-gray-400 w-4"></i> +420 123 456 789</p>
+                                        </td>
+                                        <td class="py-4 px-6 whitespace-nowrap">
+                                            <p class="text-sm text-gray-900 font-medium">10.05.2025</p>
+                                        </td>
+                                        <td class="py-4 px-6">
+                                            <p class="text-sm text-gray-600">Systém</p>
                                         </td>
                                         <td class="py-4 px-6 text-right">
-                                            <button onclick="showToast('Úprava kontaktu')" class="text-gray-400 hover:text-brand-600 transition p-2"><i class="fa-solid fa-pen"></i></button>
+                                            <div class="flex items-center justify-end gap-1">
+                                                <button onclick="openEditPersonModal('Jan', 'Novák', 'jan.novak@businesspower.cz', '+420 123 456 789', 'owner')" class="text-gray-400 hover:text-brand-600 transition p-2" title="Upravit"><i class="fa-solid fa-pen"></i></button>
+                                                <button onclick="deletePerson()" class="text-gray-400 hover:text-red-500 transition p-2" title="Odstranit"><i class="fa-solid fa-trash"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50/50 transition">
+                                        <td class="py-4 px-6">
+                                            <div class="flex items-center gap-3">
+                                                <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xs shrink-0 relative">
+                                                    PS
+                                                    <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center border-2 border-white" title="Správce">
+                                                        <i class="fa-solid fa-shield-halved text-[8px] text-white"></i>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <p class="font-medium text-sm text-gray-900">Petr Svoboda</p>
+                                                    <span class="inline-block mt-1 px-2 py-0.5 bg-gray-50 border border-gray-200 rounded text-[10px] font-bold text-blue-600 uppercase tracking-wider whitespace-nowrap">Správce</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="py-4 px-6">
+                                            <p class="text-sm text-gray-600 whitespace-nowrap"><i class="fa-solid fa-envelope text-gray-400 w-4"></i> petr.svoboda@businesspower.cz</p>
+                                            <p class="text-sm text-gray-600 mt-1 whitespace-nowrap"><i class="fa-solid fa-phone text-gray-400 w-4"></i> +420 987 654 321</p>
+                                        </td>
+                                        <td class="py-4 px-6 whitespace-nowrap">
+                                            <p class="text-sm text-gray-900 font-medium">15.08.2025</p>
+                                        </td>
+                                        <td class="py-4 px-6">
+                                            <p class="text-sm text-gray-600">Jan Novák</p>
+                                        </td>
+                                        <td class="py-4 px-6 text-right">
+                                            <div class="flex items-center justify-end gap-1">
+                                                <button onclick="openEditPersonModal('Petr', 'Svoboda', 'petr.svoboda@businesspower.cz', '+420 987 654 321', 'admin')" class="text-gray-400 hover:text-brand-600 transition p-2" title="Upravit"><i class="fa-solid fa-pen"></i></button>
+                                                <button onclick="deletePerson()" class="text-gray-400 hover:text-red-500 transition p-2" title="Odstranit"><i class="fa-solid fa-trash"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50/50 transition">
+                                        <td class="py-4 px-6">
+                                            <div class="flex items-center gap-3">
+                                                <div class="w-8 h-8 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center font-bold text-xs shrink-0 relative">
+                                                    EK
+                                                    <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-gray-500 rounded-full flex items-center justify-center border-2 border-white" title="Čtenář">
+                                                        <i class="fa-solid fa-eye text-[8px] text-white"></i>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <p class="font-medium text-sm text-gray-900">Eva Kovářová</p>
+                                                    <span class="inline-block mt-1 px-2 py-0.5 bg-gray-50 border border-gray-200 rounded text-[10px] font-bold text-gray-500 uppercase tracking-wider whitespace-nowrap">Čtenář</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="py-4 px-6">
+                                            <p class="text-sm text-gray-600 whitespace-nowrap"><i class="fa-solid fa-envelope text-gray-400 w-4"></i> eva.kovarova@businesspower.cz</p>
+                                            <p class="text-sm text-gray-600 mt-1 whitespace-nowrap"><i class="fa-solid fa-phone text-gray-400 w-4"></i> +420 111 222 333</p>
+                                        </td>
+                                        <td class="py-4 px-6 whitespace-nowrap">
+                                            <p class="text-sm text-gray-900 font-medium">02.01.2026</p>
+                                        </td>
+                                        <td class="py-4 px-6">
+                                            <p class="text-sm text-gray-600">Jan Novák</p>
+                                        </td>
+                                        <td class="py-4 px-6 text-right">
+                                            <div class="flex items-center justify-end gap-1">
+                                                <button onclick="openEditPersonModal('Eva', 'Kovářová', 'eva.kovarova@businesspower.cz', '+420 111 222 333', 'viewer')" class="text-gray-400 hover:text-brand-600 transition p-2" title="Upravit"><i class="fa-solid fa-pen"></i></button>
+                                                <button onclick="deletePerson()" class="text-gray-400 hover:text-red-500 transition p-2" title="Odstranit"><i class="fa-solid fa-trash"></i></button>
+                                            </div>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -575,6 +667,114 @@
             <button onclick="showToast('Odesílám zprávu...')" class="w-9 h-9 bg-brand-500 text-white rounded-full flex items-center justify-center hover:bg-brand-600 transition shrink-0">
                 <i class="fa-solid fa-paper-plane text-xs -ml-0.5"></i>
             </button>
+        </div>
+    </div>
+
+    <!-- MODÁLNÍ OKNO PRO PŘIDÁNÍ OSOBY -->
+    <div id="add-person-modal" class="fixed inset-0 bg-gray-900/60 z-[60] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300 px-4">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-2xl transform scale-95 transition-transform duration-300 overflow-hidden flex flex-col max-h-[90vh]">
+            
+            <!-- Hlavička modálu -->
+            <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center bg-gray-50 shrink-0">
+                <h3 id="modal-person-title" class="text-lg font-bold text-gray-900">Přidat kontaktní osobu</h3>
+                <button onclick="toggleAddPersonModal()" class="text-gray-400 hover:text-gray-600 transition">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+
+            <!-- Obsah modálu -->
+            <div class="p-6 overflow-y-auto flex-1 space-y-8">
+                
+                <!-- Základní údaje -->
+                <div>
+                    <h4 class="font-bold text-gray-900 text-sm mb-4 border-b border-gray-100 pb-2">Osobní údaje</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div>
+                            <label class="label-minimal">Jméno</label>
+                            <input type="text" id="person-name" class="input-minimal" placeholder="Např. Jan">
+                        </div>
+                        <div>
+                            <label class="label-minimal">Příjmení</label>
+                            <input type="text" id="person-surname" class="input-minimal" placeholder="Např. Novák">
+                        </div>
+                        <div>
+                            <label class="label-minimal">E-mail</label>
+                            <input type="email" id="person-email" class="input-minimal" placeholder="E-mailová adresa">
+                        </div>
+                        <div>
+                            <label class="label-minimal">Telefon</label>
+                            <input type="tel" id="person-phone" class="input-minimal" placeholder="+420 ...">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Výběr role -->
+                <div>
+                    <h4 class="font-bold text-gray-900 text-sm mb-4 border-b border-gray-100 pb-2">Oprávnění a role</h4>
+                    <p class="text-xs text-gray-500 mb-4">Vyberte úroveň přístupu, kterou nová osoba získá. Toto nastavení lze později změnit.</p>
+                    
+                    <div class="grid grid-cols-1 gap-3">
+                        
+                        <!-- Role: Primární vlastník -->
+                        <label class="relative cursor-pointer group">
+                            <input type="radio" name="role" class="peer sr-only role-radio" value="owner">
+                            <div class="border border-gray-200 rounded-xl p-4 flex gap-4 transition-colors hover:border-gray-300">
+                                <div class="w-10 h-10 rounded-full bg-green-50 flex items-center justify-center shrink-0 role-icon text-brand-500 transition-colors">
+                                    <i class="fa-solid fa-crown text-lg"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex justify-between items-start">
+                                        <p class="font-bold text-sm text-gray-900">Primární vlastník</p>
+                                        <i class="fa-solid fa-circle-check text-brand-500 opacity-0 transition-opacity role-check"></i>
+                                    </div>
+                                    <p class="text-xs text-gray-500 mt-1 leading-relaxed">Má plnou kontrolu nad účtem, fakturací a všemi službami. Může přidávat a odstraňovat další uživatele (včetně jiných vlastníků). Nelze ho odstranit bez převedení vlastnictví.</p>
+                                </div>
+                            </div>
+                        </label>
+
+                        <!-- Role: Správce -->
+                        <label class="relative cursor-pointer group">
+                            <input type="radio" name="role" class="peer sr-only role-radio" value="admin" checked>
+                            <div class="border border-gray-200 rounded-xl p-4 flex gap-4 transition-colors hover:border-gray-300">
+                                <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center shrink-0 role-icon text-blue-500 transition-colors">
+                                    <i class="fa-solid fa-shield-halved text-lg"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex justify-between items-start">
+                                        <p class="font-bold text-sm text-gray-900">Správce</p>
+                                        <i class="fa-solid fa-circle-check text-brand-500 opacity-0 transition-opacity role-check"></i>
+                                    </div>
+                                    <p class="text-xs text-gray-500 mt-1 leading-relaxed">Může editovat všechny služby a spravovat profily. Má přístup ke statistikám, ale nemůže nahlížet do fakturace ani měnit nastavení jiných uživatelů.</p>
+                                </div>
+                            </div>
+                        </label>
+
+                        <!-- Role: Čtenář -->
+                        <label class="relative cursor-pointer group">
+                            <input type="radio" name="role" class="peer sr-only role-radio" value="viewer">
+                            <div class="border border-gray-200 rounded-xl p-4 flex gap-4 transition-colors hover:border-gray-300">
+                                <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center shrink-0 role-icon text-gray-500 transition-colors">
+                                    <i class="fa-solid fa-eye text-lg"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex justify-between items-start">
+                                        <p class="font-bold text-sm text-gray-900">Čtenář</p>
+                                        <i class="fa-solid fa-circle-check text-brand-500 opacity-0 transition-opacity role-check"></i>
+                                    </div>
+                                    <p class="text-xs text-gray-500 mt-1 leading-relaxed">Má přístup pouze ke čtení dat a statistik napříč aktivními službami. Nemůže provádět žádné změny v profilech ani nakupovat nové služby.</p>
+                                </div>
+                            </div>
+                        </label>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Patička modálu (Tlačítka) -->
+            <div class="px-6 py-4 border-t border-gray-200 bg-gray-50 flex justify-end gap-3 shrink-0">
+                <button onclick="toggleAddPersonModal()" class="px-5 py-2 rounded-lg text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 transition shadow-sm">Zrušit</button>
+                <button id="modal-person-submit" onclick="submitPersonForm()" class="px-5 py-2 rounded-lg text-sm font-medium text-white bg-brand-500 hover:bg-brand-600 transition shadow-sm">Přidat osobu</button>
+            </div>
         </div>
     </div>
 
@@ -704,6 +904,58 @@
                 overlay.classList.add('opacity-0');
                 setTimeout(() => overlay.classList.add('hidden'), 300);
             }
+        }
+
+        // Modální okno pro přidání osoby
+        function toggleAddPersonModal() {
+            const modal = document.getElementById('add-person-modal');
+            const modalContent = modal.querySelector('div');
+            
+            if (modal.classList.contains('opacity-0')) {
+                // Otevřít
+                modal.classList.remove('opacity-0', 'pointer-events-none');
+                setTimeout(() => modalContent.classList.remove('scale-95'), 10);
+            } else {
+                // Zavřít
+                modalContent.classList.add('scale-95');
+                setTimeout(() => modal.classList.add('opacity-0', 'pointer-events-none'), 300);
+            }
+        }
+
+        // Pomocná fce pro otevření čistého formuláře pro PŘIDÁNÍ
+        function openAddPersonModal() {
+            document.getElementById('modal-person-title').innerText = 'Přidat kontaktní osobu';
+            document.getElementById('modal-person-submit').innerText = 'Přidat osobu';
+            document.getElementById('person-name').value = '';
+            document.getElementById('person-surname').value = '';
+            document.getElementById('person-email').value = '';
+            document.getElementById('person-phone').value = '';
+            document.querySelector('input[name="role"][value="admin"]').checked = true; // výchozí role
+            
+            toggleAddPersonModal();
+        }
+
+        // Pomocná fce pro otevření předvyplněného formuláře pro ÚPRAVU
+        function openEditPersonModal(name, surname, email, phone, role) {
+            document.getElementById('modal-person-title').innerText = 'Upravit kontaktní osobu';
+            document.getElementById('modal-person-submit').innerText = 'Uložit změny';
+            document.getElementById('person-name').value = name;
+            document.getElementById('person-surname').value = surname;
+            document.getElementById('person-email').value = email;
+            document.getElementById('person-phone').value = phone;
+            document.querySelector(`input[name="role"][value="${role}"]`).checked = true;
+            
+            toggleAddPersonModal();
+        }
+
+        function submitPersonForm() {
+            showToast('Změny u kontaktní osoby byly úspěšně uloženy');
+            toggleAddPersonModal();
+        }
+
+        function deletePerson() {
+            // Elegantní notifikace místo ostrého window.confirm
+            showToast('Osoba byla úspěšně odstraněna z účtu');
         }
     </script>
 </body>
