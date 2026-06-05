@@ -72,9 +72,23 @@
             <a href="#" class="flex items-center gap-3 bg-green-50 text-brand-600 px-3 py-2.5 rounded-lg font-medium transition">
                 <i class="fa-solid fa-layer-group w-5 text-center text-brand-600"></i> Přehled
             </a>
-            <a href="#" onclick="showToast('Otevírám GMB')" class="flex items-center gap-3 text-gray-600 hover:bg-gray-50 hover:text-gray-900 px-3 py-2.5 rounded-lg font-medium transition">
-                <i class="fa-brands fa-google w-5 text-center"></i> GMB Profily
-            </a>
+            
+            <!-- GMB Rozbalovací menu -->
+            <div>
+                <button onclick="toggleGmbMenu()" class="w-full flex items-center justify-between text-gray-600 hover:bg-gray-50 hover:text-gray-900 px-3 py-2.5 rounded-lg font-medium transition group">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-brands fa-google w-5 text-center"></i> GMB Profily
+                    </div>
+                    <i id="gmb-chevron" class="fa-solid fa-chevron-down text-[10px] text-gray-400 transition-transform duration-200"></i>
+                </button>
+                <!-- Podmenu -->
+                <div id="gmb-submenu" class="hidden flex-col gap-1 pl-11 pr-3 py-1">
+                    <a href="#" onclick="showToast('Otevírám Seznam profilů')" class="block py-1.5 text-sm text-gray-500 hover:text-gray-900 transition font-medium">Seznam profilů</a>
+                    <a href="#" onclick="showToast('Otevírám Google příspěvky')" class="block py-1.5 text-sm text-gray-500 hover:text-gray-900 transition font-medium">Google příspěvky</a>
+                    <a href="#" onclick="showToast('Otevírám Statistiky')" class="block py-1.5 text-sm text-gray-500 hover:text-gray-900 transition font-medium">Statistiky</a>
+                </div>
+            </div>
+
             <a href="#" onclick="showToast('Otevírám Virtuální prohlídku')" class="flex items-center gap-3 text-gray-600 hover:bg-gray-50 hover:text-gray-900 px-3 py-2.5 rounded-lg font-medium transition">
                 <i class="fa-solid fa-street-view w-5 text-center"></i> Virtuální prohlídka
             </a>
@@ -265,6 +279,22 @@
     </div>
 
     <script>
+        // Rozbalovací menu pro GMB
+        function toggleGmbMenu() {
+            const submenu = document.getElementById('gmb-submenu');
+            const chevron = document.getElementById('gmb-chevron');
+            
+            if (submenu.classList.contains('hidden')) {
+                submenu.classList.remove('hidden');
+                submenu.classList.add('flex');
+                chevron.classList.add('rotate-180');
+            } else {
+                submenu.classList.add('hidden');
+                submenu.classList.remove('flex');
+                chevron.classList.remove('rotate-180');
+            }
+        }
+
         // Minimalistické toasty
         let toastTimeout;
         function showToast(message) {
