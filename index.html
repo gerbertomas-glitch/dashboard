@@ -353,17 +353,20 @@
             <div id="view-seznam-profilu" class="hidden max-w-full mx-auto space-y-6 transition-opacity duration-300">
                 
                 <!-- Hromadné akce -->
-                <div class="card-minimal p-4 mb-6 overflow-x-auto hide-scrollbar">
-                    <div class="flex items-center gap-4 min-w-max">
-                        <button onclick="showToast('Otevírám úpravu názvů')" class="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-brand-600 transition px-3 py-1.5 rounded hover:bg-green-50"><i class="fa-solid fa-heading text-brand-500"></i> Název</button>
-                        <button onclick="showToast('Otevírám úpravu popisů')" class="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-brand-600 transition px-3 py-1.5 rounded hover:bg-green-50"><i class="fa-solid fa-align-left text-brand-500"></i> Popis</button>
-                        <button onclick="showToast('Otevírám úpravu webů')" class="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-brand-600 transition px-3 py-1.5 rounded hover:bg-green-50"><i class="fa-solid fa-globe text-brand-500"></i> Web</button>
-                        <button onclick="showToast('Otevírám úpravu telefonů')" class="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-brand-600 transition px-3 py-1.5 rounded hover:bg-green-50"><i class="fa-solid fa-phone text-brand-500"></i> Telefon</button>
-                        <button onclick="showToast('Otevírám úpravu dalších telefonů')" class="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-brand-600 transition px-3 py-1.5 rounded hover:bg-green-50"><i class="fa-solid fa-phone-volume text-brand-500"></i> Další tel.</button>
-                        <button onclick="showToast('Otevírám úpravu otevírací doby')" class="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-brand-600 transition px-3 py-1.5 rounded hover:bg-green-50"><i class="fa-solid fa-clock text-brand-500"></i> Otevírací doba</button>
-                        <button onclick="showToast('Otevírám úpravu speciálních hodin')" class="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-brand-600 transition px-3 py-1.5 rounded hover:bg-green-50"><i class="fa-solid fa-clock-rotate-left text-brand-500"></i> Speciální hodiny</button>
-                        <button onclick="showToast('Otevírám úpravu stavu')" class="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-brand-600 transition px-3 py-1.5 rounded hover:bg-green-50"><i class="fa-solid fa-store text-brand-500"></i> Stav</button>
-                        <button onclick="showToast('Otevírám správu fotek')" class="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-brand-600 transition px-3 py-1.5 rounded hover:bg-green-50"><i class="fa-regular fa-images text-brand-500"></i> Fotky</button>
+                <div class="mb-6">
+                    <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wide mb-3 pl-1">Hromadné úpravy</h3>
+                    <div class="card-minimal p-4 overflow-x-auto hide-scrollbar">
+                        <div class="flex items-center gap-4 min-w-max">
+                            <button onclick="openBulkEditModal('nazev')" class="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-brand-600 transition px-3 py-1.5 rounded hover:bg-green-50"><i class="fa-solid fa-heading text-brand-500"></i> Název</button>
+                            <button onclick="openBulkEditModal('popis')" class="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-brand-600 transition px-3 py-1.5 rounded hover:bg-green-50"><i class="fa-solid fa-align-left text-brand-500"></i> Popis</button>
+                            <button onclick="openBulkEditModal('web')" class="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-brand-600 transition px-3 py-1.5 rounded hover:bg-green-50"><i class="fa-solid fa-globe text-brand-500"></i> Web</button>
+                            <button onclick="openBulkEditModal('telefon')" class="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-brand-600 transition px-3 py-1.5 rounded hover:bg-green-50"><i class="fa-solid fa-phone text-brand-500"></i> Telefon</button>
+                            <button onclick="openBulkEditModal('dalsi-tel')" class="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-brand-600 transition px-3 py-1.5 rounded hover:bg-green-50"><i class="fa-solid fa-phone-volume text-brand-500"></i> Další tel.</button>
+                            <button onclick="openBulkEditModal('oteviraci-doba')" class="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-brand-600 transition px-3 py-1.5 rounded hover:bg-green-50"><i class="fa-solid fa-clock text-brand-500"></i> Otevírací doba</button>
+                            <button onclick="openBulkEditModal('specialni-hodiny')" class="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-brand-600 transition px-3 py-1.5 rounded hover:bg-green-50"><i class="fa-solid fa-clock-rotate-left text-brand-500"></i> Speciální hodiny</button>
+                            <button onclick="openBulkEditModal('stav')" class="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-brand-600 transition px-3 py-1.5 rounded hover:bg-green-50"><i class="fa-solid fa-store text-brand-500"></i> Stav</button>
+                            <button onclick="openBulkEditModal('fotky')" class="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-brand-600 transition px-3 py-1.5 rounded hover:bg-green-50"><i class="fa-regular fa-images text-brand-500"></i> Fotky</button>
+                        </div>
                     </div>
                 </div>
 
@@ -849,6 +852,40 @@
         </div>
     </div>
 
+    <!-- MODÁLNÍ OKNO PRO HROMADNÉ ÚPRAVY -->
+    <div id="bulk-edit-modal" class="fixed inset-0 bg-gray-900/60 z-[60] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300 px-4">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-xl transform scale-95 transition-transform duration-300 overflow-hidden flex flex-col">
+            
+            <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center bg-gray-50 shrink-0">
+                <h3 id="bulk-modal-title" class="text-lg font-bold text-gray-900">Hromadná úprava</h3>
+                <button onclick="toggleBulkEditModal()" class="text-gray-400 hover:text-gray-600 transition">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+
+            <div class="p-6 overflow-y-auto flex-1 space-y-6">
+                <!-- Informační box o vybraných pobočkách -->
+                <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 flex gap-3 items-start">
+                    <i class="fa-solid fa-circle-info text-blue-500 mt-0.5"></i>
+                    <div>
+                        <p class="text-sm font-bold text-blue-900">Aplikuje se na vybrané pobočky</p>
+                        <p class="text-xs text-blue-700 mt-1">Zadaná hodnota přepíše současná data u všech profilů, které jste označili zaškrtávacím políčkem v tabulce.</p>
+                    </div>
+                </div>
+
+                <!-- Dynamický obsah se vloží sem pomocí JS -->
+                <div id="bulk-modal-input-area" class="space-y-4">
+                    <!-- Zde bude input/textarea/select -->
+                </div>
+            </div>
+
+            <div class="px-6 py-4 border-t border-gray-200 bg-gray-50 flex justify-end gap-3 shrink-0">
+                <button onclick="toggleBulkEditModal()" class="px-5 py-2 rounded-lg text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 transition shadow-sm">Zrušit</button>
+                <button onclick="submitBulkEdit()" class="px-5 py-2 rounded-lg text-sm font-medium text-white bg-brand-500 hover:bg-brand-600 transition shadow-sm">Uložit do profilů</button>
+            </div>
+        </div>
+    </div>
+
     <!-- MODÁLNÍ OKNO PRO PŘIDÁNÍ OSOBY -->
     <div id="add-person-modal" class="fixed inset-0 bg-gray-900/60 z-[60] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300 px-4">
         <div class="bg-white rounded-xl shadow-2xl w-full max-w-2xl transform scale-95 transition-transform duration-300 overflow-hidden flex flex-col max-h-[90vh]">
@@ -1114,6 +1151,128 @@
 
         function deletePerson() {
             showToast('Osoba byla úspěšně odstraněna z účtu');
+        }
+
+        // Modály (Hromadné úpravy)
+        function toggleBulkEditModal() {
+            const modal = document.getElementById('bulk-edit-modal');
+            const modalContent = modal.querySelector('div');
+            
+            if (modal.classList.contains('opacity-0')) {
+                modal.classList.remove('opacity-0', 'pointer-events-none');
+                setTimeout(() => modalContent.classList.remove('scale-95'), 10);
+            } else {
+                modalContent.classList.add('scale-95');
+                setTimeout(() => modal.classList.add('opacity-0', 'pointer-events-none'), 300);
+            }
+        }
+
+        function openBulkEditModal(action) {
+            const modalTitle = document.getElementById('bulk-modal-title');
+            const modalInputArea = document.getElementById('bulk-modal-input-area');
+
+            let title = '';
+            let inputHtml = '';
+
+            // Dynamické sestavení obsahu podle toho, na co klient klikl
+            switch(action) {
+                case 'nazev':
+                    title = 'Hromadná úprava: Název pobočky';
+                    inputHtml = `
+                        <div>
+                            <label class="label-minimal">Nový sjednocený název</label>
+                            <input type="text" class="input-minimal" placeholder="Např. Business Power s.r.o.">
+                        </div>`;
+                    break;
+                case 'popis':
+                    title = 'Hromadná úprava: Popis firmy';
+                    inputHtml = `
+                        <div>
+                            <label class="label-minimal">Nový text popisu</label>
+                            <textarea class="input-minimal" rows="5" placeholder="Zadejte text, který se zobrazí ve vyhledávání..."></textarea>
+                        </div>`;
+                    break;
+                case 'web':
+                    title = 'Hromadná úprava: Webová stránka';
+                    inputHtml = `
+                        <div>
+                            <label class="label-minimal">Nová URL adresa</label>
+                            <input type="url" class="input-minimal" placeholder="https://www.vasweb.cz">
+                        </div>`;
+                    break;
+                case 'telefon':
+                    title = 'Hromadná úprava: Hlavní telefon';
+                    inputHtml = `
+                        <div>
+                            <label class="label-minimal">Nové telefonní číslo</label>
+                            <input type="tel" class="input-minimal" placeholder="+420 ...">
+                        </div>`;
+                    break;
+                case 'dalsi-tel':
+                    title = 'Hromadná úprava: Další telefony';
+                    inputHtml = `
+                        <div>
+                            <label class="label-minimal">Doplňkové telefonní číslo</label>
+                            <input type="tel" class="input-minimal" placeholder="+420 ...">
+                        </div>`;
+                    break;
+                case 'oteviraci-doba':
+                    title = 'Hromadná úprava: Otevírací doba';
+                    inputHtml = `
+                        <div>
+                            <label class="label-minimal">Standardní týdenní doba</label>
+                            <textarea class="input-minimal font-mono text-sm leading-relaxed" rows="7" placeholder="Pondělí: 8:00 - 17:00\nÚterý: 8:00 - 17:00\n..."></textarea>
+                        </div>`;
+                    break;
+                case 'specialni-hodiny':
+                    title = 'Hromadná úprava: Speciální hodiny (Svátky)';
+                    inputHtml = `
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="label-minimal">Datum svátku / výjimky</label>
+                                <input type="date" class="input-minimal">
+                            </div>
+                            <div>
+                                <label class="label-minimal">Nová doba</label>
+                                <input type="text" class="input-minimal" placeholder="Zavřeno / 8:00 - 12:00">
+                            </div>
+                        </div>`;
+                    break;
+                case 'stav':
+                    title = 'Hromadná úprava: Stav podniku';
+                    inputHtml = `
+                        <div>
+                            <label class="label-minimal">Zvolte nový stav pro profily</label>
+                            <select class="input-minimal">
+                                <option>Otevřeno</option>
+                                <option>Dočasně uzavřeno</option>
+                                <option>Trvale uzavřeno</option>
+                            </select>
+                        </div>`;
+                    break;
+                case 'fotky':
+                    title = 'Hromadná úprava: Přidat fotky';
+                    inputHtml = `
+                        <div>
+                            <label class="label-minimal">Nahrajte fotografie do profilů</label>
+                            <div class="border-2 border-dashed border-gray-300 rounded-xl p-8 flex flex-col items-center justify-center text-gray-500 hover:bg-gray-50 transition cursor-pointer">
+                                <i class="fa-solid fa-cloud-arrow-up text-3xl mb-3 text-brand-500"></i>
+                                <span class="text-sm font-bold text-gray-700">Klikněte nebo přetáhněte soubory sem</span>
+                                <span class="text-xs text-gray-400 mt-1">Doporučený formát JPG, PNG. Max 5MB na fotku.</span>
+                            </div>
+                        </div>`;
+                    break;
+            }
+
+            modalTitle.innerText = title;
+            modalInputArea.innerHTML = inputHtml;
+
+            toggleBulkEditModal();
+        }
+
+        function submitBulkEdit() {
+            showToast('Změny se nyní hromadně propisují do vybraných profilů');
+            toggleBulkEditModal();
         }
     </script>
 </body>
