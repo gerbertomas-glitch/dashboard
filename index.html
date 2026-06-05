@@ -355,18 +355,32 @@
                 <!-- Hromadné akce -->
                 <div class="mb-6">
                     <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wide mb-3 pl-1">Hromadné úpravy</h3>
-                    <div class="card-minimal p-4 overflow-x-auto hide-scrollbar">
-                        <div class="flex items-center gap-4 min-w-max">
-                            <button onclick="openBulkEditModal('nazev')" class="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-brand-600 transition px-3 py-1.5 rounded hover:bg-green-50"><i class="fa-solid fa-heading text-brand-500"></i> Název</button>
-                            <button onclick="openBulkEditModal('popis')" class="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-brand-600 transition px-3 py-1.5 rounded hover:bg-green-50"><i class="fa-solid fa-align-left text-brand-500"></i> Popis</button>
-                            <button onclick="openBulkEditModal('web')" class="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-brand-600 transition px-3 py-1.5 rounded hover:bg-green-50"><i class="fa-solid fa-globe text-brand-500"></i> Web</button>
-                            <button onclick="openBulkEditModal('telefon')" class="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-brand-600 transition px-3 py-1.5 rounded hover:bg-green-50"><i class="fa-solid fa-phone text-brand-500"></i> Telefon</button>
-                            <button onclick="openBulkEditModal('dalsi-tel')" class="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-brand-600 transition px-3 py-1.5 rounded hover:bg-green-50"><i class="fa-solid fa-phone-volume text-brand-500"></i> Další tel.</button>
-                            <button onclick="openBulkEditModal('oteviraci-doba')" class="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-brand-600 transition px-3 py-1.5 rounded hover:bg-green-50"><i class="fa-solid fa-clock text-brand-500"></i> Otevírací doba</button>
-                            <button onclick="openBulkEditModal('specialni-hodiny')" class="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-brand-600 transition px-3 py-1.5 rounded hover:bg-green-50"><i class="fa-solid fa-clock-rotate-left text-brand-500"></i> Speciální hodiny</button>
-                            <button onclick="openBulkEditModal('stav')" class="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-brand-600 transition px-3 py-1.5 rounded hover:bg-green-50"><i class="fa-solid fa-store text-brand-500"></i> Stav</button>
-                            <button onclick="openBulkEditModal('fotky')" class="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-brand-600 transition px-3 py-1.5 rounded hover:bg-green-50"><i class="fa-regular fa-images text-brand-500"></i> Fotky</button>
+                    <div class="grid grid-cols-1 xl:grid-cols-3 gap-5">
+                        
+                        <!-- Sekce: Údaje o firmě -->
+                        <div class="card-minimal p-5 xl:col-span-2 flex flex-col">
+                            <p class="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-3">Údaje o firmě</p>
+                            <div class="flex flex-wrap gap-2.5">
+                                <button onclick="openBulkEditModal('nazev')" class="flex items-center gap-2 text-sm font-medium text-gray-700 bg-gray-50 border border-gray-200 hover:bg-green-50 hover:text-brand-600 hover:border-green-200 transition px-3 py-1.5 rounded-lg shadow-sm"><i class="fa-solid fa-heading text-brand-500"></i> Název</button>
+                                <button onclick="openBulkEditModal('popis')" class="flex items-center gap-2 text-sm font-medium text-gray-700 bg-gray-50 border border-gray-200 hover:bg-green-50 hover:text-brand-600 hover:border-green-200 transition px-3 py-1.5 rounded-lg shadow-sm"><i class="fa-solid fa-align-left text-brand-500"></i> Popis</button>
+                                <button onclick="openBulkEditModal('web')" class="flex items-center gap-2 text-sm font-medium text-gray-700 bg-gray-50 border border-gray-200 hover:bg-green-50 hover:text-brand-600 hover:border-green-200 transition px-3 py-1.5 rounded-lg shadow-sm"><i class="fa-solid fa-globe text-brand-500"></i> Web</button>
+                                <button onclick="openBulkEditModal('telefon')" class="flex items-center gap-2 text-sm font-medium text-gray-700 bg-gray-50 border border-gray-200 hover:bg-green-50 hover:text-brand-600 hover:border-green-200 transition px-3 py-1.5 rounded-lg shadow-sm"><i class="fa-solid fa-phone text-brand-500"></i> Telefon</button>
+                                <button onclick="openBulkEditModal('oteviraci-doba')" class="flex items-center gap-2 text-sm font-medium text-gray-700 bg-gray-50 border border-gray-200 hover:bg-green-50 hover:text-brand-600 hover:border-green-200 transition px-3 py-1.5 rounded-lg shadow-sm"><i class="fa-solid fa-clock text-brand-500"></i> Otevírací doba</button>
+                                <button onclick="openBulkEditModal('specialni-hodiny')" class="flex items-center gap-2 text-sm font-medium text-gray-700 bg-gray-50 border border-gray-200 hover:bg-green-50 hover:text-brand-600 hover:border-green-200 transition px-3 py-1.5 rounded-lg shadow-sm"><i class="fa-solid fa-clock-rotate-left text-brand-500"></i> Speciální hodiny</button>
+                                <button onclick="openBulkEditModal('stav')" class="flex items-center gap-2 text-sm font-medium text-gray-700 bg-gray-50 border border-gray-200 hover:bg-green-50 hover:text-brand-600 hover:border-green-200 transition px-3 py-1.5 rounded-lg shadow-sm"><i class="fa-solid fa-store text-brand-500"></i> Stav</button>
+                                <button onclick="openBulkEditModal('fotky')" class="flex items-center gap-2 text-sm font-medium text-gray-700 bg-gray-50 border border-gray-200 hover:bg-green-50 hover:text-brand-600 hover:border-green-200 transition px-3 py-1.5 rounded-lg shadow-sm"><i class="fa-regular fa-images text-brand-500"></i> Foto</button>
+                            </div>
                         </div>
+
+                        <!-- Sekce: Propagace -->
+                        <div class="card-minimal p-5 xl:col-span-1 flex flex-col bg-gradient-to-br from-white to-green-50/30 border-green-100">
+                            <p class="text-[11px] font-bold text-brand-600 uppercase tracking-wider mb-3">Propagace</p>
+                            <div class="flex flex-wrap gap-2.5">
+                                <button onclick="openBulkEditModal('novinky')" class="flex items-center gap-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 hover:bg-green-50 hover:text-brand-600 hover:border-green-200 transition px-3 py-1.5 rounded-lg shadow-sm"><i class="fa-regular fa-newspaper text-brand-500"></i> Google Novinky</button>
+                                <button onclick="openBulkEditModal('produkty')" class="flex items-center gap-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 hover:bg-green-50 hover:text-brand-600 hover:border-green-200 transition px-3 py-1.5 rounded-lg shadow-sm"><i class="fa-solid fa-box-open text-brand-500"></i> Google Produkty</button>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 
@@ -1366,6 +1380,47 @@
                                 <i class="fa-solid fa-cloud-arrow-up text-3xl mb-3 text-brand-500"></i>
                                 <span class="text-sm font-bold text-gray-700">Klikněte nebo přetáhněte soubory sem</span>
                                 <span class="text-xs text-gray-400 mt-1">Doporučený formát JPG, PNG. Max 5MB na fotku.</span>
+                            </div>
+                        </div>`;
+                    break;
+                case 'novinky':
+                    title = 'Hromadná úprava: Google Novinky';
+                    inputHtml = `
+                        <div>
+                            <label class="label-minimal">Text novinky (Příspěvku)</label>
+                            <textarea class="input-minimal mb-4" rows="4" placeholder="Zadejte text novinky pro vaše zákazníky..."></textarea>
+                            
+                            <label class="label-minimal">Přiložit obrázek (Volitelné)</label>
+                            <div class="border-2 border-dashed border-gray-300 rounded-xl p-6 flex flex-col items-center justify-center text-gray-500 hover:bg-gray-50 transition cursor-pointer">
+                                <i class="fa-solid fa-image text-2xl mb-2 text-gray-400"></i>
+                                <span class="text-xs font-medium text-gray-600">Nahrát obrázek k příspěvku</span>
+                            </div>
+                        </div>`;
+                    break;
+                case 'produkty':
+                    title = 'Hromadná úprava: Google Produkty';
+                    inputHtml = `
+                        <div class="space-y-4">
+                            <div>
+                                <label class="label-minimal">Název produktu</label>
+                                <input type="text" class="input-minimal" placeholder="Např. Konzultace zdarma">
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="label-minimal">Cena (Kč)</label>
+                                    <input type="number" class="input-minimal" placeholder="Např. 990">
+                                </div>
+                                <div>
+                                    <label class="label-minimal">Kategorie</label>
+                                    <select class="input-minimal">
+                                        <option>Služby</option>
+                                        <option>Zboží</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="label-minimal">Popis produktu</label>
+                                <textarea class="input-minimal" rows="3" placeholder="Stručný popis produktu pro zákazníky..."></textarea>
                             </div>
                         </div>`;
                     break;
