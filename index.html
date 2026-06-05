@@ -89,10 +89,10 @@
 </head>
 <body class="font-sans text-gray-900 h-screen flex overflow-hidden antialiased">
 
-    <!-- Mobilní overlay (tmavé pozadí při otevřeném menu) -->
+    <!-- Mobilní overlay -->
     <div id="mobile-overlay" onclick="toggleMobileMenu()" class="fixed inset-0 bg-gray-900 bg-opacity-50 z-30 hidden md:hidden transition-opacity opacity-0 duration-300"></div>
 
-    <!-- LEVÉ MENU (Čisté, s důrazem na typografii) -->
+    <!-- LEVÉ MENU -->
     <aside id="sidebar" class="w-64 bg-surface border-r border-border flex flex-col flex-shrink-0 z-40 fixed inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition-transform duration-300">
         
         <!-- Logo -->
@@ -107,20 +107,19 @@
         <nav class="flex-1 overflow-y-auto py-6 px-4 flex flex-col gap-1">
             <p class="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Menu</p>
             
-            <!-- Aktivní položka -->
             <a href="#" onclick="switchView('dashboard')" id="nav-dashboard" class="flex items-center gap-3 bg-green-50 text-brand-600 px-3 py-2.5 rounded-lg font-medium transition">
                 <i class="fa-solid fa-layer-group w-5 text-center text-brand-600"></i> Přehled
             </a>
             
             <!-- GMB Rozbalovací menu -->
             <div>
-                <button onclick="toggleGmbMenu()" class="w-full flex items-center text-gray-600 hover:bg-gray-50 hover:text-gray-900 px-3 py-2.5 rounded-lg font-medium transition group">
+                <button onclick="toggleMenu('gmb-submenu')" class="w-full flex items-center text-gray-600 hover:bg-gray-50 hover:text-gray-900 px-3 py-2.5 rounded-lg font-medium transition group">
                     <div class="flex items-center gap-3">
                         <i class="fa-brands fa-google w-5 text-center"></i> Firemní Google profil
                     </div>
                 </button>
                 <div id="gmb-submenu" class="flex flex-col gap-1 pl-11 pr-3 max-h-0 overflow-hidden opacity-0 transition-all duration-300">
-                    <a href="#" onclick="showToast('Otevírám Seznam profilů')" class="block py-1.5 text-sm text-gray-500 hover:text-gray-900 transition font-medium">Seznam profilů</a>
+                    <a href="#" onclick="switchView('seznam-profilu')" id="nav-seznam-profilu" class="block py-1.5 text-sm text-gray-500 hover:text-gray-900 transition font-medium">Seznam profilů</a>
                     <a href="#" onclick="showToast('Otevírám Google příspěvky')" class="block py-1.5 text-sm text-gray-500 hover:text-gray-900 transition font-medium">Google příspěvky</a>
                     <a href="#" onclick="showToast('Otevírám Statistiky')" class="block py-1.5 text-sm text-gray-500 hover:text-gray-900 transition font-medium">Statistiky</a>
                 </div>
@@ -128,7 +127,7 @@
 
             <!-- Street View Rozbalovací menu -->
             <div>
-                <button onclick="toggleSvMenu()" class="w-full flex items-center text-gray-600 hover:bg-gray-50 hover:text-gray-900 px-3 py-2.5 rounded-lg font-medium transition group">
+                <button onclick="toggleMenu('sv-submenu')" class="w-full flex items-center text-gray-600 hover:bg-gray-50 hover:text-gray-900 px-3 py-2.5 rounded-lg font-medium transition group">
                     <div class="flex items-center gap-3">
                         <i class="fa-solid fa-street-view w-5 text-center"></i> Google Street View
                     </div>
@@ -141,7 +140,7 @@
             
             <!-- NFC Rozbalovací menu -->
             <div>
-                <button onclick="toggleNfcMenu()" class="w-full flex items-center text-gray-600 hover:bg-gray-50 hover:text-gray-900 px-3 py-2.5 rounded-lg font-medium transition group">
+                <button onclick="toggleMenu('nfc-submenu')" class="w-full flex items-center text-gray-600 hover:bg-gray-50 hover:text-gray-900 px-3 py-2.5 rounded-lg font-medium transition group">
                     <div class="flex items-center gap-3">
                         <i class="fa-solid fa-wifi w-5 text-center"></i> NFC Produkty
                     </div>
@@ -154,7 +153,7 @@
 
             <!-- Google Ads Rozbalovací menu -->
             <div>
-                <button onclick="toggleAdsMenu()" class="w-full flex items-center text-gray-600 hover:bg-gray-50 hover:text-gray-900 px-3 py-2.5 rounded-lg font-medium transition group">
+                <button onclick="toggleMenu('ads-submenu')" class="w-full flex items-center text-gray-600 hover:bg-gray-50 hover:text-gray-900 px-3 py-2.5 rounded-lg font-medium transition group">
                     <div class="flex items-center gap-3">
                         <i class="fa-solid fa-bullhorn w-5 text-center"></i> Google Ads
                     </div>
@@ -205,13 +204,11 @@
             </div>
             
             <div class="flex items-center gap-4 sm:gap-6">
-                <!-- Zvoneček notifikací -->
                 <button onclick="showToast('Zatím nemáte žádné nové notifikace')" class="relative text-gray-400 hover:text-gray-600 transition">
                     <i class="fa-regular fa-bell text-xl"></i>
                     <span class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-surface"></span>
                 </button>
                 
-                <!-- Profil - Tlačítko (Nyní přepíná na kartu klienta) -->
                 <button onclick="switchView('profile', 'tab-spolecnost')" class="flex items-center gap-3 hover:opacity-80 transition group">
                     <div class="text-right hidden sm:block">
                         <p class="text-sm font-semibold text-gray-900 leading-none">Business Power s.r.o.</p>
@@ -225,11 +222,11 @@
             </div>
         </header>
 
-        <!-- HLAVNÍ PLOCHA (Skrývání / Zobrazování sekcí) -->
+        <!-- HLAVNÍ PLOCHA -->
         <main class="flex-1 overflow-y-auto p-4 sm:p-8 relative">
             
             <!-- ---------------------------------------------------- -->
-            <!-- POHLED: DASHBOARD (Základní obrazovka) -->
+            <!-- POHLED: DASHBOARD -->
             <!-- ---------------------------------------------------- -->
             <div id="view-dashboard" class="max-w-6xl mx-auto space-y-8 block transition-opacity duration-300">
                 <h2 class="text-sm font-semibold text-gray-900 uppercase tracking-wide pt-4">Vaše služby</h2>
@@ -250,7 +247,7 @@
                         <div class="grid grid-cols-2 gap-4 mb-8">
                             <div>
                                 <p class="text-xs text-gray-500 uppercase tracking-wider mb-1">Počet profilů</p>
-                                <p class="text-2xl font-semibold text-gray-900">2</p>
+                                <p class="text-2xl font-semibold text-gray-900">10</p>
                             </div>
                             <div>
                                 <p class="text-xs text-gray-500 uppercase tracking-wider mb-1">Zobrazení</p>
@@ -262,7 +259,7 @@
 
                         <div class="mt-auto flex flex-col gap-3">
                             <div class="flex gap-3">
-                                <button onclick="showToast('Otevírám správu')" class="flex-1 bg-brand-500 border border-transparent text-white py-2 rounded-lg text-sm font-medium hover:bg-brand-600 transition shadow-sm">Spravovat</button>
+                                <button onclick="switchView('seznam-profilu')" class="flex-1 bg-brand-500 border border-transparent text-white py-2 rounded-lg text-sm font-medium hover:bg-brand-600 transition shadow-sm">Spravovat</button>
                                 <button onclick="showToast('Otevírám statistiky')" class="flex-1 border border-gray-300 bg-white text-gray-700 py-2 rounded-lg text-sm font-medium hover:bg-gray-100 transition shadow-sm">Statistiky</button>
                             </div>
                             <button onclick="showToast('Otevírám doobjednávku')" class="w-full bg-white border border-brand-500 text-brand-600 py-2 rounded-lg text-sm font-medium hover:bg-gray-100 transition shadow-sm">Doobjednat</button>
@@ -346,6 +343,188 @@
                                 Vyžádat konzultaci
                             </button>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ---------------------------------------------------- -->
+            <!-- POHLED: SEZNAM PROFILŮ -->
+            <!-- ---------------------------------------------------- -->
+            <div id="view-seznam-profilu" class="hidden max-w-full mx-auto space-y-6 transition-opacity duration-300">
+                
+                <!-- Hromadné akce -->
+                <div class="card-minimal p-4 mb-6 overflow-x-auto hide-scrollbar">
+                    <div class="flex items-center gap-4 min-w-max">
+                        <button onclick="showToast('Otevírám úpravu názvů')" class="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-brand-600 transition px-3 py-1.5 rounded hover:bg-green-50"><i class="fa-solid fa-heading text-brand-500"></i> Název</button>
+                        <button onclick="showToast('Otevírám úpravu popisů')" class="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-brand-600 transition px-3 py-1.5 rounded hover:bg-green-50"><i class="fa-solid fa-align-left text-brand-500"></i> Popis</button>
+                        <button onclick="showToast('Otevírám úpravu webů')" class="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-brand-600 transition px-3 py-1.5 rounded hover:bg-green-50"><i class="fa-solid fa-globe text-brand-500"></i> Web</button>
+                        <button onclick="showToast('Otevírám úpravu telefonů')" class="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-brand-600 transition px-3 py-1.5 rounded hover:bg-green-50"><i class="fa-solid fa-phone text-brand-500"></i> Telefon</button>
+                        <button onclick="showToast('Otevírám úpravu dalších telefonů')" class="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-brand-600 transition px-3 py-1.5 rounded hover:bg-green-50"><i class="fa-solid fa-phone-volume text-brand-500"></i> Další tel.</button>
+                        <button onclick="showToast('Otevírám úpravu otevírací doby')" class="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-brand-600 transition px-3 py-1.5 rounded hover:bg-green-50"><i class="fa-solid fa-clock text-brand-500"></i> Otevírací doba</button>
+                        <button onclick="showToast('Otevírám úpravu speciálních hodin')" class="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-brand-600 transition px-3 py-1.5 rounded hover:bg-green-50"><i class="fa-solid fa-clock-rotate-left text-brand-500"></i> Speciální hodiny</button>
+                        <button onclick="showToast('Otevírám úpravu stavu')" class="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-brand-600 transition px-3 py-1.5 rounded hover:bg-green-50"><i class="fa-solid fa-store text-brand-500"></i> Stav</button>
+                        <button onclick="showToast('Otevírám správu fotek')" class="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-brand-600 transition px-3 py-1.5 rounded hover:bg-green-50"><i class="fa-regular fa-images text-brand-500"></i> Fotky</button>
+                    </div>
+                </div>
+
+                <!-- Tabulka profilů -->
+                <div class="card-minimal overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-gray-50 border-b border-gray-200">
+                                    <th class="py-4 px-6 w-12"><input type="checkbox" class="w-4 h-4 rounded border-gray-300 text-brand-600 focus:ring-brand-500"></th>
+                                    <th class="py-4 px-6 text-sm font-bold text-gray-900 tracking-wide">ID profilu</th>
+                                    <th class="py-4 px-6 text-sm font-bold text-gray-900 tracking-wide">Jméno lokality</th>
+                                    <th class="py-4 px-6 text-sm font-bold text-gray-900 tracking-wide">Ulice</th>
+                                    <th class="py-4 px-6 text-sm font-bold text-gray-900 tracking-wide">Město</th>
+                                    <th class="py-4 px-6 text-sm font-bold text-gray-900 tracking-wide text-right">Akce</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-100">
+                                <!-- Vygenerovaných 10 řádků -->
+                                <tr class="hover:bg-gray-50/50 transition group">
+                                    <td class="py-4 px-6"><input type="checkbox" class="w-4 h-4 rounded border-gray-300 text-brand-600 focus:ring-brand-500"></td>
+                                    <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">ID-1001</td>
+                                    <td class="py-4 px-6 text-sm text-gray-900 font-medium">Business Power - 1</td>
+                                    <td class="py-4 px-6 text-sm text-gray-600">Bucharova 1314/8</td>
+                                    <td class="py-4 px-6 text-sm text-gray-600">Praha 13</td>
+                                    <td class="py-4 px-6 text-right whitespace-nowrap">
+                                        <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <button onclick="showToast('Otevírám statistiky')" class="text-gray-400 hover:text-brand-600 p-2 transition" title="Statistiky"><i class="fa-solid fa-chart-simple"></i></button>
+                                            <button onclick="showToast('Otevírám profil v Mapách')" class="text-gray-400 hover:text-brand-600 p-2 transition" title="Zobrazit v Google Mapách"><i class="fa-solid fa-map-location-dot"></i></button>
+                                            <button onclick="showToast('Otevírám profil ve Vyhledávači')" class="text-gray-400 hover:text-brand-600 p-2 transition" title="Zobrazit v Google Vyhledávači"><i class="fa-brands fa-google"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50/50 transition group">
+                                    <td class="py-4 px-6"><input type="checkbox" class="w-4 h-4 rounded border-gray-300 text-brand-600 focus:ring-brand-500"></td>
+                                    <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">ID-1002</td>
+                                    <td class="py-4 px-6 text-sm text-gray-900 font-medium">Business Power - 2</td>
+                                    <td class="py-4 px-6 text-sm text-gray-600">Sokolovská 394/17</td>
+                                    <td class="py-4 px-6 text-sm text-gray-600">Praha 8</td>
+                                    <td class="py-4 px-6 text-right whitespace-nowrap">
+                                        <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <button onclick="showToast('Otevírám statistiky')" class="text-gray-400 hover:text-brand-600 p-2 transition" title="Statistiky"><i class="fa-solid fa-chart-simple"></i></button>
+                                            <button onclick="showToast('Otevírám profil v Mapách')" class="text-gray-400 hover:text-brand-600 p-2 transition" title="Zobrazit v Google Mapách"><i class="fa-solid fa-map-location-dot"></i></button>
+                                            <button onclick="showToast('Otevírám profil ve Vyhledávači')" class="text-gray-400 hover:text-brand-600 p-2 transition" title="Zobrazit v Google Vyhledávači"><i class="fa-brands fa-google"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50/50 transition group">
+                                    <td class="py-4 px-6"><input type="checkbox" class="w-4 h-4 rounded border-gray-300 text-brand-600 focus:ring-brand-500"></td>
+                                    <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">ID-1003</td>
+                                    <td class="py-4 px-6 text-sm text-gray-900 font-medium">Business Power - 3</td>
+                                    <td class="py-4 px-6 text-sm text-gray-600">Václavské náměstí 802/56</td>
+                                    <td class="py-4 px-6 text-sm text-gray-600">Praha 1</td>
+                                    <td class="py-4 px-6 text-right whitespace-nowrap">
+                                        <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <button onclick="showToast('Otevírám statistiky')" class="text-gray-400 hover:text-brand-600 p-2 transition" title="Statistiky"><i class="fa-solid fa-chart-simple"></i></button>
+                                            <button onclick="showToast('Otevírám profil v Mapách')" class="text-gray-400 hover:text-brand-600 p-2 transition" title="Zobrazit v Google Mapách"><i class="fa-solid fa-map-location-dot"></i></button>
+                                            <button onclick="showToast('Otevírám profil ve Vyhledávači')" class="text-gray-400 hover:text-brand-600 p-2 transition" title="Zobrazit v Google Vyhledávači"><i class="fa-brands fa-google"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50/50 transition group">
+                                    <td class="py-4 px-6"><input type="checkbox" class="w-4 h-4 rounded border-gray-300 text-brand-600 focus:ring-brand-500"></td>
+                                    <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">ID-1004</td>
+                                    <td class="py-4 px-6 text-sm text-gray-900 font-medium">Business Power - 4</td>
+                                    <td class="py-4 px-6 text-sm text-gray-600">Masarykova 412/32</td>
+                                    <td class="py-4 px-6 text-sm text-gray-600">Brno</td>
+                                    <td class="py-4 px-6 text-right whitespace-nowrap">
+                                        <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <button onclick="showToast('Otevírám statistiky')" class="text-gray-400 hover:text-brand-600 p-2 transition" title="Statistiky"><i class="fa-solid fa-chart-simple"></i></button>
+                                            <button onclick="showToast('Otevírám profil v Mapách')" class="text-gray-400 hover:text-brand-600 p-2 transition" title="Zobrazit v Google Mapách"><i class="fa-solid fa-map-location-dot"></i></button>
+                                            <button onclick="showToast('Otevírám profil ve Vyhledávači')" class="text-gray-400 hover:text-brand-600 p-2 transition" title="Zobrazit v Google Vyhledávači"><i class="fa-brands fa-google"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50/50 transition group">
+                                    <td class="py-4 px-6"><input type="checkbox" class="w-4 h-4 rounded border-gray-300 text-brand-600 focus:ring-brand-500"></td>
+                                    <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">ID-1005</td>
+                                    <td class="py-4 px-6 text-sm text-gray-900 font-medium">Business Power - 5</td>
+                                    <td class="py-4 px-6 text-sm text-gray-600">Nádražní 545/12</td>
+                                    <td class="py-4 px-6 text-sm text-gray-600">Ostrava</td>
+                                    <td class="py-4 px-6 text-right whitespace-nowrap">
+                                        <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <button onclick="showToast('Otevírám statistiky')" class="text-gray-400 hover:text-brand-600 p-2 transition" title="Statistiky"><i class="fa-solid fa-chart-simple"></i></button>
+                                            <button onclick="showToast('Otevírám profil v Mapách')" class="text-gray-400 hover:text-brand-600 p-2 transition" title="Zobrazit v Google Mapách"><i class="fa-solid fa-map-location-dot"></i></button>
+                                            <button onclick="showToast('Otevírám profil ve Vyhledávači')" class="text-gray-400 hover:text-brand-600 p-2 transition" title="Zobrazit v Google Vyhledávači"><i class="fa-brands fa-google"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50/50 transition group">
+                                    <td class="py-4 px-6"><input type="checkbox" class="w-4 h-4 rounded border-gray-300 text-brand-600 focus:ring-brand-500"></td>
+                                    <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">ID-1006</td>
+                                    <td class="py-4 px-6 text-sm text-gray-900 font-medium">Business Power - 6</td>
+                                    <td class="py-4 px-6 text-sm text-gray-600">Klatovská třída 200</td>
+                                    <td class="py-4 px-6 text-sm text-gray-600">Plzeň</td>
+                                    <td class="py-4 px-6 text-right whitespace-nowrap">
+                                        <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <button onclick="showToast('Otevírám statistiky')" class="text-gray-400 hover:text-brand-600 p-2 transition" title="Statistiky"><i class="fa-solid fa-chart-simple"></i></button>
+                                            <button onclick="showToast('Otevírám profil v Mapách')" class="text-gray-400 hover:text-brand-600 p-2 transition" title="Zobrazit v Google Mapách"><i class="fa-solid fa-map-location-dot"></i></button>
+                                            <button onclick="showToast('Otevírám profil ve Vyhledávači')" class="text-gray-400 hover:text-brand-600 p-2 transition" title="Zobrazit v Google Vyhledávači"><i class="fa-brands fa-google"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50/50 transition group">
+                                    <td class="py-4 px-6"><input type="checkbox" class="w-4 h-4 rounded border-gray-300 text-brand-600 focus:ring-brand-500"></td>
+                                    <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">ID-1007</td>
+                                    <td class="py-4 px-6 text-sm text-gray-900 font-medium">Business Power - 7</td>
+                                    <td class="py-4 px-6 text-sm text-gray-600">Pražská 15/2</td>
+                                    <td class="py-4 px-6 text-sm text-gray-600">Liberec</td>
+                                    <td class="py-4 px-6 text-right whitespace-nowrap">
+                                        <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <button onclick="showToast('Otevírám statistiky')" class="text-gray-400 hover:text-brand-600 p-2 transition" title="Statistiky"><i class="fa-solid fa-chart-simple"></i></button>
+                                            <button onclick="showToast('Otevírám profil v Mapách')" class="text-gray-400 hover:text-brand-600 p-2 transition" title="Zobrazit v Google Mapách"><i class="fa-solid fa-map-location-dot"></i></button>
+                                            <button onclick="showToast('Otevírám profil ve Vyhledávači')" class="text-gray-400 hover:text-brand-600 p-2 transition" title="Zobrazit v Google Vyhledávači"><i class="fa-brands fa-google"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50/50 transition group">
+                                    <td class="py-4 px-6"><input type="checkbox" class="w-4 h-4 rounded border-gray-300 text-brand-600 focus:ring-brand-500"></td>
+                                    <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">ID-1008</td>
+                                    <td class="py-4 px-6 text-sm text-gray-900 font-medium">Business Power - 8</td>
+                                    <td class="py-4 px-6 text-sm text-gray-600">Palackého třída 123</td>
+                                    <td class="py-4 px-6 text-sm text-gray-600">Pardubice</td>
+                                    <td class="py-4 px-6 text-right whitespace-nowrap">
+                                        <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <button onclick="showToast('Otevírám statistiky')" class="text-gray-400 hover:text-brand-600 p-2 transition" title="Statistiky"><i class="fa-solid fa-chart-simple"></i></button>
+                                            <button onclick="showToast('Otevírám profil v Mapách')" class="text-gray-400 hover:text-brand-600 p-2 transition" title="Zobrazit v Google Mapách"><i class="fa-solid fa-map-location-dot"></i></button>
+                                            <button onclick="showToast('Otevírám profil ve Vyhledávači')" class="text-gray-400 hover:text-brand-600 p-2 transition" title="Zobrazit v Google Vyhledávači"><i class="fa-brands fa-google"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50/50 transition group">
+                                    <td class="py-4 px-6"><input type="checkbox" class="w-4 h-4 rounded border-gray-300 text-brand-600 focus:ring-brand-500"></td>
+                                    <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">ID-1009</td>
+                                    <td class="py-4 px-6 text-sm text-gray-900 font-medium">Business Power - 9</td>
+                                    <td class="py-4 px-6 text-sm text-gray-600">Třída Míru 55</td>
+                                    <td class="py-4 px-6 text-sm text-gray-600">Olomouc</td>
+                                    <td class="py-4 px-6 text-right whitespace-nowrap">
+                                        <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <button onclick="showToast('Otevírám statistiky')" class="text-gray-400 hover:text-brand-600 p-2 transition" title="Statistiky"><i class="fa-solid fa-chart-simple"></i></button>
+                                            <button onclick="showToast('Otevírám profil v Mapách')" class="text-gray-400 hover:text-brand-600 p-2 transition" title="Zobrazit v Google Mapách"><i class="fa-solid fa-map-location-dot"></i></button>
+                                            <button onclick="showToast('Otevírám profil ve Vyhledávači')" class="text-gray-400 hover:text-brand-600 p-2 transition" title="Zobrazit v Google Vyhledávači"><i class="fa-brands fa-google"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50/50 transition group">
+                                    <td class="py-4 px-6"><input type="checkbox" class="w-4 h-4 rounded border-gray-300 text-brand-600 focus:ring-brand-500"></td>
+                                    <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">ID-1010</td>
+                                    <td class="py-4 px-6 text-sm text-gray-900 font-medium">Business Power - 10</td>
+                                    <td class="py-4 px-6 text-sm text-gray-600">Velké Náměstí 1</td>
+                                    <td class="py-4 px-6 text-sm text-gray-600">Hradec Králové</td>
+                                    <td class="py-4 px-6 text-right whitespace-nowrap">
+                                        <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <button onclick="showToast('Otevírám statistiky')" class="text-gray-400 hover:text-brand-600 p-2 transition" title="Statistiky"><i class="fa-solid fa-chart-simple"></i></button>
+                                            <button onclick="showToast('Otevírám profil v Mapách')" class="text-gray-400 hover:text-brand-600 p-2 transition" title="Zobrazit v Google Mapách"><i class="fa-solid fa-map-location-dot"></i></button>
+                                            <button onclick="showToast('Otevírám profil ve Vyhledávači')" class="text-gray-400 hover:text-brand-600 p-2 transition" title="Zobrazit v Google Vyhledávači"><i class="fa-brands fa-google"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -459,7 +638,7 @@
                                 </thead>
                                 <tbody class="divide-y divide-gray-100">
                                     <tr class="hover:bg-gray-50/50 transition">
-                                        <td class="py-4 px-6">
+                                        <td class="py-4 px-6 whitespace-nowrap">
                                             <div class="flex items-center gap-3">
                                                 <div class="w-8 h-8 rounded-full bg-green-100 text-brand-600 flex items-center justify-center font-bold text-xs shrink-0 relative">
                                                     JN
@@ -467,9 +646,9 @@
                                                         <i class="fa-solid fa-crown text-[8px] text-white"></i>
                                                     </div>
                                                 </div>
-                                                <div>
+                                                <div class="flex items-center gap-2">
                                                     <p class="font-medium text-sm text-gray-900">Jan Novák</p>
-                                                    <span class="inline-block mt-1 px-2 py-0.5 bg-gray-50 border border-gray-200 rounded text-[10px] font-bold text-brand-600 uppercase tracking-wider whitespace-nowrap">Primární vlastník</span>
+                                                    <span class="px-2 py-0.5 border border-gray-200 rounded text-[10px] font-bold text-brand-600 uppercase tracking-wider">Primární vlastník</span>
                                                 </div>
                                             </div>
                                         </td>
@@ -491,7 +670,7 @@
                                         </td>
                                     </tr>
                                     <tr class="hover:bg-gray-50/50 transition">
-                                        <td class="py-4 px-6">
+                                        <td class="py-4 px-6 whitespace-nowrap">
                                             <div class="flex items-center gap-3">
                                                 <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xs shrink-0 relative">
                                                     PS
@@ -499,9 +678,9 @@
                                                         <i class="fa-solid fa-shield-halved text-[8px] text-white"></i>
                                                     </div>
                                                 </div>
-                                                <div>
+                                                <div class="flex items-center gap-2">
                                                     <p class="font-medium text-sm text-gray-900">Petr Svoboda</p>
-                                                    <span class="inline-block mt-1 px-2 py-0.5 bg-gray-50 border border-gray-200 rounded text-[10px] font-bold text-blue-600 uppercase tracking-wider whitespace-nowrap">Správce</span>
+                                                    <span class="px-2 py-0.5 border border-gray-200 rounded text-[10px] font-bold text-blue-600 uppercase tracking-wider">Správce</span>
                                                 </div>
                                             </div>
                                         </td>
@@ -523,7 +702,7 @@
                                         </td>
                                     </tr>
                                     <tr class="hover:bg-gray-50/50 transition">
-                                        <td class="py-4 px-6">
+                                        <td class="py-4 px-6 whitespace-nowrap">
                                             <div class="flex items-center gap-3">
                                                 <div class="w-8 h-8 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center font-bold text-xs shrink-0 relative">
                                                     EK
@@ -531,9 +710,9 @@
                                                         <i class="fa-solid fa-eye text-[8px] text-white"></i>
                                                     </div>
                                                 </div>
-                                                <div>
+                                                <div class="flex items-center gap-2">
                                                     <p class="font-medium text-sm text-gray-900">Eva Kovářová</p>
-                                                    <span class="inline-block mt-1 px-2 py-0.5 bg-gray-50 border border-gray-200 rounded text-[10px] font-bold text-gray-500 uppercase tracking-wider whitespace-nowrap">Čtenář</span>
+                                                    <span class="px-2 py-0.5 border border-gray-200 rounded text-[10px] font-bold text-gray-500 uppercase tracking-wider">Čtenář</span>
                                                 </div>
                                             </div>
                                         </td>
@@ -618,7 +797,7 @@
         </main>
     </div>
 
-    <!-- TOAST NOTIFIKACE (Minimalistická) -->
+    <!-- TOAST NOTIFIKACE -->
     <div id="toast" class="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white px-5 py-3 rounded-lg shadow-xl opacity-0 pointer-events-none transition-all duration-300 z-50 flex items-center gap-3">
         <i class="fa-solid fa-circle-check text-brand-500"></i>
         <span id="toast-message" class="text-sm font-medium">Akce byla úspěšná</span>
@@ -674,7 +853,6 @@
     <div id="add-person-modal" class="fixed inset-0 bg-gray-900/60 z-[60] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300 px-4">
         <div class="bg-white rounded-xl shadow-2xl w-full max-w-2xl transform scale-95 transition-transform duration-300 overflow-hidden flex flex-col max-h-[90vh]">
             
-            <!-- Hlavička modálu -->
             <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center bg-gray-50 shrink-0">
                 <h3 id="modal-person-title" class="text-lg font-bold text-gray-900">Přidat kontaktní osobu</h3>
                 <button onclick="toggleAddPersonModal()" class="text-gray-400 hover:text-gray-600 transition">
@@ -682,10 +860,8 @@
                 </button>
             </div>
 
-            <!-- Obsah modálu -->
             <div class="p-6 overflow-y-auto flex-1 space-y-8">
                 
-                <!-- Základní údaje -->
                 <div>
                     <h4 class="font-bold text-gray-900 text-sm mb-4 border-b border-gray-100 pb-2">Osobní údaje</h4>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -708,14 +884,12 @@
                     </div>
                 </div>
 
-                <!-- Výběr role -->
                 <div>
                     <h4 class="font-bold text-gray-900 text-sm mb-4 border-b border-gray-100 pb-2">Oprávnění a role</h4>
                     <p class="text-xs text-gray-500 mb-4">Vyberte úroveň přístupu, kterou nová osoba získá. Toto nastavení lze později změnit.</p>
                     
                     <div class="grid grid-cols-1 gap-3">
                         
-                        <!-- Role: Primární vlastník -->
                         <label class="relative cursor-pointer group">
                             <input type="radio" name="role" class="peer sr-only role-radio" value="owner">
                             <div class="border border-gray-200 rounded-xl p-4 flex gap-4 transition-colors hover:border-gray-300">
@@ -732,7 +906,6 @@
                             </div>
                         </label>
 
-                        <!-- Role: Správce -->
                         <label class="relative cursor-pointer group">
                             <input type="radio" name="role" class="peer sr-only role-radio" value="admin" checked>
                             <div class="border border-gray-200 rounded-xl p-4 flex gap-4 transition-colors hover:border-gray-300">
@@ -749,7 +922,6 @@
                             </div>
                         </label>
 
-                        <!-- Role: Čtenář -->
                         <label class="relative cursor-pointer group">
                             <input type="radio" name="role" class="peer sr-only role-radio" value="viewer">
                             <div class="border border-gray-200 rounded-xl p-4 flex gap-4 transition-colors hover:border-gray-300">
@@ -768,100 +940,93 @@
 
                     </div>
                 </div>
-            </div>
 
-            <!-- Patička modálu (Tlačítka) -->
-            <div class="px-6 py-4 border-t border-gray-200 bg-gray-50 flex justify-end gap-3 shrink-0">
-                <button onclick="toggleAddPersonModal()" class="px-5 py-2 rounded-lg text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 transition shadow-sm">Zrušit</button>
-                <button id="modal-person-submit" onclick="submitPersonForm()" class="px-5 py-2 rounded-lg text-sm font-medium text-white bg-brand-500 hover:bg-brand-600 transition shadow-sm">Přidat osobu</button>
+                <div class="px-6 py-4 border-t border-gray-200 bg-gray-50 flex justify-end gap-3 shrink-0">
+                    <button onclick="toggleAddPersonModal()" class="px-5 py-2 rounded-lg text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 transition shadow-sm">Zrušit</button>
+                    <button id="modal-person-submit" onclick="submitPersonForm()" class="px-5 py-2 rounded-lg text-sm font-medium text-white bg-brand-500 hover:bg-brand-600 transition shadow-sm">Přidat osobu</button>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Logika pro přepínání hlavních oken (Dashboard vs Karta klienta)
+        // Logika pro přepínání pohledů
         function switchView(viewId, tabId = null) {
-            const dashboard = document.getElementById('view-dashboard');
-            const profile = document.getElementById('view-profile');
+            const views = ['view-dashboard', 'view-profile', 'view-seznam-profilu'];
             const headerTitle = document.getElementById('header-title');
-            const navDashboard = document.getElementById('nav-dashboard');
-            const navFakturace = document.getElementById('nav-fakturace');
-            const navNastaveni = document.getElementById('nav-nastaveni');
+            const navItems = ['nav-dashboard', 'nav-fakturace', 'nav-nastaveni', 'nav-seznam-profilu'];
+
+            // Skrýt všechny pohledy
+            views.forEach(id => document.getElementById(id).classList.add('hidden'));
 
             // Reset menu styling
-            navDashboard.className = 'flex items-center gap-3 text-gray-600 hover:bg-gray-50 hover:text-gray-900 px-3 py-2.5 rounded-lg font-medium transition';
-            navFakturace.className = 'flex items-center gap-3 text-gray-600 hover:bg-gray-50 hover:text-gray-900 px-3 py-2.5 rounded-lg font-medium transition';
-            navNastaveni.className = 'flex items-center gap-3 text-gray-600 hover:bg-gray-50 hover:text-gray-900 px-3 py-2.5 rounded-lg font-medium transition';
+            navItems.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    if (id === 'nav-seznam-profilu') {
+                        el.className = 'block py-1.5 text-sm text-gray-500 hover:text-gray-900 transition font-medium';
+                    } else {
+                        el.className = 'flex items-center gap-3 text-gray-600 hover:bg-gray-50 hover:text-gray-900 px-3 py-2.5 rounded-lg font-medium transition';
+                    }
+                }
+            });
 
+            // Zobrazit požadovaný pohled
             if (viewId === 'dashboard') {
-                dashboard.classList.remove('hidden');
-                profile.classList.add('hidden');
+                document.getElementById('view-dashboard').classList.remove('hidden');
                 headerTitle.innerText = 'Přehled služeb';
-                navDashboard.className = 'flex items-center gap-3 bg-green-50 text-brand-600 px-3 py-2.5 rounded-lg font-medium transition';
+                document.getElementById('nav-dashboard').className = 'flex items-center gap-3 bg-green-50 text-brand-600 px-3 py-2.5 rounded-lg font-medium transition';
             } else if (viewId === 'profile') {
-                dashboard.classList.add('hidden');
-                profile.classList.remove('hidden');
+                document.getElementById('view-profile').classList.remove('hidden');
                 headerTitle.innerText = 'Karta klienta';
                 
                 if(tabId === 'tab-fakturace') {
-                    navFakturace.className = 'flex items-center gap-3 bg-green-50 text-brand-600 px-3 py-2.5 rounded-lg font-medium transition';
+                    document.getElementById('nav-fakturace').className = 'flex items-center gap-3 bg-green-50 text-brand-600 px-3 py-2.5 rounded-lg font-medium transition';
                 } else {
-                    navNastaveni.className = 'flex items-center gap-3 bg-green-50 text-brand-600 px-3 py-2.5 rounded-lg font-medium transition';
+                    document.getElementById('nav-nastaveni').className = 'flex items-center gap-3 bg-green-50 text-brand-600 px-3 py-2.5 rounded-lg font-medium transition';
                 }
 
-                if(tabId) {
-                    switchProfileTab(tabId);
+                if(tabId) switchProfileTab(tabId);
+            } else if (viewId === 'seznam-profilu') {
+                document.getElementById('view-seznam-profilu').classList.remove('hidden');
+                headerTitle.innerText = 'Seznam profilů';
+                document.getElementById('nav-seznam-profilu').className = 'block py-1.5 text-sm text-brand-600 font-bold transition';
+                
+                // Ujistit se, že je menu GMB rozbalené
+                const gmbMenu = document.getElementById('gmb-submenu');
+                if (gmbMenu.classList.contains('max-h-0')) {
+                    toggleMenu('gmb-submenu');
                 }
             }
 
             // Zavřít mobilní menu po prokliku
-            if(window.innerWidth < 768) {
-                toggleMobileMenu();
-            }
+            if(window.innerWidth < 768) toggleMobileMenu();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Logika pro přepínání záložek uvnitř Karty klienta
+        // Logika pro přepínání záložek
         function switchProfileTab(tabId) {
-            // Skrýt všechny záložky
             document.getElementById('tab-spolecnost').classList.add('hidden');
             document.getElementById('tab-kontakty').classList.add('hidden');
             document.getElementById('tab-fakturace').classList.add('hidden');
             
-            // Reset stylů tlačítek
             const btnClassInactive = 'whitespace-nowrap py-4 px-6 border-b-2 font-medium text-sm transition-colors border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300';
             document.getElementById('btn-tab-spolecnost').className = btnClassInactive;
             document.getElementById('btn-tab-kontakty').className = btnClassInactive;
             document.getElementById('btn-tab-fakturace').className = btnClassInactive;
 
-            // Zobrazit aktivní a obarvit
             document.getElementById(tabId).classList.remove('hidden');
             document.getElementById('btn-' + tabId).className = 'whitespace-nowrap py-4 px-6 border-b-2 font-medium text-sm transition-colors border-brand-500 text-brand-600';
         }
 
-        // Dropdown menu levý panel
-        function toggleGmbMenu() {
-            const submenu = document.getElementById('gmb-submenu');
-            submenu.classList.toggle('max-h-0'); submenu.classList.toggle('opacity-0');
-            submenu.classList.toggle('max-h-40'); submenu.classList.toggle('opacity-100'); submenu.classList.toggle('py-1');
-        }
-        function toggleNfcMenu() {
-            const submenu = document.getElementById('nfc-submenu');
-            submenu.classList.toggle('max-h-0'); submenu.classList.toggle('opacity-0');
-            submenu.classList.toggle('max-h-40'); submenu.classList.toggle('opacity-100'); submenu.classList.toggle('py-1');
-        }
-        function toggleSvMenu() {
-            const submenu = document.getElementById('sv-submenu');
-            submenu.classList.toggle('max-h-0'); submenu.classList.toggle('opacity-0');
-            submenu.classList.toggle('max-h-40'); submenu.classList.toggle('opacity-100'); submenu.classList.toggle('py-1');
-        }
-        function toggleAdsMenu() {
-            const submenu = document.getElementById('ads-submenu');
+        // Dropdown menu
+        function toggleMenu(menuId) {
+            const submenu = document.getElementById(menuId);
             submenu.classList.toggle('max-h-0'); submenu.classList.toggle('opacity-0');
             submenu.classList.toggle('max-h-40'); submenu.classList.toggle('opacity-100'); submenu.classList.toggle('py-1');
         }
 
-        // Minimalistické toasty
+        // Toasty
         let toastTimeout;
         function showToast(message) {
             const toast = document.getElementById('toast');
@@ -877,7 +1042,7 @@
             }, 3000);
         }
 
-        // Okno chatu
+        // Chat
         let isChatOpen = false;
         function toggleChat() {
             const chatWindow = document.getElementById('chat-window');
@@ -891,7 +1056,7 @@
             isChatOpen = !isChatOpen;
         }
 
-        // Mobilní overlay
+        // Mobilní menu
         function toggleMobileMenu() {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('mobile-overlay');
@@ -906,23 +1071,20 @@
             }
         }
 
-        // Modální okno pro přidání osoby
+        // Modály (Osoby)
         function toggleAddPersonModal() {
             const modal = document.getElementById('add-person-modal');
             const modalContent = modal.querySelector('div');
             
             if (modal.classList.contains('opacity-0')) {
-                // Otevřít
                 modal.classList.remove('opacity-0', 'pointer-events-none');
                 setTimeout(() => modalContent.classList.remove('scale-95'), 10);
             } else {
-                // Zavřít
                 modalContent.classList.add('scale-95');
                 setTimeout(() => modal.classList.add('opacity-0', 'pointer-events-none'), 300);
             }
         }
 
-        // Pomocná fce pro otevření čistého formuláře pro PŘIDÁNÍ
         function openAddPersonModal() {
             document.getElementById('modal-person-title').innerText = 'Přidat kontaktní osobu';
             document.getElementById('modal-person-submit').innerText = 'Přidat osobu';
@@ -930,12 +1092,10 @@
             document.getElementById('person-surname').value = '';
             document.getElementById('person-email').value = '';
             document.getElementById('person-phone').value = '';
-            document.querySelector('input[name="role"][value="admin"]').checked = true; // výchozí role
-            
+            document.querySelector('input[name="role"][value="admin"]').checked = true;
             toggleAddPersonModal();
         }
 
-        // Pomocná fce pro otevření předvyplněného formuláře pro ÚPRAVU
         function openEditPersonModal(name, surname, email, phone, role) {
             document.getElementById('modal-person-title').innerText = 'Upravit kontaktní osobu';
             document.getElementById('modal-person-submit').innerText = 'Uložit změny';
@@ -944,7 +1104,6 @@
             document.getElementById('person-email').value = email;
             document.getElementById('person-phone').value = phone;
             document.querySelector(`input[name="role"][value="${role}"]`).checked = true;
-            
             toggleAddPersonModal();
         }
 
@@ -954,7 +1113,6 @@
         }
 
         function deletePerson() {
-            // Elegantní notifikace místo ostrého window.confirm
             showToast('Osoba byla úspěšně odstraněna z účtu');
         }
     </script>
