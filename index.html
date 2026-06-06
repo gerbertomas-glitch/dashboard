@@ -45,31 +45,6 @@
             border-color: #d1d5db;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
         }
-
-        .input-minimal {
-            width: 100%;
-            background-color: #ffffff;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            padding: 10px 16px;
-            font-size: 0.875rem;
-            color: #111827;
-            transition: all 0.2s;
-        }
-        .input-minimal:focus {
-            outline: none;
-            border-color: #16a34a;
-            box-shadow: 0 0 0 1px #16a34a;
-        }
-        .label-minimal {
-            display: block;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: #6b7280;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 6px;
-        }
     </style>
 </head>
 <body class="font-sans text-gray-900 h-screen flex overflow-hidden antialiased">
@@ -103,8 +78,7 @@
                     </div>
                 </button>
                 <div id="gmb-submenu" class="flex flex-col gap-1 pl-11 pr-3 max-h-0 overflow-hidden opacity-0 transition-all duration-300">
-                    <!-- Pokud nemáte seznam-profilu.html na serveru, použijeme "#" nebo váš odkaz -->
-                    <a href="#" onclick="switchView('seznam-profilu')" id="nav-seznam-profilu" class="block py-1.5 text-sm text-gray-500 hover:text-gray-900 transition font-medium">Seznam profilů</a>
+                    <a href="#" onclick="showToast('Otevírám Seznam profilů...')" class="block py-1.5 text-sm text-gray-500 hover:text-gray-900 transition font-medium">Seznam profilů</a>
                     <a href="#" onclick="showToast('Otevírám Google příspěvky')" class="block py-1.5 text-sm text-gray-500 hover:text-gray-900 transition font-medium">Google příspěvky</a>
                     <a href="#" onclick="showToast('Otevírám Statistiky')" class="block py-1.5 text-sm text-gray-500 hover:text-gray-900 transition font-medium">Statistiky</a>
                 </div>
@@ -148,7 +122,7 @@
 
             <div class="h-px bg-border my-4 mx-3"></div>
             
-            <!-- OPRAVENÉ ODKAZY - vrací se zpět na absolutní URL s parametry -->
+            <!-- EXTERNÍ ODKAZY NA NASAZENOU VERZI (Fakturace a Nastavení) -->
             <a href="https://gerbertomas-glitch.github.io/editacefirmy/?tab=tab-fakturace" id="nav-fakturace" class="flex items-center gap-3 text-gray-600 hover:bg-gray-50 hover:text-gray-900 px-3 py-2.5 rounded-lg font-medium transition">
                 <i class="fa-solid fa-file-invoice w-5 text-center"></i> Fakturace
             </a>
@@ -183,7 +157,7 @@
                 <button onclick="toggleMobileMenu()" class="md:hidden text-gray-500 hover:text-gray-700 transition">
                     <i class="fa-solid fa-bars text-xl"></i>
                 </button>
-                <h1 id="header-title" class="text-lg sm:text-xl font-semibold text-gray-900 tracking-tight truncate">Přehled služeb</h1>
+                <h1 class="text-lg sm:text-xl font-semibold text-gray-900 tracking-tight truncate">Přehled služeb</h1>
             </div>
             
             <div class="flex items-center gap-4 sm:gap-6">
@@ -206,13 +180,10 @@
             </div>
         </header>
 
-        <!-- HLAVNÍ PLOCHA -->
-        <main class="flex-1 overflow-y-auto p-4 sm:p-8 relative">
+        <!-- HLAVNÍ PLOCHA (POUZE DASHBOARD) -->
+        <main class="flex-1 overflow-y-auto p-4 sm:p-8 relative bg-gray-100">
             
-            <!-- ---------------------------------------------------- -->
-            <!-- POHLED: DASHBOARD -->
-            <!-- ---------------------------------------------------- -->
-            <div id="view-dashboard" class="max-w-6xl mx-auto space-y-8 block transition-opacity duration-300">
+            <div class="max-w-6xl mx-auto space-y-8 block">
                 <h2 class="text-sm font-semibold text-gray-900 uppercase tracking-wide pt-4">Vaše služby</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
@@ -243,10 +214,10 @@
 
                         <div class="mt-auto flex flex-col gap-3">
                             <div class="flex gap-3">
-                                <button onclick="switchView('seznam-profilu')" class="flex-1 bg-brand-500 border border-transparent text-white py-2 rounded-lg text-sm font-medium hover:bg-brand-600 transition shadow-sm">Spravovat</button>
-                                <button onclick="showToast('Otevírám statistiky')" class="flex-1 border border-gray-300 bg-white text-gray-700 py-2 rounded-lg text-sm font-medium hover:bg-gray-100 transition shadow-sm">Statistiky</button>
+                                <button onclick="showToast('Otevírám správu profilů...')" class="flex-1 bg-brand-500 border border-transparent text-white py-2 rounded-lg text-sm font-medium hover:bg-brand-600 transition shadow-sm">Spravovat</button>
+                                <button onclick="showToast('Otevírám statistiky...')" class="flex-1 border border-gray-300 bg-white text-gray-700 py-2 rounded-lg text-sm font-medium hover:bg-gray-100 transition shadow-sm">Statistiky</button>
                             </div>
-                            <button onclick="showToast('Otevírám doobjednávku')" class="w-full bg-white border border-gray-300 text-gray-700 py-2 rounded-lg text-sm font-medium hover:bg-gray-100 transition shadow-sm">Doobjednat</button>
+                            <button onclick="showToast('Přesměrovávám na doobjednávku...')" class="w-full bg-white border border-gray-300 text-gray-700 py-2 rounded-lg text-sm font-medium hover:bg-gray-100 transition shadow-sm">Doobjednat</button>
                         </div>
                     </div>
 
@@ -277,10 +248,10 @@
 
                         <div class="mt-auto flex flex-col gap-3">
                             <div class="flex gap-3">
-                                <button onclick="showToast('Otevírám správu')" class="flex-1 bg-brand-500 border border-transparent text-white py-2 rounded-lg text-sm font-medium hover:bg-brand-600 transition shadow-sm">Spravovat</button>
-                                <button onclick="showToast('Otevírám statistiky')" class="flex-1 border border-gray-300 bg-white text-gray-700 py-2 rounded-lg text-sm font-medium hover:bg-gray-100 transition shadow-sm">Statistiky</button>
+                                <button onclick="showToast('Otevírám správu produktů...')" class="flex-1 bg-brand-500 border border-transparent text-white py-2 rounded-lg text-sm font-medium hover:bg-brand-600 transition shadow-sm">Spravovat</button>
+                                <button onclick="showToast('Otevírám statistiky...')" class="flex-1 border border-gray-300 bg-white text-gray-700 py-2 rounded-lg text-sm font-medium hover:bg-gray-100 transition shadow-sm">Statistiky</button>
                             </div>
-                            <button onclick="showToast('Otevírám doobjednávku')" class="w-full bg-white border border-gray-300 text-gray-700 py-2 rounded-lg text-sm font-medium hover:bg-gray-100 transition shadow-sm">Doobjednat</button>
+                            <button onclick="showToast('Přesměrovávám na doobjednávku...')" class="w-full bg-white border border-gray-300 text-gray-700 py-2 rounded-lg text-sm font-medium hover:bg-gray-100 transition shadow-sm">Doobjednat</button>
                         </div>
                     </div>
                 </div>
@@ -288,21 +259,21 @@
                 <h2 class="text-sm font-semibold text-gray-900 uppercase tracking-wide pt-4">Dostupné rozšíření</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <!-- STREET VIEW -->
-                    <div id="card-sv" class="card-minimal bg-gray-50/50 p-6 flex flex-col border-dashed border-gray-300 transition-colors duration-300">
+                    <div class="card-minimal bg-gray-50/50 p-6 flex flex-col border-dashed border-gray-300 transition-colors duration-300">
                         <div class="flex justify-between items-start mb-4">
                             <div class="flex items-center gap-3">
-                                <div id="icon-bg-sv" class="w-10 h-10 rounded border border-gray-200 bg-white flex items-center justify-center text-gray-400">
+                                <div class="w-10 h-10 rounded border border-gray-200 bg-white flex items-center justify-center text-gray-400">
                                     <i class="fa-solid fa-street-view text-xl"></i>
                                 </div>
                                 <h3 class="font-bold text-gray-900 text-lg">Google Street View</h3>
                             </div>
-                            <span id="badge-sv" class="px-2.5 py-1 rounded bg-gray-200 text-gray-600 text-[10px] font-bold uppercase tracking-wider">Neaktivní</span>
+                            <span class="px-2.5 py-1 rounded bg-gray-200 text-gray-600 text-[10px] font-bold uppercase tracking-wider">Neaktivní</span>
                         </div>
-                        <div id="content-sv" class="mb-6 flex-1">
+                        <div class="mb-6 flex-1">
                             <p class="text-sm text-gray-600">Zákazníci preferují vizuální obsah. Pozvěte je k sobě dovnitř přímo z Google Map a zvyšte důvěru.</p>
                         </div>
                         <div class="mt-auto">
-                            <button id="btn-sv" onclick="showToast('Zpracovává se')" class="w-full bg-brand-500 border border-transparent text-white py-2 rounded-lg text-sm font-medium hover:bg-brand-600 transition shadow-sm">
+                            <button onclick="showToast('Přesměrovávám na objednávku...')" class="w-full bg-brand-500 border border-transparent text-white py-2 rounded-lg text-sm font-medium hover:bg-brand-600 transition shadow-sm">
                                 Zjistit více a objednat
                             </button>
                         </div>
@@ -323,83 +294,10 @@
                             <p class="text-sm text-gray-600">Okamžitá návštěvnost. Dostaňte se na první pozici ve vyhledávání pomocí přesně cílené reklamy.</p>
                         </div>
                         <div class="mt-auto">
-                            <button onclick="showToast('Odesílám žádost')" class="w-full bg-brand-500 border border-transparent text-white py-2 rounded-lg text-sm font-medium hover:bg-brand-600 transition shadow-sm">
+                            <button onclick="showToast('Odesílám žádost...')" class="w-full bg-brand-500 border border-transparent text-white py-2 rounded-lg text-sm font-medium hover:bg-brand-600 transition shadow-sm">
                                 Vyžádat konzultaci
                             </button>
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ---------------------------------------------------- -->
-            <!-- POHLED: SEZNAM PROFILŮ -->
-            <!-- ---------------------------------------------------- -->
-            <div id="view-seznam-profilu" class="hidden max-w-full mx-auto space-y-6 transition-opacity duration-300">
-                
-                <!-- Hromadné akce -->
-                <div class="mb-6">
-                    <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wide mb-4 pl-1">Hromadné úpravy</h3>
-                    
-                    <div class="bg-white border border-gray-200 rounded-xl shadow-sm flex flex-col md:flex-row overflow-hidden">
-                        <!-- Sekce: Údaje o firmě -->
-                        <div class="flex-1 p-5 border-b md:border-b-0 md:border-r border-gray-100">
-                            <div class="flex items-center gap-2 mb-3">
-                                <div class="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-gray-500"><i class="fa-regular fa-building text-xs"></i></div>
-                                <h4 class="text-xs font-bold text-gray-700 uppercase tracking-wider">Údaje o firmě</h4>
-                            </div>
-                            <div class="flex flex-wrap gap-2">
-                                <button onclick="openBulkEditModal('nazev')" class="px-3 py-1.5 bg-gray-50 hover:bg-green-50 text-gray-700 hover:text-brand-600 border border-gray-200 hover:border-green-200 rounded-lg text-sm font-medium transition flex items-center gap-2"><i class="fa-solid fa-heading text-brand-500 opacity-70"></i> Název</button>
-                                <button onclick="openBulkEditModal('popis')" class="px-3 py-1.5 bg-gray-50 hover:bg-green-50 text-gray-700 hover:text-brand-600 border border-gray-200 hover:border-green-200 rounded-lg text-sm font-medium transition flex items-center gap-2"><i class="fa-solid fa-align-left text-brand-500 opacity-70"></i> Popis</button>
-                                <button onclick="openBulkEditModal('web')" class="px-3 py-1.5 bg-gray-50 hover:bg-green-50 text-gray-700 hover:text-brand-600 border border-gray-200 hover:border-green-200 rounded-lg text-sm font-medium transition flex items-center gap-2"><i class="fa-solid fa-globe text-brand-500 opacity-70"></i> Web</button>
-                                <button onclick="openBulkEditModal('telefon')" class="px-3 py-1.5 bg-gray-50 hover:bg-green-50 text-gray-700 hover:text-brand-600 border border-gray-200 hover:border-green-200 rounded-lg text-sm font-medium transition flex items-center gap-2"><i class="fa-solid fa-phone text-brand-500 opacity-70"></i> Telefon</button>
-                                <button onclick="openBulkEditModal('oteviraci-doba')" class="px-3 py-1.5 bg-gray-50 hover:bg-green-50 text-gray-700 hover:text-brand-600 border border-gray-200 hover:border-green-200 rounded-lg text-sm font-medium transition flex items-center gap-2"><i class="fa-solid fa-clock text-brand-500 opacity-70"></i> Otevírací doba</button>
-                                <button onclick="openBulkEditModal('specialni-hodiny')" class="px-3 py-1.5 bg-gray-50 hover:bg-green-50 text-gray-700 hover:text-brand-600 border border-gray-200 hover:border-green-200 rounded-lg text-sm font-medium transition flex items-center gap-2"><i class="fa-solid fa-clock-rotate-left text-brand-500 opacity-70"></i> Speciální hodiny</button>
-                                <button onclick="openBulkEditModal('stav')" class="px-3 py-1.5 bg-gray-50 hover:bg-green-50 text-gray-700 hover:text-brand-600 border border-gray-200 hover:border-green-200 rounded-lg text-sm font-medium transition flex items-center gap-2"><i class="fa-solid fa-store text-brand-500 opacity-70"></i> Stav</button>
-                                <button onclick="openBulkEditModal('fotky')" class="px-3 py-1.5 bg-gray-50 hover:bg-green-50 text-gray-700 hover:text-brand-600 border border-gray-200 hover:border-green-200 rounded-lg text-sm font-medium transition flex items-center gap-2"><i class="fa-regular fa-images text-brand-500 opacity-70"></i> Foto</button>
-                            </div>
-                        </div>
-
-                        <!-- Sekce: Propagace -->
-                        <div class="md:w-1/3 p-5 bg-green-50/30">
-                            <div class="flex items-center gap-2 mb-3">
-                                <div class="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center text-brand-600"><i class="fa-solid fa-bullhorn text-xs"></i></div>
-                                <h4 class="text-xs font-bold text-brand-600 uppercase tracking-wider">Propagace</h4>
-                            </div>
-                            <div class="flex flex-col gap-2">
-                                <button onclick="openBulkEditModal('novinky')" class="w-full px-3 py-2 bg-white hover:bg-green-50 text-gray-700 hover:text-brand-600 border border-gray-200 hover:border-green-200 rounded-lg text-sm font-medium transition shadow-sm flex items-center gap-2"><i class="fa-regular fa-newspaper text-brand-500 opacity-70 w-4"></i> Google Novinky</button>
-                                <button onclick="openBulkEditModal('produkty')" class="w-full px-3 py-2 bg-white hover:bg-green-50 text-gray-700 hover:text-brand-600 border border-gray-200 hover:border-green-200 rounded-lg text-sm font-medium transition shadow-sm flex items-center gap-2"><i class="fa-solid fa-box-open text-brand-500 opacity-70 w-4"></i> Google Produkty</button>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                <!-- Filtr poboček -->
-                <div class="mb-6">
-                    <div class="relative">
-                        <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                        <input type="text" id="table-search" onkeyup="filterTableBranches()" class="w-full bg-white border border-gray-300 rounded-lg px-4 py-2.5 pl-11 text-sm text-gray-900 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition shadow-sm" placeholder="Filtrovat pobočky (podle názvu, města, ulice nebo ID)...">
-                    </div>
-                </div>
-
-                <!-- Tabulka profilů -->
-                <div class="card-minimal overflow-hidden">
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse" id="profiles-table">
-                            <thead>
-                                <tr class="bg-gray-50 border-b border-gray-200">
-                                    <th class="py-4 px-6 w-12"><input type="checkbox" class="w-4 h-4 rounded border-gray-300 text-brand-600 focus:ring-brand-500"></th>
-                                    <th class="py-4 px-6 text-sm font-bold text-gray-900 tracking-wide">ID profilu</th>
-                                    <th class="py-4 px-6 text-sm font-bold text-gray-900 tracking-wide">Jméno lokality</th>
-                                    <th class="py-4 px-6 text-sm font-bold text-gray-900 tracking-wide">Ulice</th>
-                                    <th class="py-4 px-6 text-sm font-bold text-gray-900 tracking-wide">Město</th>
-                                    <th class="py-4 px-6 text-sm font-bold text-gray-900 tracking-wide text-right">Akce</th>
-                                </tr>
-                            </thead>
-                            <tbody id="profiles-tbody" class="divide-y divide-gray-100">
-                                <!-- Generováno dynamicky -->
-                            </tbody>
-                        </table>
                     </div>
                 </div>
             </div>
@@ -459,90 +357,8 @@
         </div>
     </div>
 
-    <!-- MODÁLNÍ OKNO PRO HROMADNÉ ÚPRAVY -->
-    <div id="bulk-edit-modal" class="fixed inset-0 bg-gray-900/60 z-[60] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300 px-4">
-        <div class="bg-white rounded-xl shadow-2xl w-full max-w-xl transform scale-95 transition-transform duration-300 overflow-hidden flex flex-col max-h-[90vh]">
-            <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center bg-gray-50 shrink-0">
-                <h3 id="bulk-modal-title" class="text-lg font-bold text-gray-900">Hromadná úprava</h3>
-                <button onclick="toggleBulkEditModal()" class="text-gray-400 hover:text-gray-600 transition">
-                    <i class="fa-solid fa-xmark text-xl"></i>
-                </button>
-            </div>
-            <div class="p-6 overflow-y-auto flex-1 space-y-6 custom-scrollbar">
-                <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 flex gap-3 items-start">
-                    <i class="fa-solid fa-circle-info text-blue-500 mt-0.5"></i>
-                    <div>
-                        <p class="text-sm font-bold text-blue-900">Aplikuje se na vybrané pobočky</p>
-                        <p class="text-xs text-blue-700 mt-1">Vyberte v seznamu níže pobočky, u kterých chcete zadanou hodnotu hromadně přepsat.</p>
-                    </div>
-                </div>
-
-                <div id="bulk-modal-input-area" class="space-y-4 border-b border-gray-100 pb-6">
-                    <!-- Zde bude input/textarea/select -->
-                </div>
-
-                <div>
-                    <label class="label-minimal">Pobočky k úpravě</label>
-                    <div class="relative mb-3 mt-1">
-                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm"></i>
-                        <input type="text" id="branch-search" onkeyup="filterBranches()" class="input-minimal pl-9" placeholder="Vyhledat pobočku (např. Praha, Business Power)...">
-                    </div>
-                    <div class="border border-gray-200 rounded-lg max-h-48 overflow-y-auto bg-gray-50/50 custom-scrollbar" id="branch-list">
-                        <!-- Zde se vygenerují obsluhované pobočky -->
-                    </div>
-                </div>
-            </div>
-
-            <div class="px-6 py-4 border-t border-gray-200 bg-gray-50 flex justify-end gap-3 shrink-0">
-                <button onclick="toggleBulkEditModal()" class="px-5 py-2 rounded-lg text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 transition shadow-sm">Zrušit</button>
-                <button onclick="submitBulkEdit()" class="px-5 py-2 rounded-lg text-sm font-medium text-white bg-brand-500 hover:bg-brand-600 transition shadow-sm">Uložit do profilů</button>
-            </div>
-        </div>
-    </div>
-
-
+    <!-- POUZE NEZBYTNÉ SCRIPTY PRO UI -->
     <script>
-        // Logika pro přepínání pohledů v rámci Dashboardu
-        function switchView(viewId) {
-            const views = ['view-dashboard', 'view-seznam-profilu'];
-            const headerTitle = document.getElementById('header-title');
-            const navItems = ['nav-dashboard', 'nav-seznam-profilu'];
-
-            views.forEach(id => {
-                const el = document.getElementById(id);
-                if(el) el.classList.add('hidden');
-            });
-
-            navItems.forEach(id => {
-                const el = document.getElementById(id);
-                if (el) {
-                    if (id === 'nav-seznam-profilu') {
-                        el.className = 'block py-1.5 text-sm text-gray-500 hover:text-gray-900 transition font-medium';
-                    } else {
-                        el.className = 'flex items-center gap-3 text-gray-600 hover:bg-gray-50 hover:text-gray-900 px-3 py-2.5 rounded-lg font-medium transition';
-                    }
-                }
-            });
-
-            if (viewId === 'dashboard') {
-                document.getElementById('view-dashboard').classList.remove('hidden');
-                headerTitle.innerText = 'Přehled služeb';
-                document.getElementById('nav-dashboard').className = 'flex items-center gap-3 bg-green-50 text-brand-600 px-3 py-2.5 rounded-lg font-medium transition';
-            } else if (viewId === 'seznam-profilu') {
-                document.getElementById('view-seznam-profilu').classList.remove('hidden');
-                headerTitle.innerText = 'Seznam profilů';
-                document.getElementById('nav-seznam-profilu').className = 'block py-1.5 text-sm text-brand-600 font-bold transition';
-                
-                const gmbMenu = document.getElementById('gmb-submenu');
-                if (gmbMenu && gmbMenu.classList.contains('max-h-0')) {
-                    toggleMenu('gmb-submenu');
-                }
-            }
-
-            if(window.innerWidth < 768) toggleMobileMenu();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
         // Dropdown menu (Sidebar)
         function toggleMenu(menuId) {
             const submenu = document.getElementById(menuId);
@@ -567,7 +383,7 @@
             }
         }
 
-        // Toasty
+        // Toasty (Vyskakovací hlášky)
         let toastTimeout;
         function showToast(message) {
             const toast = document.getElementById('toast');
@@ -583,7 +399,7 @@
             }, 3000);
         }
 
-        // Chat
+        // Plovoucí Chat
         let isChatOpen = false;
         function toggleChat() {
             const chatWindow = document.getElementById('chat-window');
@@ -595,380 +411,6 @@
                 chatWindow.classList.add('opacity-100', 'translate-y-0');
             }
             isChatOpen = !isChatOpen;
-        }
-
-        // Modály (Hromadné úpravy)
-        function toggleBulkEditModal() {
-            const modal = document.getElementById('bulk-edit-modal');
-            const modalContent = modal.querySelector('div');
-            
-            if (modal.classList.contains('opacity-0')) {
-                modal.classList.remove('opacity-0', 'pointer-events-none');
-                setTimeout(() => modalContent.classList.remove('scale-95'), 10);
-            } else {
-                modalContent.classList.add('scale-95');
-                setTimeout(() => modal.classList.add('opacity-0', 'pointer-events-none'), 300);
-            }
-        }
-
-        function openBulkEditModal(action) {
-            const modalTitle = document.getElementById('bulk-modal-title');
-            const modalInputArea = document.getElementById('bulk-modal-input-area');
-
-            const searchInput = document.getElementById('branch-search');
-            if (searchInput) {
-                searchInput.value = '';
-                filterBranches(); 
-            }
-
-            let title = '';
-            let inputHtml = '';
-
-            switch(action) {
-                case 'nazev':
-                    title = 'Hromadná úprava: Název pobočky';
-                    inputHtml = `
-                        <div>
-                            <label class="label-minimal">Nový sjednocený název</label>
-                            <input type="text" class="input-minimal" placeholder="Např. Business Power s.r.o.">
-                        </div>`;
-                    break;
-                case 'popis':
-                    title = 'Hromadná úprava: Popis firmy';
-                    inputHtml = `
-                        <div>
-                            <label class="label-minimal">Nový text popisu</label>
-                            <textarea class="input-minimal" rows="5" placeholder="Zadejte text, který se zobrazí ve vyhledávání..."></textarea>
-                        </div>`;
-                    break;
-                case 'web':
-                    title = 'Hromadná úprava: Webová stránka';
-                    inputHtml = `
-                        <div>
-                            <label class="label-minimal">Nová URL adresa</label>
-                            <input type="url" class="input-minimal" placeholder="https://www.vasweb.cz">
-                        </div>`;
-                    break;
-                case 'telefon':
-                    title = 'Hromadná úprava: Hlavní telefon';
-                    inputHtml = `
-                        <div>
-                            <label class="label-minimal">Nové telefonní číslo</label>
-                            <input type="tel" class="input-minimal" placeholder="+420 ...">
-                        </div>`;
-                    break;
-                case 'oteviraci-doba': {
-                    title = 'Hromadná úprava: Otevírací doba';
-                    
-                    const days = ['pondělí', 'úterý', 'středa', 'čtvrtek', 'pátek', 'sobota', 'neděle'];
-                    let scheduleHtml = '';
-                    
-                    days.forEach(day => {
-                        const isWeekend = (day === 'sobota' || day === 'neděle');
-                        scheduleHtml += `
-                            <div class="day-row flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-4 py-3 border-b border-gray-100 last:border-0 items-start">
-                                <div class="w-32 pt-2 shrink-0">
-                                    <p class="text-sm font-medium text-gray-900 mb-2 capitalize">${day}</p>
-                                    <label class="flex items-center gap-2 cursor-pointer w-max">
-                                        <div class="relative flex items-center">
-                                            <input type="checkbox" class="peer appearance-none w-5 h-5 border-2 border-gray-400 rounded checked:bg-brand-500 checked:border-brand-500 transition-colors" onchange="toggleDayClosed(this)" ${isWeekend ? 'checked' : ''}>
-                                            <i class="fa-solid fa-check absolute text-white text-xs left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 peer-checked:opacity-100"></i>
-                                        </div>
-                                        <span class="text-sm text-gray-700">Zavřeno</span>
-                                    </label>
-                                </div>
-                                <div class="flex-1 space-y-2 time-container ${isWeekend ? 'hidden' : ''}">
-                                    ${!isWeekend ? `
-                                    <div class="flex items-center gap-3 time-row">
-                                        <div class="relative border border-gray-300 rounded px-3 py-2 w-32 focus-within:border-brand-500 focus-within:ring-1 focus-within:ring-brand-500 transition-colors bg-white">
-                                            <label class="absolute -top-2 left-2 bg-white px-1 text-[10px] text-gray-500">Otevírá:</label>
-                                            <input type="text" class="w-full text-sm outline-none text-gray-900 bg-transparent" value="7:30">
-                                        </div>
-                                        <span class="text-gray-400">-</span>
-                                        <div class="relative border border-gray-300 rounded px-3 py-2 w-32 focus-within:border-brand-500 focus-within:ring-1 focus-within:ring-brand-500 transition-colors bg-white">
-                                            <label class="absolute -top-2 left-2 bg-white px-1 text-[10px] text-gray-500">Zavírá:</label>
-                                            <input type="text" class="w-full text-sm outline-none text-gray-900 bg-transparent" value="16:00">
-                                        </div>
-                                        <button onclick="addTimeRow(this)" class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors"><i class="fa-solid fa-plus"></i></button>
-                                    </div>` : ''}
-                                </div>
-                            </div>
-                        `;
-                    });
-
-                    inputHtml = `
-                        <div>
-                            <div class="mb-6 space-y-4">
-                                <label class="flex items-start gap-3 cursor-pointer group">
-                                    <div class="relative flex items-center justify-center mt-0.5">
-                                        <input type="radio" name="business_status" class="peer appearance-none w-5 h-5 border-2 border-gray-400 rounded-full checked:border-brand-500 transition-colors" checked>
-                                        <div class="absolute w-2.5 h-2.5 bg-brand-500 rounded-full scale-0 peer-checked:scale-100 transition-transform"></div>
-                                    </div>
-                                    <div>
-                                        <p class="text-sm font-medium text-gray-900">Otevřeno (má hlavní otevírací dobu)</p>
-                                        <p class="text-xs text-gray-500">Zobrazovat, kdy má vaše firma otevřeno</p>
-                                    </div>
-                                </label>
-                                <label class="flex items-start gap-3 cursor-pointer group">
-                                    <div class="relative flex items-center justify-center mt-0.5">
-                                        <input type="radio" name="business_status" class="peer appearance-none w-5 h-5 border-2 border-gray-400 rounded-full checked:border-brand-500 transition-colors">
-                                        <div class="absolute w-2.5 h-2.5 bg-brand-500 rounded-full scale-0 peer-checked:scale-100 transition-transform"></div>
-                                    </div>
-                                    <div>
-                                        <p class="text-sm font-medium text-gray-900">Otevřeno (bez hlavní otevírací doby)</p>
-                                        <p class="text-xs text-gray-500">Neuvádět žádnou otevírací dobu</p>
-                                    </div>
-                                </label>
-                            </div>
-                            <div class="space-y-1 border-t border-gray-200 pt-4">
-                                ${scheduleHtml}
-                            </div>
-                        </div>`;
-                    break;
-                }
-                case 'specialni-hodiny':
-                    title = 'Hromadná úprava: Speciální hodiny';
-                    inputHtml = `
-                        <div class="space-y-4">
-                            <div>
-                                <label class="label-minimal">Datum svátku / události</label>
-                                <input type="date" class="input-minimal" onchange="document.getElementById('special-hours-container').classList.remove('hidden')">
-                            </div>
-                            <div id="special-hours-container" class="hidden day-row flex flex-col sm:flex-row sm:items-start gap-4 pt-4 border-t border-gray-100 items-start">
-                                <div class="w-32 pt-2 shrink-0">
-                                    <label class="flex items-center gap-2 cursor-pointer w-max">
-                                        <div class="relative flex items-center">
-                                            <input type="checkbox" class="peer appearance-none w-5 h-5 border-2 border-gray-400 rounded checked:bg-brand-500 checked:border-brand-500 transition-colors" onchange="toggleDayClosed(this)">
-                                            <i class="fa-solid fa-check absolute text-white text-xs left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 peer-checked:opacity-100"></i>
-                                        </div>
-                                        <span class="text-sm text-gray-700">Zavřeno</span>
-                                    </label>
-                                </div>
-                                <div class="flex-1 space-y-2 time-container">
-                                    <div class="flex items-center gap-3 time-row">
-                                        <div class="relative border border-gray-300 rounded px-3 py-2 w-32 focus-within:border-brand-500 focus-within:ring-1 focus-within:ring-brand-500 transition-colors bg-white">
-                                            <label class="absolute -top-2 left-2 bg-white px-1 text-[10px] text-gray-500">Otevírá:</label>
-                                            <input type="text" class="w-full text-sm outline-none text-gray-900 bg-transparent" value="7:30">
-                                        </div>
-                                        <span class="text-gray-400">-</span>
-                                        <div class="relative border border-gray-300 rounded px-3 py-2 w-32 focus-within:border-brand-500 focus-within:ring-1 focus-within:ring-brand-500 transition-colors bg-white">
-                                            <label class="absolute -top-2 left-2 bg-white px-1 text-[10px] text-gray-500">Zavírá:</label>
-                                            <input type="text" class="w-full text-sm outline-none text-gray-900 bg-transparent" value="16:00">
-                                        </div>
-                                        <button onclick="addTimeRow(this)" class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors"><i class="fa-solid fa-plus"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>`;
-                    break;
-                case 'stav':
-                    title = 'Hromadná úprava: Stav podniku';
-                    inputHtml = `
-                        <div>
-                            <label class="label-minimal">Zvolte nový stav pro profily</label>
-                            <select class="input-minimal">
-                                <option>Otevřeno</option>
-                                <option>Dočasně uzavřeno</option>
-                                <option>Trvale uzavřeno</option>
-                            </select>
-                        </div>`;
-                    break;
-                case 'fotky':
-                    title = 'Hromadná úprava: Přidat fotky';
-                    inputHtml = `
-                        <div>
-                            <label class="label-minimal">Nahrajte fotografie do profilů</label>
-                            <div class="border-2 border-dashed border-gray-300 rounded-xl p-8 flex flex-col items-center justify-center text-gray-500 hover:bg-gray-50 transition cursor-pointer">
-                                <i class="fa-solid fa-cloud-arrow-up text-3xl mb-3 text-brand-500"></i>
-                                <span class="text-sm font-bold text-gray-700">Klikněte nebo přetáhněte soubory sem</span>
-                                <span class="text-xs text-gray-400 mt-1">Doporučený formát JPG, PNG. Max 5MB na fotku.</span>
-                            </div>
-                        </div>`;
-                    break;
-                case 'novinky':
-                    title = 'Hromadná úprava: Google Novinky';
-                    inputHtml = `
-                        <div>
-                            <label class="label-minimal">Text novinky (Příspěvku)</label>
-                            <textarea class="input-minimal mb-3" rows="3" placeholder="Zadejte text novinky pro vaše zákazníky..."></textarea>
-                            
-                            <label class="label-minimal">Přiložit obrázek (Volitelné)</label>
-                            <div class="border-2 border-dashed border-gray-300 rounded-xl p-4 flex flex-col items-center justify-center text-gray-500 hover:bg-gray-50 transition cursor-pointer">
-                                <i class="fa-solid fa-image text-xl mb-1 text-gray-400"></i>
-                                <span class="text-xs font-medium text-gray-600">Nahrát obrázek k příspěvku</span>
-                            </div>
-                        </div>`;
-                    break;
-                case 'produkty':
-                    title = 'Hromadná úprava: Google Produkty';
-                    inputHtml = `
-                        <div class="space-y-3">
-                            <div>
-                                <label class="label-minimal">Název produktu</label>
-                                <input type="text" class="input-minimal" placeholder="Např. Konzultace zdarma">
-                            </div>
-                            <div class="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label class="label-minimal">Cena (Kč)</label>
-                                    <input type="number" class="input-minimal" placeholder="Např. 990">
-                                </div>
-                                <div>
-                                    <label class="label-minimal">Kategorie</label>
-                                    <select class="input-minimal">
-                                        <option>Služby</option>
-                                        <option>Zboží</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div>
-                                <label class="label-minimal">Popis produktu</label>
-                                <textarea class="input-minimal" rows="2" placeholder="Stručný popis produktu pro zákazníky..."></textarea>
-                            </div>
-                        </div>`;
-                    break;
-            }
-
-            modalTitle.innerText = title;
-            modalInputArea.innerHTML = inputHtml;
-
-            toggleBulkEditModal();
-        }
-
-        function submitBulkEdit() {
-            showToast('Změny se nyní hromadně propisují do vybraných profilů');
-            toggleBulkEditModal();
-        }
-
-        function filterBranches() {
-            const input = document.getElementById('branch-search');
-            const filter = input.value.toLowerCase();
-            const nodes = document.querySelectorAll('.branch-item');
-            
-            nodes.forEach(node => {
-                const text = node.innerText.toLowerCase();
-                if (text.includes(filter)) {
-                    node.style.display = "flex";
-                } else {
-                    node.style.display = "none";
-                }
-            });
-        }
-
-        function filterTableBranches() {
-            const input = document.getElementById('table-search');
-            const filter = input.value.toLowerCase();
-            const rows = document.querySelectorAll('#profiles-table tbody tr');
-            
-            rows.forEach(row => {
-                const text = row.innerText.toLowerCase();
-                if (text.includes(filter)) {
-                    row.style.display = "";
-                } else {
-                    row.style.display = "none";
-                }
-            });
-        }
-
-        // TOTO JE TO NOVÉ: Generování seznamu profilů - bez obřích modálů
-        function generateProfiles() {
-            const tbody = document.getElementById('profiles-tbody');
-            const modalList = document.getElementById('branch-list');
-            let html = '';
-            let modalHtml = '';
-
-            for (let i = 1; i <= 10; i++) {
-                const name = i === 1 ? 'VIEW CZECH' : `Business Power s.r.o. - Pobočka ${i}`;
-                const street = i === 1 ? 'Chrastavská 231' : `Bucharova ${2650 + i}/12`;
-                const city = i === 1 ? 'Liberec' : 'Praha 13';
-                const pid = `ID-${1000 + i}`;
-
-                html += `
-                <tr class="hover:bg-gray-50/50 transition group">
-                    <td class="py-4 px-6"><input type="checkbox" class="w-4 h-4 rounded border-gray-300 text-brand-600 focus:ring-brand-500"></td>
-                    <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">${pid}</td>
-                    <td class="py-4 px-6 text-sm text-gray-900 font-medium">${name}</td>
-                    <td class="py-4 px-6 text-sm text-gray-600">${street}</td>
-                    <td class="py-4 px-6 text-sm text-gray-600">${city}</td>
-                    <td class="py-4 px-6 text-right whitespace-nowrap">
-                        <div class="flex items-center justify-end gap-2">
-                            <button onclick="showToast('Otevírám statistiky')" class="text-gray-400 hover:text-brand-600 p-2 transition" title="Statistiky"><i class="fa-solid fa-chart-simple"></i></button>
-                            <button onclick="showToast('Otevírám profil v Mapách')" class="text-gray-400 hover:text-brand-600 p-2 transition" title="Zobrazit v Google Mapách"><i class="fa-solid fa-map-location-dot"></i></button>
-                            <button onclick="showToast('Otevírám profil ve Vyhledávači')" class="text-gray-400 hover:text-brand-600 p-2 transition" title="Zobrazit v Google Vyhledávači"><i class="fa-brands fa-google"></i></button>
-                            
-                            <!-- EXTERNÍ ODKAZ (pokud ho chcete využít na novou stránku pro detail): -->
-                            <!-- <a href="profil-detail.html" class="text-gray-400 hover:text-brand-600 p-2 transition flex items-center justify-center" title="Upravit profil"><i class="fa-solid fa-pen"></i></a> -->
-                            
-                            <button onclick="showToast('Otevírám detail profilu')" class="text-gray-400 hover:text-brand-600 p-2 transition" title="Upravit profil"><i class="fa-solid fa-pen"></i></button>
-                        </div>
-                    </td>
-                </tr>`;
-
-                modalHtml += `
-                <label class="flex items-center gap-3 p-3 hover:bg-green-50 border-b border-gray-100 cursor-pointer transition branch-item">
-                    <input type="checkbox" class="w-4 h-4 rounded border-gray-300 text-brand-600 focus:ring-brand-500" ${i <= 2 ? 'checked' : ''}>
-                    <div>
-                        <p class="text-sm font-medium text-gray-900">${name}</p>
-                        <p class="text-xs text-gray-500">${street}, ${city}</p>
-                    </div>
-                </label>`;
-            }
-            if(tbody) tbody.innerHTML = html;
-            if(modalList) modalList.innerHTML = modalHtml;
-        }
-
-        window.onload = function() {
-            generateProfiles();
-        };
-
-        function toggleDayClosed(checkbox) {
-            const container = checkbox.closest('.day-row').querySelector('.time-container');
-            if (!container) return;
-
-            if (checkbox.checked) {
-                container.classList.add('hidden');
-            } else {
-                container.classList.remove('hidden');
-                if (container.children.length === 0) {
-                    const rowHtml = `
-                        <div class="flex items-center gap-3 time-row mt-2">
-                            <div class="relative border border-gray-300 rounded px-3 py-2 w-32 focus-within:border-brand-500 focus-within:ring-1 focus-within:ring-brand-500 transition-colors bg-white">
-                                <label class="absolute -top-2 left-2 bg-white px-1 text-[10px] text-gray-500">Otevírá:</label>
-                                <input type="text" class="w-full text-sm outline-none text-gray-900 bg-transparent" value="7:30">
-                            </div>
-                            <span class="text-gray-400">-</span>
-                            <div class="relative border border-gray-300 rounded px-3 py-2 w-32 focus-within:border-brand-500 focus-within:ring-1 focus-within:ring-brand-500 transition-colors bg-white">
-                                <label class="absolute -top-2 left-2 bg-white px-1 text-[10px] text-gray-500">Zavírá:</label>
-                                <input type="text" class="w-full text-sm outline-none text-gray-900 bg-transparent" value="16:00">
-                            </div>
-                            <button onclick="addTimeRow(this)" class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors"><i class="fa-solid fa-plus"></i></button>
-                        </div>
-                    `;
-                    container.insertAdjacentHTML('beforeend', rowHtml);
-                }
-            }
-        }
-
-        function addTimeRow(btn) {
-            const container = btn.closest('.time-container');
-            const rowHtml = `
-                <div class="flex items-center gap-3 time-row mt-2">
-                    <div class="relative border border-gray-300 rounded px-3 py-2 w-32 focus-within:border-brand-500 focus-within:ring-1 focus-within:ring-brand-500 transition-colors bg-white">
-                        <label class="absolute -top-2 left-2 bg-white px-1 text-[10px] text-gray-500">Otevírá:</label>
-                        <input type="text" class="w-full text-sm outline-none text-gray-900 bg-transparent" value="12:00">
-                    </div>
-                    <span class="text-gray-400">-</span>
-                    <div class="relative border border-gray-300 rounded px-3 py-2 w-32 focus-within:border-brand-500 focus-within:ring-1 focus-within:ring-brand-500 transition-colors bg-white">
-                        <label class="absolute -top-2 left-2 bg-white px-1 text-[10px] text-gray-500">Zavírá:</label>
-                        <input type="text" class="w-full text-sm outline-none text-gray-900 bg-transparent" value="17:00">
-                    </div>
-                    <button onclick="removeTimeRow(this)" class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-full transition-colors"><i class="fa-regular fa-trash-can"></i></button>
-                </div>
-            `;
-            container.insertAdjacentHTML('beforeend', rowHtml);
-        }
-
-        function removeTimeRow(btn) {
-            btn.closest('.time-row').remove();
         }
     </script>
 </body>
