@@ -1613,7 +1613,7 @@
 
                     <!-- SEKCE: POLOHA -->
                     <div id="sec-poloha" class="mb-10 pt-4">
-                        <h3 class="text-base font-medium text-gray-900 mb-4">Poloha a oblasti</h3>
+                        <h3 class="text-base font-medium text-google-text mb-4">Poloha a oblasti</h3>
                         
                         <!-- Adresa firmy -->
                         <div class="editable-block group p-4 -mx-4 rounded-lg border-b border-gray-100" id="edit-block-address">
@@ -1687,63 +1687,465 @@
                                 </div>
                                 
                                 <div class="flex gap-3">
-                                    <button onclick="saveInlineEditAddress()" class="bg-blue-600 text-white px-6 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition">Uložit</button>
-                                    <button onclick="toggleInlineEdit('edit-block-address')" class="bg-white border border-gray-300 text-blue-600 px-6 py-2 rounded-md text-sm font-medium hover:bg-gray-50 transition">Zrušit</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Obslužná oblast -->
-                        <div class="editable-block group p-4 -mx-4 rounded-lg border-b border-google-border" id="edit-block-service-area">
-                            <div class="display-container flex justify-between items-start" onclick="toggleInlineEdit('edit-block-service-area')">
-                                <div>
-                                    <p class="text-sm font-medium text-google-text mb-1">Obslužná oblast</p>
-                                    <p class="text-sm text-google-textLight" id="val-service-area">Třebíč, Česko</p>
-                                </div>
-                                <i class="fa-solid fa-pen text-google-textLight edit-icon mt-1 group-hover:text-google-blue"></i>
-                            </div>
-                            <!-- In-line Edit Container -->
-                            <div class="inline-edit-container">
-                                <h4 class="text-lg font-normal text-google-text mb-2">Obslužná oblast</h4>
-                                <p class="text-sm text-google-textLight mb-6">Informujte zákazníky o tom, kde vaše firma poskytuje služby nebo kam doručuje. <a href="#" class="text-google-blue hover:underline">Další informace</a></p>
-                                
-                                <div class="relative border border-google-border rounded-md px-3 py-3 focus-within:border-google-blue focus-within:ring-1 focus-within:ring-google-blue transition bg-white w-full max-w-sm mb-6">
-                                    <input type="text" class="w-full text-base outline-none text-google-text" value="" placeholder="Vyhledejte oblast">
-                                </div>
-
-                                <div class="mb-6">
-                                    <p class="text-sm text-google-textLight mb-3">Navrhované obslužné oblasti</p>
-                                    <div class="flex flex-wrap gap-2">
-                                        <button onclick="addServiceAreaPill('Praha')" class="flex items-center gap-2 border border-google-border rounded-full px-4 py-1.5 text-sm font-medium text-google-text hover:bg-google-bg transition">
-                                            <i class="fa-solid fa-plus text-google-blue"></i> Praha
-                                        </button>
-                                        <button onclick="addServiceAreaPill('Brno')" class="flex items-center gap-2 border border-google-border rounded-full px-4 py-1.5 text-sm font-medium text-google-text hover:bg-google-bg transition">
-                                            <i class="fa-solid fa-plus text-google-blue"></i> Brno
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div class="mb-8">
-                                    <p class="text-sm text-google-textLight mb-3">Vybrané obslužné oblasti</p>
-                                    <div id="service-area-pills" class="flex flex-wrap gap-2">
-                                        <!-- Výchozí vybraná oblast -->
-                                        <div class="flex items-center gap-2 bg-google-bg border border-google-border rounded-full px-3 py-1.5 text-sm font-medium text-google-text service-pill">
-                                            <span>Třebíč, Česko</span>
-                                            <button onclick="this.closest('.service-pill').remove()" class="text-google-textLight hover:text-google-text ml-1"><i class="fa-solid fa-xmark"></i></button>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="flex gap-3">
                                     <button onclick="saveInlineEditServiceArea()" class="bg-google-blue text-white px-6 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition">Uložit</button>
-                                    <button onclick="toggleInlineEdit('edit-block-service-area')" class="bg-white border border-google-border text-google-blue px-6 py-2 rounded-md text-sm font-medium hover:bg-google-bg transition">Zrušit</button>
+                                    <button onclick="toggleInlineEdit('edit-block-service-area')" class="bg-white border border-gray-300 text-google-blue px-6 py-2 rounded-md text-sm font-medium hover:bg-gray-50 transition">Zrušit</button>
                                 </div>
                             </div>
                         </div>
 
                     </div>
 
-                    <div id="sec-oteviraci" class="mb-10 pt-4"><h3 class="text-base font-medium text-google-text mb-4">Otevírací doba</h3><p class="text-sm text-google-textLight mb-8">Zde se zobrazuje otevírací doba...</p></div>
+                    <!-- SEKCE: OTEVÍRACÍ DOBA -->
+                    <div id="sec-oteviraci" class="mb-10 pt-4">
+                        <h3 class="text-base font-medium text-google-text mb-4">Otevírací doba</h3>
+                        
+                        <!-- Běžná otevírací doba -->
+                        <div class="editable-block group p-4 -mx-4 rounded-lg border-b border-gray-100" id="edit-block-hours">
+                            <div class="display-container flex justify-between items-start" onclick="toggleInlineEdit('edit-block-hours')">
+                                <div class="w-full">
+                                    <p class="text-sm font-medium text-google-text mb-3">Otevírací doba</p>
+                                    <div class="grid grid-cols-[100px_1fr] gap-2 text-sm text-google-textLight">
+                                        <div class="font-medium text-google-text">pondělí</div><div>7:30–16:00</div>
+                                        <div class="font-medium text-google-text">úterý</div><div>7:30–16:00</div>
+                                        <div class="font-medium text-google-text">středa</div><div>7:30–16:00</div>
+                                        <div class="font-medium text-google-text">čtvrtek</div><div>7:30–16:00</div>
+                                        <div class="font-medium text-google-text">pátek</div><div>7:30–16:00</div>
+                                        <div class="font-medium text-google-text">sobota</div><div>Zavřeno</div>
+                                        <div class="font-medium text-google-text">neděle</div><div>Zavřeno</div>
+                                    </div>
+                                </div>
+                                <i class="fa-solid fa-pen text-gray-400 edit-icon mt-1 group-hover:text-brand-600 ml-4 shrink-0"></i>
+                            </div>
+                            <!-- In-line Edit Container pro otevírací dobu -->
+                            <div class="inline-edit-container">
+                                <h4 class="text-lg font-normal text-gray-900 mb-2">Provozní doba</h4>
+                                <p class="text-sm text-gray-500 mb-6">Nastavte hlavní otevírací dobu, nebo označte firmu jako zavřenou. <a href="#" class="text-google-blue hover:underline">Další informace</a></p>
+                                
+                                <div class="mb-6 space-y-4">
+                                    <label class="flex items-start gap-3 cursor-pointer group">
+                                        <div class="relative flex items-center justify-center mt-0.5">
+                                            <input type="radio" name="profile_business_status" class="peer appearance-none w-5 h-5 border-2 border-gray-400 rounded-full checked:border-google-blue transition-colors" checked>
+                                            <div class="absolute w-2.5 h-2.5 bg-google-blue rounded-full scale-0 peer-checked:scale-100 transition-transform"></div>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-medium text-gray-900">Otevřeno (má hlavní otevírací dobu)</p>
+                                            <p class="text-xs text-gray-500">Zobrazovat, kdy má vaše firma otevřeno</p>
+                                        </div>
+                                    </label>
+                                    <label class="flex items-start gap-3 cursor-pointer group">
+                                        <div class="relative flex items-center justify-center mt-0.5">
+                                            <input type="radio" name="profile_business_status" class="peer appearance-none w-5 h-5 border-2 border-gray-400 rounded-full checked:border-google-blue transition-colors">
+                                            <div class="absolute w-2.5 h-2.5 bg-google-blue rounded-full scale-0 peer-checked:scale-100 transition-transform"></div>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-medium text-gray-900">Otevřeno (bez hlavní otevírací doby)</p>
+                                            <p class="text-xs text-gray-500">Neuvádět žádnou otevírací dobu</p>
+                                        </div>
+                                    </label>
+                                    <label class="flex items-start gap-3 cursor-pointer group">
+                                        <div class="relative flex items-center justify-center mt-0.5">
+                                            <input type="radio" name="profile_business_status" class="peer appearance-none w-5 h-5 border-2 border-gray-400 rounded-full checked:border-google-blue transition-colors">
+                                            <div class="absolute w-2.5 h-2.5 bg-google-blue rounded-full scale-0 peer-checked:scale-100 transition-transform"></div>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-medium text-gray-900">Dočasně uzavřeno</p>
+                                            <p class="text-xs text-gray-500">Ukázat, že vaše firma v budoucnu zase otevře</p>
+                                        </div>
+                                    </label>
+                                    <label class="flex items-start gap-3 cursor-pointer group">
+                                        <div class="relative flex items-center justify-center mt-0.5">
+                                            <input type="radio" name="profile_business_status" class="peer appearance-none w-5 h-5 border-2 border-gray-400 rounded-full checked:border-google-blue transition-colors">
+                                            <div class="absolute w-2.5 h-2.5 bg-google-blue rounded-full scale-0 peer-checked:scale-100 transition-transform"></div>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-medium text-gray-900">Trvale uzavřeno</p>
+                                            <p class="text-xs text-gray-500">Ukázat, že vaše firma už neexistuje</p>
+                                        </div>
+                                    </label>
+                                </div>
+                                
+                                <div class="space-y-1 border-t border-gray-200 pt-4" id="profile-hours-container">
+                                    <!-- Generované dny -->
+                                    <div class="day-row flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-4 py-3 border-b border-gray-100 last:border-0 items-start">
+                                        <div class="w-32 pt-2 shrink-0">
+                                            <p class="text-sm font-medium text-gray-900 mb-2 capitalize">pondělí</p>
+                                            <label class="flex items-center gap-2 cursor-pointer w-max">
+                                                <div class="relative flex items-center">
+                                                    <input type="checkbox" class="peer appearance-none w-5 h-5 border-2 border-gray-400 rounded checked:bg-google-blue checked:border-google-blue transition-colors" onchange="toggleDayClosed(this)">
+                                                    <i class="fa-solid fa-check absolute text-white text-xs left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 peer-checked:opacity-100"></i>
+                                                </div>
+                                                <span class="text-sm text-gray-700">Zavřeno</span>
+                                            </label>
+                                        </div>
+                                        <div class="flex-1 space-y-2 time-container">
+                                            <div class="flex items-center gap-3 time-row">
+                                                <div class="relative border border-gray-300 rounded px-3 py-2 w-32 focus-within:border-google-blue focus-within:ring-1 focus-within:ring-google-blue transition-colors bg-white">
+                                                    <label class="absolute -top-2 left-2 bg-white px-1 text-[10px] text-gray-500">Otevírá:</label>
+                                                    <input type="text" class="w-full text-sm outline-none text-gray-900 bg-transparent" value="7:30">
+                                                </div>
+                                                <span class="text-gray-400">-</span>
+                                                <div class="relative border border-gray-300 rounded px-3 py-2 w-32 focus-within:border-google-blue focus-within:ring-1 focus-within:ring-google-blue transition-colors bg-white">
+                                                    <label class="absolute -top-2 left-2 bg-white px-1 text-[10px] text-gray-500">Zavírá:</label>
+                                                    <input type="text" class="w-full text-sm outline-none text-gray-900 bg-transparent" value="16:00">
+                                                </div>
+                                                <button onclick="addTimeRow(this)" class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors"><i class="fa-solid fa-plus"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="day-row flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-4 py-3 border-b border-gray-100 last:border-0 items-start">
+                                        <div class="w-32 pt-2 shrink-0">
+                                            <p class="text-sm font-medium text-gray-900 mb-2 capitalize">úterý</p>
+                                            <label class="flex items-center gap-2 cursor-pointer w-max">
+                                                <div class="relative flex items-center">
+                                                    <input type="checkbox" class="peer appearance-none w-5 h-5 border-2 border-gray-400 rounded checked:bg-google-blue checked:border-google-blue transition-colors" onchange="toggleDayClosed(this)">
+                                                    <i class="fa-solid fa-check absolute text-white text-xs left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 peer-checked:opacity-100"></i>
+                                                </div>
+                                                <span class="text-sm text-gray-700">Zavřeno</span>
+                                            </label>
+                                        </div>
+                                        <div class="flex-1 space-y-2 time-container">
+                                            <div class="flex items-center gap-3 time-row">
+                                                <div class="relative border border-gray-300 rounded px-3 py-2 w-32 focus-within:border-google-blue focus-within:ring-1 focus-within:ring-google-blue transition-colors bg-white">
+                                                    <label class="absolute -top-2 left-2 bg-white px-1 text-[10px] text-gray-500">Otevírá:</label>
+                                                    <input type="text" class="w-full text-sm outline-none text-gray-900 bg-transparent" value="7:30">
+                                                </div>
+                                                <span class="text-gray-400">-</span>
+                                                <div class="relative border border-gray-300 rounded px-3 py-2 w-32 focus-within:border-google-blue focus-within:ring-1 focus-within:ring-google-blue transition-colors bg-white">
+                                                    <label class="absolute -top-2 left-2 bg-white px-1 text-[10px] text-gray-500">Zavírá:</label>
+                                                    <input type="text" class="w-full text-sm outline-none text-gray-900 bg-transparent" value="16:00">
+                                                </div>
+                                                <button onclick="addTimeRow(this)" class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors"><i class="fa-solid fa-plus"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="day-row flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-4 py-3 border-b border-gray-100 last:border-0 items-start">
+                                        <div class="w-32 pt-2 shrink-0">
+                                            <p class="text-sm font-medium text-gray-900 mb-2 capitalize">středa</p>
+                                            <label class="flex items-center gap-2 cursor-pointer w-max">
+                                                <div class="relative flex items-center">
+                                                    <input type="checkbox" class="peer appearance-none w-5 h-5 border-2 border-gray-400 rounded checked:bg-google-blue checked:border-google-blue transition-colors" onchange="toggleDayClosed(this)">
+                                                    <i class="fa-solid fa-check absolute text-white text-xs left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 peer-checked:opacity-100"></i>
+                                                </div>
+                                                <span class="text-sm text-gray-700">Zavřeno</span>
+                                            </label>
+                                        </div>
+                                        <div class="flex-1 space-y-2 time-container">
+                                            <div class="flex items-center gap-3 time-row">
+                                                <div class="relative border border-gray-300 rounded px-3 py-2 w-32 focus-within:border-google-blue focus-within:ring-1 focus-within:ring-google-blue transition-colors bg-white">
+                                                    <label class="absolute -top-2 left-2 bg-white px-1 text-[10px] text-gray-500">Otevírá:</label>
+                                                    <input type="text" class="w-full text-sm outline-none text-gray-900 bg-transparent" value="7:30">
+                                                </div>
+                                                <span class="text-gray-400">-</span>
+                                                <div class="relative border border-gray-300 rounded px-3 py-2 w-32 focus-within:border-google-blue focus-within:ring-1 focus-within:ring-google-blue transition-colors bg-white">
+                                                    <label class="absolute -top-2 left-2 bg-white px-1 text-[10px] text-gray-500">Zavírá:</label>
+                                                    <input type="text" class="w-full text-sm outline-none text-gray-900 bg-transparent" value="16:00">
+                                                </div>
+                                                <button onclick="addTimeRow(this)" class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors"><i class="fa-solid fa-plus"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="day-row flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-4 py-3 border-b border-gray-100 last:border-0 items-start">
+                                        <div class="w-32 pt-2 shrink-0">
+                                            <p class="text-sm font-medium text-gray-900 mb-2 capitalize">čtvrtek</p>
+                                            <label class="flex items-center gap-2 cursor-pointer w-max">
+                                                <div class="relative flex items-center">
+                                                    <input type="checkbox" class="peer appearance-none w-5 h-5 border-2 border-gray-400 rounded checked:bg-google-blue checked:border-google-blue transition-colors" onchange="toggleDayClosed(this)">
+                                                    <i class="fa-solid fa-check absolute text-white text-xs left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 peer-checked:opacity-100"></i>
+                                                </div>
+                                                <span class="text-sm text-gray-700">Zavřeno</span>
+                                            </label>
+                                        </div>
+                                        <div class="flex-1 space-y-2 time-container">
+                                            <div class="flex items-center gap-3 time-row">
+                                                <div class="relative border border-gray-300 rounded px-3 py-2 w-32 focus-within:border-google-blue focus-within:ring-1 focus-within:ring-google-blue transition-colors bg-white">
+                                                    <label class="absolute -top-2 left-2 bg-white px-1 text-[10px] text-gray-500">Otevírá:</label>
+                                                    <input type="text" class="w-full text-sm outline-none text-gray-900 bg-transparent" value="7:30">
+                                                </div>
+                                                <span class="text-gray-400">-</span>
+                                                <div class="relative border border-gray-300 rounded px-3 py-2 w-32 focus-within:border-google-blue focus-within:ring-1 focus-within:ring-google-blue transition-colors bg-white">
+                                                    <label class="absolute -top-2 left-2 bg-white px-1 text-[10px] text-gray-500">Zavírá:</label>
+                                                    <input type="text" class="w-full text-sm outline-none text-gray-900 bg-transparent" value="16:00">
+                                                </div>
+                                                <button onclick="addTimeRow(this)" class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors"><i class="fa-solid fa-plus"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="day-row flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-4 py-3 border-b border-gray-100 last:border-0 items-start">
+                                        <div class="w-32 pt-2 shrink-0">
+                                            <p class="text-sm font-medium text-gray-900 mb-2 capitalize">pátek</p>
+                                            <label class="flex items-center gap-2 cursor-pointer w-max">
+                                                <div class="relative flex items-center">
+                                                    <input type="checkbox" class="peer appearance-none w-5 h-5 border-2 border-gray-400 rounded checked:bg-google-blue checked:border-google-blue transition-colors" onchange="toggleDayClosed(this)">
+                                                    <i class="fa-solid fa-check absolute text-white text-xs left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 peer-checked:opacity-100"></i>
+                                                </div>
+                                                <span class="text-sm text-gray-700">Zavřeno</span>
+                                            </label>
+                                        </div>
+                                        <div class="flex-1 space-y-2 time-container">
+                                            <div class="flex items-center gap-3 time-row">
+                                                <div class="relative border border-gray-300 rounded px-3 py-2 w-32 focus-within:border-google-blue focus-within:ring-1 focus-within:ring-google-blue transition-colors bg-white">
+                                                    <label class="absolute -top-2 left-2 bg-white px-1 text-[10px] text-gray-500">Otevírá:</label>
+                                                    <input type="text" class="w-full text-sm outline-none text-gray-900 bg-transparent" value="7:30">
+                                                </div>
+                                                <span class="text-gray-400">-</span>
+                                                <div class="relative border border-gray-300 rounded px-3 py-2 w-32 focus-within:border-google-blue focus-within:ring-1 focus-within:ring-google-blue transition-colors bg-white">
+                                                    <label class="absolute -top-2 left-2 bg-white px-1 text-[10px] text-gray-500">Zavírá:</label>
+                                                    <input type="text" class="w-full text-sm outline-none text-gray-900 bg-transparent" value="16:00">
+                                                </div>
+                                                <button onclick="addTimeRow(this)" class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors"><i class="fa-solid fa-plus"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="day-row flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-4 py-3 border-b border-gray-100 last:border-0 items-start">
+                                        <div class="w-32 pt-2 shrink-0">
+                                            <p class="text-sm font-medium text-gray-900 mb-2 capitalize">sobota</p>
+                                            <label class="flex items-center gap-2 cursor-pointer w-max">
+                                                <div class="relative flex items-center">
+                                                    <input type="checkbox" class="peer appearance-none w-5 h-5 border-2 border-gray-400 rounded checked:bg-google-blue checked:border-google-blue transition-colors" checked onchange="toggleDayClosed(this)">
+                                                    <i class="fa-solid fa-check absolute text-white text-xs left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 peer-checked:opacity-100"></i>
+                                                </div>
+                                                <span class="text-sm text-gray-700">Zavřeno</span>
+                                            </label>
+                                        </div>
+                                        <div class="flex-1 space-y-2 time-container hidden">
+                                        </div>
+                                    </div>
+
+                                    <div class="day-row flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-4 py-3 border-b border-gray-100 last:border-0 items-start">
+                                        <div class="w-32 pt-2 shrink-0">
+                                            <p class="text-sm font-medium text-gray-900 mb-2 capitalize">neděle</p>
+                                            <label class="flex items-center gap-2 cursor-pointer w-max">
+                                                <div class="relative flex items-center">
+                                                    <input type="checkbox" class="peer appearance-none w-5 h-5 border-2 border-gray-400 rounded checked:bg-google-blue checked:border-google-blue transition-colors" checked onchange="toggleDayClosed(this)">
+                                                    <i class="fa-solid fa-check absolute text-white text-xs left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 peer-checked:opacity-100"></i>
+                                                </div>
+                                                <span class="text-sm text-gray-700">Zavřeno</span>
+                                            </label>
+                                        </div>
+                                        <div class="flex-1 space-y-2 time-container hidden">
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="flex gap-3 mt-6">
+                                    <button onclick="saveInlineEdit('edit-block-hours', null, null, false, true)" class="bg-google-blue text-white px-6 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition">Uložit</button>
+                                    <button onclick="toggleInlineEdit('edit-block-hours')" class="bg-white border border-gray-300 text-google-blue px-6 py-2 rounded-md text-sm font-medium hover:bg-gray-50 transition">Zrušit</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Speciální otevírací doba -->
+                        <div class="editable-block group p-4 -mx-4 rounded-lg border-b border-gray-100" id="edit-block-special-hours">
+                            <div class="display-container flex justify-between items-start" onclick="toggleInlineEdit('edit-block-special-hours')">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900 mb-1">Speciální otevírací doba</p>
+                                    <p class="text-sm text-gray-400 italic" id="val-special-hours">Nenastaveno</p>
+                                </div>
+                                <i class="fa-solid fa-pen text-gray-400 edit-icon mt-1 group-hover:text-brand-600"></i>
+                            </div>
+                            <!-- In-line Edit Container -->
+                            <div class="inline-edit-container">
+                                <h4 class="text-lg font-normal text-gray-900 mb-2">Speciální otevírací doba</h4>
+                                <p class="text-sm text-gray-500 mb-6">Nastavte otevírací dobu pro dny, kdy má vaše firma nestandardní provoz, například na státní svátky. <a href="#" class="text-google-blue hover:underline">Další informace</a></p>
+                                
+                                <div class="space-y-4">
+                                    <div>
+                                        <label class="block text-xs font-medium text-gray-500 mb-1 uppercase tracking-wide">Datum svátku / události</label>
+                                        <input type="date" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:border-google-blue focus:ring-1 focus:ring-google-blue mb-4 transition" onchange="document.getElementById('profile-special-hours-container').classList.remove('hidden')">
+                                    </div>
+                                    
+                                    <!-- Po výběru data se zobrazí tento blok pro zadání času -->
+                                    <div id="profile-special-hours-container" class="hidden day-row flex flex-col sm:flex-row sm:items-start gap-4 pt-4 border-t border-gray-100 items-start">
+                                        <div class="w-32 pt-2 shrink-0">
+                                            <label class="flex items-center gap-2 cursor-pointer w-max">
+                                                <div class="relative flex items-center">
+                                                    <input type="checkbox" class="peer appearance-none w-5 h-5 border-2 border-gray-400 rounded checked:bg-google-blue checked:border-google-blue transition-colors" onchange="toggleDayClosed(this)">
+                                                    <i class="fa-solid fa-check absolute text-white text-xs left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 peer-checked:opacity-100"></i>
+                                                </div>
+                                                <span class="text-sm text-gray-700">Zavřeno</span>
+                                            </label>
+                                        </div>
+                                        <div class="flex-1 space-y-2 time-container">
+                                            <div class="flex items-center gap-3 time-row">
+                                                <div class="relative border border-gray-300 rounded px-3 py-2 w-32 focus-within:border-google-blue focus-within:ring-1 focus-within:ring-google-blue transition-colors bg-white">
+                                                    <label class="absolute -top-2 left-2 bg-white px-1 text-[10px] text-gray-500">Otevírá:</label>
+                                                    <input type="text" class="w-full text-sm outline-none text-gray-900 bg-transparent" value="7:30">
+                                                </div>
+                                                <span class="text-gray-400">-</span>
+                                                <div class="relative border border-gray-300 rounded px-3 py-2 w-32 focus-within:border-google-blue focus-within:ring-1 focus-within:ring-google-blue transition-colors bg-white">
+                                                    <label class="absolute -top-2 left-2 bg-white px-1 text-[10px] text-gray-500">Zavírá:</label>
+                                                    <input type="text" class="w-full text-sm outline-none text-gray-900 bg-transparent" value="16:00">
+                                                </div>
+                                                <button onclick="addTimeRow(this)" class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors"><i class="fa-solid fa-plus"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex gap-3 mt-6">
+                                    <button onclick="saveInlineEdit('edit-block-special-hours', null, 'val-special-hours', false, false, true)" class="bg-google-blue text-white px-6 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition">Uložit</button>
+                                    <button onclick="toggleInlineEdit('edit-block-special-hours')" class="bg-white border border-gray-300 text-google-blue px-6 py-2 rounded-md text-sm font-medium hover:bg-gray-50 transition">Zrušit</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- SEKCE: OTEVÍRACÍ DOBA -->
+                    <div id="sec-oteviraci" class="mb-10 pt-4">
+                        <h3 class="text-base font-medium text-gray-900 mb-4">Otevírací doba</h3>
+                        
+                        <!-- Běžná otevírací doba -->
+                        <div class="editable-block group p-4 -mx-4 rounded-lg border-b border-gray-100" id="edit-block-hours">
+                            <div class="display-container flex justify-between items-start" onclick="toggleInlineEdit('edit-block-hours')">
+                                <div class="w-full">
+                                    <p class="text-sm font-medium text-gray-900 mb-3">Otevírací doba</p>
+                                    <div class="grid grid-cols-[100px_1fr] gap-2 text-sm text-gray-600">
+                                        <div class="font-medium text-gray-900">pondělí</div><div>7:30–16:00</div>
+                                        <div class="font-medium text-gray-900">úterý</div><div>7:30–16:00</div>
+                                        <div class="font-medium text-gray-900">středa</div><div>7:30–16:00</div>
+                                        <div class="font-medium text-gray-900">čtvrtek</div><div>7:30–16:00</div>
+                                        <div class="font-medium text-gray-900">pátek</div><div>7:30–16:00</div>
+                                        <div class="font-medium text-gray-900">sobota</div><div>Zavřeno</div>
+                                        <div class="font-medium text-gray-900">neděle</div><div>Zavřeno</div>
+                                    </div>
+                                </div>
+                                <i class="fa-solid fa-pen text-gray-400 edit-icon mt-1 group-hover:text-brand-600 ml-4 shrink-0"></i>
+                            </div>
+                            <!-- In-line Edit Container pro otevírací dobu -->
+                            <div class="inline-edit-container">
+                                <h4 class="text-lg font-normal text-gray-900 mb-2">Provozní doba</h4>
+                                <p class="text-sm text-gray-500 mb-6">Nastavte hlavní otevírací dobu, nebo označte firmu jako zavřenou. <a href="#" class="text-blue-600 hover:underline">Další informace</a></p>
+                                
+                                <div class="mb-6 space-y-4">
+                                    <label class="flex items-start gap-3 cursor-pointer group">
+                                        <div class="relative flex items-center justify-center mt-0.5">
+                                            <input type="radio" name="profile_business_status" class="peer appearance-none w-5 h-5 border-2 border-gray-400 rounded-full checked:border-blue-600 transition-colors" checked>
+                                            <div class="absolute w-2.5 h-2.5 bg-blue-600 rounded-full scale-0 peer-checked:scale-100 transition-transform"></div>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-medium text-gray-900">Otevřeno (má hlavní otevírací dobu)</p>
+                                            <p class="text-xs text-gray-500">Zobrazovat, kdy má vaše firma otevřeno</p>
+                                        </div>
+                                    </label>
+                                    <label class="flex items-start gap-3 cursor-pointer group">
+                                        <div class="relative flex items-center justify-center mt-0.5">
+                                            <input type="radio" name="profile_business_status" class="peer appearance-none w-5 h-5 border-2 border-gray-400 rounded-full checked:border-blue-600 transition-colors">
+                                            <div class="absolute w-2.5 h-2.5 bg-blue-600 rounded-full scale-0 peer-checked:scale-100 transition-transform"></div>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-medium text-gray-900">Otevřeno (bez hlavní otevírací doby)</p>
+                                            <p class="text-xs text-gray-500">Neuvádět žádnou otevírací dobu</p>
+                                        </div>
+                                    </label>
+                                    <label class="flex items-start gap-3 cursor-pointer group">
+                                        <div class="relative flex items-center justify-center mt-0.5">
+                                            <input type="radio" name="profile_business_status" class="peer appearance-none w-5 h-5 border-2 border-gray-400 rounded-full checked:border-blue-600 transition-colors">
+                                            <div class="absolute w-2.5 h-2.5 bg-blue-600 rounded-full scale-0 peer-checked:scale-100 transition-transform"></div>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-medium text-gray-900">Dočasně uzavřeno</p>
+                                            <p class="text-xs text-gray-500">Ukázat, že vaše firma v budoucnu zase otevře</p>
+                                        </div>
+                                    </label>
+                                    <label class="flex items-start gap-3 cursor-pointer group">
+                                        <div class="relative flex items-center justify-center mt-0.5">
+                                            <input type="radio" name="profile_business_status" class="peer appearance-none w-5 h-5 border-2 border-gray-400 rounded-full checked:border-blue-600 transition-colors">
+                                            <div class="absolute w-2.5 h-2.5 bg-blue-600 rounded-full scale-0 peer-checked:scale-100 transition-transform"></div>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-medium text-gray-900">Trvale uzavřeno</p>
+                                            <p class="text-xs text-gray-500">Ukázat, že vaše firma už neexistuje</p>
+                                        </div>
+                                    </label>
+                                </div>
+                                
+                                <div class="space-y-1 border-t border-gray-200 pt-4" id="profile-hours-container">
+                                    <!-- Dny budou vygenerovány JS -->
+                                </div>
+
+                                <div class="flex gap-3 mt-6">
+                                    <button onclick="saveInlineEdit('edit-block-hours', null, null, false, true)" class="bg-blue-600 text-white px-6 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition">Uložit</button>
+                                    <button onclick="toggleInlineEdit('edit-block-hours')" class="bg-white border border-gray-300 text-blue-600 px-6 py-2 rounded-md text-sm font-medium hover:bg-gray-50 transition">Zrušit</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Speciální otevírací doba -->
+                        <div class="editable-block group p-4 -mx-4 rounded-lg border-b border-gray-100" id="edit-block-special-hours">
+                            <div class="display-container flex justify-between items-start" onclick="toggleInlineEdit('edit-block-special-hours')">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900 mb-1">Speciální otevírací doba</p>
+                                    <p class="text-sm text-gray-400 italic" id="val-special-hours">Nenastaveno</p>
+                                </div>
+                                <i class="fa-solid fa-pen text-gray-400 edit-icon mt-1 group-hover:text-brand-600"></i>
+                            </div>
+                            <!-- In-line Edit Container -->
+                            <div class="inline-edit-container">
+                                <h4 class="text-lg font-normal text-gray-900 mb-2">Speciální otevírací doba</h4>
+                                <p class="text-sm text-gray-500 mb-6">Nastavte otevírací dobu pro dny, kdy má vaše firma nestandardní provoz, například na státní svátky. <a href="#" class="text-blue-600 hover:underline">Další informace</a></p>
+                                
+                                <div class="space-y-4">
+                                    <div>
+                                        <label class="block text-xs font-medium text-gray-500 mb-1 uppercase tracking-wide">Datum svátku / události</label>
+                                        <input type="date" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 mb-4 transition" onchange="document.getElementById('profile-special-hours-container').classList.remove('hidden')">
+                                    </div>
+                                    
+                                    <!-- Po výběru data se zobrazí tento blok pro zadání času -->
+                                    <div id="profile-special-hours-container" class="hidden day-row flex flex-col sm:flex-row sm:items-start gap-4 pt-4 border-t border-gray-100 items-start">
+                                        <div class="w-32 pt-2 shrink-0">
+                                            <label class="flex items-center gap-2 cursor-pointer w-max">
+                                                <div class="relative flex items-center">
+                                                    <input type="checkbox" class="peer appearance-none w-5 h-5 border-2 border-gray-400 rounded checked:bg-blue-600 checked:border-blue-600 transition-colors" onchange="toggleDayClosed(this)">
+                                                    <i class="fa-solid fa-check absolute text-white text-xs left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 peer-checked:opacity-100"></i>
+                                                </div>
+                                                <span class="text-sm text-gray-700">Zavřeno</span>
+                                            </label>
+                                        </div>
+                                        <div class="flex-1 space-y-2 time-container">
+                                            <div class="flex items-center gap-3 time-row">
+                                                <div class="relative border border-gray-300 rounded px-3 py-2 w-32 focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600 transition-colors bg-white">
+                                                    <label class="absolute -top-2 left-2 bg-white px-1 text-[10px] text-gray-500">Otevírá:</label>
+                                                    <input type="text" class="w-full text-sm outline-none text-gray-900 bg-transparent" value="7:30">
+                                                </div>
+                                                <span class="text-gray-400">-</span>
+                                                <div class="relative border border-gray-300 rounded px-3 py-2 w-32 focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600 transition-colors bg-white">
+                                                    <label class="absolute -top-2 left-2 bg-white px-1 text-[10px] text-gray-500">Zavírá:</label>
+                                                    <input type="text" class="w-full text-sm outline-none text-gray-900 bg-transparent" value="16:00">
+                                                </div>
+                                                <button onclick="addTimeRow(this)" class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors"><i class="fa-solid fa-plus"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex gap-3 mt-6">
+                                    <button onclick="saveInlineEdit('edit-block-special-hours', null, 'val-special-hours', false, false, true)" class="bg-blue-600 text-white px-6 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition">Uložit</button>
+                                    <button onclick="toggleInlineEdit('edit-block-special-hours')" class="bg-white border border-gray-300 text-blue-600 px-6 py-2 rounded-md text-sm font-medium hover:bg-gray-50 transition">Zrušit</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Zbytek sekcí pro scroll test... -->
+                    <div id="sec-vice" class="mb-10 pt-4"><h3 class="text-base font-medium text-gray-900 mb-4">Více</h3><p class="text-sm text-gray-500 mb-8">Zde naleznete další atributy pobočky...</p></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SUB-MODÁL PRO RYCHLOU EDITACI POLÍČKA -->
+    <div id="quick-edit-modal" class="fixed inset-0 bg-gray-900/60 z-[70] hidden flex items-center justify-center px-4 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-lg flex flex-col overflow-hidden transform scale-95 transition-transform duration-300" id="quick-edit-content">
+            <div class="p-6 border-b border-gray-200 flex justify-between items-center bg-gray-50">
+                <h3 class="text-xl font-normal text-gray-900" id="quick-edit-title">Upravit pole</h3>
                 <button onclick="closeQuickEdit()" class="text-gray-400 hover:text-gray-600 w-10 h-10 rounded-full flex items-center justify-center transition">
                     <i class="fa-solid fa-xmark text-lg"></i>
                 </button>
@@ -2316,7 +2718,29 @@
         }
 
         // Funkce pro uložení hodnoty z in-line editoru zpět do textu
-        function saveInlineEdit(blockId, inputId, valId, isTextarea = false) {
+        function saveInlineEdit(blockId, inputId, valId, isTextarea = false, isHours = false, isSpecialHours = false) {
+            if (isHours) {
+                showToast('Otevírací doba byla uložena.');
+                toggleInlineEdit(blockId);
+                return;
+            }
+            if (isSpecialHours) {
+                const dateInput = document.querySelector(`#${blockId} input[type="date"]`).value;
+                const displayEl = document.getElementById(valId);
+                if (dateInput) {
+                    displayEl.innerText = `Nastaveno pro: ${new Date(dateInput).toLocaleDateString('cs-CZ')}`;
+                    displayEl.classList.remove('italic', 'text-gray-400');
+                    displayEl.classList.add('text-gray-600');
+                } else {
+                    displayEl.innerText = 'Nenastaveno';
+                    displayEl.classList.add('italic', 'text-gray-400');
+                    displayEl.classList.remove('text-gray-600');
+                }
+                showToast('Speciální otevírací doba uložena.');
+                toggleInlineEdit(blockId);
+                return;
+            }
+            
             const inputVal = document.getElementById(inputId).value;
             const displayEl = document.getElementById(valId);
             
@@ -2952,7 +3376,47 @@
         // Inicializace při načtení
         window.onload = function() {
             generateProfiles();
+            generateProfileHours();
         };
+
+        // Generování dnů v modálním okně profilu
+        function generateProfileHours() {
+            const container = document.getElementById('profile-hours-container');
+            const days = ['pondělí', 'úterý', 'středa', 'čtvrtek', 'pátek', 'sobota', 'neděle'];
+            let scheduleHtml = '';
+            
+            days.forEach(day => {
+                scheduleHtml += `
+                    <div class="day-row flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-4 py-3 border-b border-gray-100 last:border-0 items-start">
+                        <div class="w-32 pt-2 shrink-0">
+                            <p class="text-sm font-medium text-gray-900 mb-2 capitalize">${day}</p>
+                            <label class="flex items-center gap-2 cursor-pointer w-max">
+                                <div class="relative flex items-center">
+                                    <input type="checkbox" class="peer appearance-none w-5 h-5 border-2 border-gray-400 rounded checked:bg-blue-600 checked:border-blue-600 transition-colors" onchange="toggleDayClosed(this)">
+                                    <i class="fa-solid fa-check absolute text-white text-xs left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 peer-checked:opacity-100"></i>
+                                </div>
+                                <span class="text-sm text-gray-700">Zavřeno</span>
+                            </label>
+                        </div>
+                        <div class="flex-1 space-y-2 time-container">
+                            <div class="flex items-center gap-3 time-row">
+                                <div class="relative border border-gray-300 rounded px-3 py-2 w-32 focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600 transition-colors bg-white">
+                                    <label class="absolute -top-2 left-2 bg-white px-1 text-[10px] text-gray-500">Otevírá:</label>
+                                    <input type="text" class="w-full text-sm outline-none text-gray-900 bg-transparent" value="7:30">
+                                </div>
+                                <span class="text-gray-400">-</span>
+                                <div class="relative border border-gray-300 rounded px-3 py-2 w-32 focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600 transition-colors bg-white">
+                                    <label class="absolute -top-2 left-2 bg-white px-1 text-[10px] text-gray-500">Zavírá:</label>
+                                    <input type="text" class="w-full text-sm outline-none text-gray-900 bg-transparent" value="16:00">
+                                </div>
+                                <button onclick="addTimeRow(this)" class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors"><i class="fa-solid fa-plus"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = scheduleHtml;
+        }
 
     </script>
 </body>
