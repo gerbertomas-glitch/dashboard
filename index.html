@@ -1611,8 +1611,127 @@
                         </div>
                     </div>
 
-                    <!-- Zbytek sekcí pro scroll test... -->
-                    <div id="sec-poloha" class="mb-10 pt-4"><h3 class="text-base font-medium text-gray-900 mb-4">Poloha</h3><p class="text-sm text-gray-500 mb-8">Zde se zobrazuje adresa a mapa pobočky...</p></div>
+                    <!-- SEKCE: POLOHA -->
+                    <div id="sec-poloha" class="mb-10 pt-4">
+                        <h3 class="text-base font-medium text-gray-900 mb-4">Poloha a oblasti</h3>
+                        
+                        <!-- Adresa firmy -->
+                        <div class="editable-block group p-4 -mx-4 rounded-lg border-b border-gray-100" id="edit-block-address">
+                            <div class="display-container flex justify-between items-start" onclick="toggleInlineEdit('edit-block-address')">
+                                <div class="w-full">
+                                    <p class="text-sm font-medium text-gray-900 mb-1">Adresa firmy</p>
+                                    <p class="text-sm text-gray-600 mb-4" id="val-address">Brněnská 346, 674 01 Třebíč</p>
+                                    <!-- Náhled mapy v display módu -->
+                                    <div class="w-full h-48 bg-gray-200 rounded-xl overflow-hidden relative border border-gray-200 pointer-events-none">
+                                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2613.6897127110943!2d15.882196615671191!3d49.21523907932356!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x470d6c1b3f114c0b%3A0x6b77242e8cc97424!2sBrn%C4%9Bnsk%C3%A1%20346%2C%20674%2001%20T%C5%99eb%C3%AD%C4%8D!5e0!3m2!1scs!2scz!4v1686064512345!5m2!1scs!2scz" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                    </div>
+                                </div>
+                                <i class="fa-solid fa-pen text-gray-400 edit-icon mt-1 group-hover:text-brand-600 ml-4 shrink-0"></i>
+                            </div>
+                            <!-- In-line Edit Container -->
+                            <div class="inline-edit-container">
+                                <h4 class="text-lg font-normal text-gray-900 mb-2">Adresa firmy</h4>
+                                <p class="text-sm text-gray-500 mb-6">Pokud vaši firmu zákazníci fyzicky navštěvují, uveďte její adresu a označte v mapě špendlíkem její polohu. <a href="#" class="text-blue-600 hover:underline">Další informace</a></p>
+                                
+                                <div class="flex items-center gap-3 mb-8">
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" value="" class="sr-only peer" checked>
+                                        <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600"></div>
+                                    </label>
+                                    <span class="text-sm font-medium text-gray-900">Ukazovat adresu firmy zákazníkům</span>
+                                </div>
+
+                                <div class="flex flex-col lg:flex-row gap-8 mb-6">
+                                    <!-- Levý sloupec s formulářem -->
+                                    <div class="flex-1 space-y-6">
+                                        <div class="flex items-center gap-2">
+                                            <div class="relative border border-gray-300 rounded-md px-3 py-3 flex-1 bg-white focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600 transition">
+                                                <label class="absolute -top-2 left-2 bg-white px-1 text-[11px] text-gray-500">Země/oblast</label>
+                                                <input type="text" id="input-country" class="w-full text-base outline-none text-gray-900" value="Česko">
+                                            </div>
+                                            <i class="fa-solid fa-circle-info text-gray-600 text-xl" title="Země nemůže být změněna pro existující profil"></i>
+                                        </div>
+
+                                        <div class="relative border border-gray-300 rounded-md px-3 py-3 bg-white focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600 transition">
+                                            <label class="absolute -top-2 left-2 bg-white px-1 text-[11px] text-gray-500">Ulice</label>
+                                            <input type="text" id="input-street" class="w-full text-base outline-none text-gray-900" value="Brněnská 346">
+                                        </div>
+
+                                        <button class="flex items-center gap-2 text-blue-600 font-medium text-sm hover:underline">
+                                            <i class="fa-solid fa-plus text-lg"></i> Přidat řádek adresy (volitelné)
+                                        </button>
+
+                                        <div class="relative border border-gray-300 rounded-md px-3 py-3 bg-white focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600 transition">
+                                            <label class="absolute -top-2 left-2 bg-white px-1 text-[11px] text-gray-500">PSČ</label>
+                                            <input type="text" id="input-zip" class="w-full text-base outline-none text-gray-900" value="674 01">
+                                        </div>
+
+                                        <div class="relative border border-gray-300 rounded-md px-3 py-3 bg-white focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600 transition">
+                                            <label class="absolute -top-2 left-2 bg-white px-1 text-[11px] text-gray-500">Město</label>
+                                            <input type="text" id="input-city" class="w-full text-base outline-none text-gray-900" value="Třebíč">
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Pravý sloupec s interaktivní mapou -->
+                                    <div class="flex-1">
+                                        <div id="map-edit-container" class="w-full h-80 bg-gray-200 rounded-xl relative border border-gray-300 shadow-sm overflow-hidden group">
+                                            <!-- Překryvná vrstva, která "chytá" kliknutí, dokud se nedá Upravit -->
+                                            <div id="map-overlay" class="absolute inset-0 z-10 flex items-start justify-end p-3 transition-colors bg-transparent">
+                                                <button onclick="enableMapEdit(event)" class="bg-white text-blue-600 px-4 py-1.5 rounded text-sm font-medium shadow-sm border border-gray-200 hover:bg-gray-50 transition">Upravit</button>
+                                            </div>
+                                            <!-- Iframe mapy -->
+                                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2613.6897127110943!2d15.882196615671191!3d49.21523907932356!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x470d6c1b3f114c0b%3A0x6b77242e8cc97424!2sBrn%C4%9Bnsk%C3%A1%20346%2C%20674%2001%20T%C5%99eb%C3%AD%C4%8D!5e0!3m2!1scs!2scz!4v1686064512345!5m2!1scs!2scz" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                        </div>
+                                        <p class="text-xs text-gray-500 mt-2 text-center" id="map-hint" style="display: none;"><i class="fa-solid fa-arrows-up-down-left-right mr-1"></i> Posuňte mapu a umístěte špendlík na přesné místo.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex gap-3">
+                                    <button onclick="saveInlineEditAddress()" class="bg-blue-600 text-white px-6 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition">Uložit</button>
+                                    <button onclick="toggleInlineEdit('edit-block-address')" class="bg-white border border-gray-300 text-blue-600 px-6 py-2 rounded-md text-sm font-medium hover:bg-gray-50 transition">Zrušit</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Obslužná oblast -->
+                        <div class="editable-block group p-4 -mx-4 rounded-lg border-b border-gray-100" id="edit-block-service-area">
+                            <div class="display-container flex justify-between items-start" onclick="toggleInlineEdit('edit-block-service-area')">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900 mb-1">Obslužná oblast</p>
+                                    <p class="text-sm text-gray-600" id="val-service-area">Třebíč, Česko</p>
+                                </div>
+                                <i class="fa-solid fa-pen text-gray-400 edit-icon mt-1 group-hover:text-brand-600"></i>
+                            </div>
+                            <!-- In-line Edit Container -->
+                            <div class="inline-edit-container">
+                                <h4 class="text-lg font-normal text-gray-900 mb-2">Obslužná oblast</h4>
+                                <p class="text-sm text-gray-500 mb-6">Uveďte oblasti, ve kterých nabízíte dodání nebo služby. <a href="#" class="text-blue-600 hover:underline">Další informace</a></p>
+                                
+                                <div id="service-area-container">
+                                    <div class="flex items-center gap-4 mb-4 service-area-row">
+                                        <div class="relative border border-gray-300 rounded-md px-3 py-3 flex-1 bg-white focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600 transition">
+                                            <label class="absolute -top-2 left-2 bg-white px-1 text-[11px] text-gray-500">Oblast</label>
+                                            <input type="text" class="w-full text-base outline-none text-gray-900 input-service-area" value="Třebíč, Česko" placeholder="Vyhledejte oblast...">
+                                        </div>
+                                        <button onclick="this.closest('.service-area-row').remove()" class="w-10 h-10 flex items-center justify-center text-gray-500 hover:bg-gray-100 rounded-full transition shrink-0">
+                                            <i class="fa-solid fa-trash-can text-lg"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <button onclick="addServiceArea()" class="flex items-center gap-2 text-blue-600 font-medium text-sm hover:underline mb-8 mt-2">
+                                    <i class="fa-solid fa-plus text-lg"></i> Přidat obslužnou oblast
+                                </button>
+                                
+                                <div class="flex gap-3">
+                                    <button onclick="saveInlineEditServiceArea()" class="bg-blue-600 text-white px-6 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition">Uložit</button>
+                                    <button onclick="toggleInlineEdit('edit-block-service-area')" class="bg-white border border-gray-300 text-blue-600 px-6 py-2 rounded-md text-sm font-medium hover:bg-gray-50 transition">Zrušit</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
                     <div id="sec-oteviraci" class="mb-10 pt-4"><h3 class="text-base font-medium text-gray-900 mb-4">Otevírací doba</h3><p class="text-sm text-gray-500 mb-8">Zde se zobrazuje otevírací doba...</p></div>
                     <div id="sec-vice" class="mb-10 pt-4"><h3 class="text-base font-medium text-gray-900 mb-4">Více</h3><p class="text-sm text-gray-500 mb-8">Zde naleznete další atributy pobočky...</p></div>
                 </div>
@@ -2352,26 +2471,95 @@
             btn.closest('.secondary-category-row').remove();
         }
 
-        // --- Logika pro telefony a předvolby ---
-        let secondaryPhoneCount = 0;
-
-        function selectCountry(typeId, countryCode, prefix) {
-            // Skrytí roletky
-            document.getElementById(`country-dropdown-${typeId}`).classList.add('hidden');
-            // Změna vlajky
-            document.getElementById(`selected-flag-${typeId}`).src = `https://flagcdn.com/w20/${countryCode}.png`;
+        // --- Logika pro Polohu a adresy ---
+        function enableMapEdit(e) {
+            e.stopPropagation(); // Zabrání bublání clicku
+            const overlay = document.getElementById('map-overlay');
+            const hint = document.getElementById('map-hint');
+            
+            // Schováme overlay s tlačítkem, aby šlo klikat do iframu
+            overlay.style.display = 'none';
+            // Zobrazíme nápovědu
+            hint.style.display = 'block';
+            
+            // Zde by v produkci ideálně následovalo předání kontroly nad Google Maps API (enable draging atd.)
+            showToast('Režim úpravy mapy je aktivní. Posuňte mapu na přesnou pozici.');
         }
 
-        // Zavření roletek předvoleb kliknutím jinam
-        document.addEventListener('click', function(event) {
-            const dropdowns = document.querySelectorAll('[id^="country-dropdown-"]');
-            dropdowns.forEach(dropdown => {
-                if (!dropdown.contains(event.target) && !dropdown.previousElementSibling.contains(event.target)) {
-                    dropdown.classList.add('hidden');
+        function saveInlineEditAddress() {
+            const street = document.getElementById('input-street').value;
+            const zip = document.getElementById('input-zip').value;
+            const city = document.getElementById('input-city').value;
+            
+            let displayAddress = '';
+            if(street) displayAddress += street + ', ';
+            if(zip) displayAddress += zip + ' ';
+            if(city) displayAddress += city;
+            
+            const displayEl = document.getElementById('val-address');
+            
+            if (!displayAddress || displayAddress.trim() === '') {
+                displayEl.innerText = 'Nenastaveno';
+                displayEl.classList.add('italic', 'text-gray-400');
+                displayEl.classList.remove('text-gray-600');
+            } else {
+                displayEl.innerText = displayAddress;
+                displayEl.classList.remove('italic', 'text-gray-400');
+                displayEl.classList.add('text-gray-600');
+            }
+            
+            // Vrátíme mapu do read-only módu
+            document.getElementById('map-overlay').style.display = 'flex';
+            document.getElementById('map-hint').style.display = 'none';
+            
+            showToast('Adresa firmy úspěšně uložena.');
+            toggleInlineEdit('edit-block-address');
+        }
+
+        function addServiceArea() {
+            const container = document.getElementById('service-area-container');
+            const rowHtml = `
+                <div class="flex items-center gap-4 mb-4 service-area-row">
+                    <div class="relative border border-gray-300 rounded-md px-3 py-3 flex-1 bg-white focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600 transition">
+                        <label class="absolute -top-2 left-2 bg-white px-1 text-[11px] text-gray-500">Oblast</label>
+                        <input type="text" class="w-full text-base outline-none text-gray-900 input-service-area" value="" placeholder="Vyhledejte oblast...">
+                    </div>
+                    <button onclick="this.closest('.service-area-row').remove()" class="w-10 h-10 flex items-center justify-center text-gray-500 hover:bg-gray-100 rounded-full transition shrink-0">
+                        <i class="fa-solid fa-trash-can text-lg"></i>
+                    </button>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', rowHtml);
+        }
+
+        function saveInlineEditServiceArea() {
+            const container = document.getElementById('service-area-container');
+            const inputs = container.querySelectorAll('.input-service-area');
+            let areas = [];
+            
+            inputs.forEach(input => {
+                if(input.value.trim() !== '') {
+                    areas.push(input.value.trim());
                 }
             });
-        });
 
+            const displayEl = document.getElementById('val-service-area');
+            
+            if (areas.length === 0) {
+                displayEl.innerText = 'Nenastaveno';
+                displayEl.classList.add('italic', 'text-gray-400');
+                displayEl.classList.remove('text-gray-600');
+            } else {
+                displayEl.innerText = areas.join(', ');
+                displayEl.classList.remove('italic', 'text-gray-400');
+                displayEl.classList.add('text-gray-600');
+            }
+            
+            showToast('Obslužná oblast uložena.');
+            toggleInlineEdit('edit-block-service-area');
+        }
+
+        // --- Logika pro telefony ---
         function addSecondaryPhone() {
             secondaryPhoneCount++;
             const container = document.getElementById('secondary-phones-container');
