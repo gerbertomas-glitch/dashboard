@@ -1032,6 +1032,106 @@
         </div>
     </div>
 
+    <!-- MODÁLNÍ OKNO PRO PŘIDÁNÍ OSOBY -->
+    <div id="add-person-modal" class="fixed inset-0 bg-gray-900/60 z-[60] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300 px-4">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-2xl transform scale-95 transition-transform duration-300 overflow-hidden flex flex-col max-h-[90vh]">
+            
+            <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center bg-gray-50 shrink-0">
+                <h3 id="modal-person-title" class="text-lg font-bold text-gray-900">Přidat kontaktní osobu</h3>
+                <button onclick="toggleAddPersonModal()" class="text-gray-400 hover:text-gray-600 transition">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+
+            <div class="p-6 overflow-y-auto flex-1 space-y-8 custom-scrollbar">
+                
+                <div>
+                    <h4 class="font-bold text-gray-900 text-sm mb-4 border-b border-gray-100 pb-2">Osobní údaje</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div>
+                            <label class="label-minimal">Jméno</label>
+                            <input type="text" id="person-name" class="input-minimal" placeholder="Např. Jan">
+                        </div>
+                        <div>
+                            <label class="label-minimal">Příjmení</label>
+                            <input type="text" id="person-surname" class="input-minimal" placeholder="Např. Novák">
+                        </div>
+                        <div>
+                            <label class="label-minimal">E-mail</label>
+                            <input type="email" id="person-email" class="input-minimal" placeholder="E-mailová adresa">
+                        </div>
+                        <div>
+                            <label class="label-minimal">Telefon</label>
+                            <input type="tel" id="person-phone" class="input-minimal" placeholder="+420 ...">
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-gray-900 text-sm mb-4 border-b border-gray-100 pb-2">Oprávnění a role</h4>
+                    <p class="text-xs text-gray-500 mb-4">Vyberte úroveň přístupu, kterou nová osoba získá. Toto nastavení lze později změnit.</p>
+                    
+                    <div class="grid grid-cols-1 gap-3">
+                        
+                        <label class="relative cursor-pointer group">
+                            <input type="radio" name="role" class="peer sr-only role-radio" value="owner">
+                            <div class="border border-gray-200 rounded-xl p-4 flex gap-4 transition-colors hover:border-gray-300">
+                                <div class="w-10 h-10 rounded-full bg-green-50 flex items-center justify-center shrink-0 role-icon text-brand-500 transition-colors">
+                                    <i class="fa-solid fa-crown text-lg"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex justify-between items-start">
+                                        <p class="font-bold text-sm text-gray-900">Primární vlastník</p>
+                                        <i class="fa-solid fa-circle-check text-brand-500 opacity-0 transition-opacity role-check"></i>
+                                    </div>
+                                    <p class="text-xs text-gray-500 mt-1 leading-relaxed">Má plnou kontrolu nad účtem, fakturací a všemi službami. Může přidávat a odstraňovat další uživatele (včetně jiných vlastníků). Nelze ho odstranit bez převedení vlastnictví.</p>
+                                </div>
+                            </div>
+                        </label>
+
+                        <label class="relative cursor-pointer group">
+                            <input type="radio" name="role" class="peer sr-only role-radio" value="admin" checked>
+                            <div class="border border-gray-200 rounded-xl p-4 flex gap-4 transition-colors hover:border-gray-300">
+                                <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center shrink-0 role-icon text-blue-500 transition-colors">
+                                    <i class="fa-solid fa-shield-halved text-lg"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex justify-between items-start">
+                                        <p class="font-bold text-sm text-gray-900">Správce</p>
+                                        <i class="fa-solid fa-circle-check text-brand-500 opacity-0 transition-opacity role-check"></i>
+                                    </div>
+                                    <p class="text-xs text-gray-500 mt-1 leading-relaxed">Může editovat všechny služby a spravovat profily. Má přístup ke statistikám, ale nemůže nahlížet do fakturace ani měnit nastavení jiných uživatelů.</p>
+                                </div>
+                            </div>
+                        </label>
+
+                        <label class="relative cursor-pointer group">
+                            <input type="radio" name="role" class="peer sr-only role-radio" value="viewer">
+                            <div class="border border-gray-200 rounded-xl p-4 flex gap-4 transition-colors hover:border-gray-300">
+                                <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center shrink-0 role-icon text-gray-500 transition-colors">
+                                    <i class="fa-solid fa-eye text-lg"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex justify-between items-start">
+                                        <p class="font-bold text-sm text-gray-900">Čtenář</p>
+                                        <i class="fa-solid fa-circle-check text-brand-500 opacity-0 transition-opacity role-check"></i>
+                                    </div>
+                                    <p class="text-xs text-gray-500 mt-1 leading-relaxed">Má přístup pouze ke čtení dat a statistik napříč aktivními službami. Nemůže provádět žádné změny v profilech ani nakupovat nové služby.</p>
+                                </div>
+                            </div>
+                        </label>
+
+                    </div>
+                </div>
+
+                <div class="px-6 py-4 border-t border-gray-200 bg-gray-50 flex justify-end gap-3 shrink-0">
+                    <button onclick="toggleAddPersonModal()" class="px-5 py-2 rounded-lg text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 transition shadow-sm">Zrušit</button>
+                    <button id="modal-person-submit" onclick="submitPersonForm()" class="px-5 py-2 rounded-lg text-sm font-medium text-white bg-brand-500 hover:bg-brand-600 transition shadow-sm">Přidat osobu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- MODÁLNÍ OKNO PRO DETAILNÍ ÚPRAVU JEDNOHO PROFILU -->
     <div id="profile-edit-modal" class="fixed inset-0 bg-gray-900/60 z-[60] hidden flex items-center justify-center md:p-4 opacity-0 pointer-events-none transition-opacity duration-300">
         <div class="bg-white md:rounded-xl shadow-2xl w-full h-full md:h-auto md:max-h-[90vh] md:max-w-3xl flex flex-col overflow-hidden transform scale-95 transition-transform duration-300">
@@ -1097,7 +1197,7 @@
                         </div>
 
                         <!-- Obchodní kategorie -->
-                        <div class="editable-block group p-4 -mx-4 rounded-lg flex justify-between items-start border-b border-gray-100" id="edit-block-category">
+                        <div class="editable-block group p-4 -mx-4 rounded-lg border-b border-gray-100" id="edit-block-category">
                             <div class="display-container flex justify-between items-start w-full" onclick="toggleInlineEdit('edit-block-category')">
                                 <div>
                                     <p class="text-sm font-medium text-gray-900 mb-1">Obchodní kategorie</p>
@@ -1199,17 +1299,6 @@
                             </div>
                             
                             <div class="display-container">
-                                <!-- Google Info Box -->
-                                <div class="flex items-start md:items-center justify-between gap-4 p-4 bg-white border border-gray-200 rounded-lg mb-3 shadow-sm">
-                                    <div class="flex items-start gap-3">
-                                        <i class="fa-solid fa-circle-info text-blue-600 mt-0.5 md:mt-0"></i>
-                                        <p class="text-sm text-gray-900">Google aktualizoval vaše datum otevření.</p>
-                                    </div>
-                                    <div class="flex gap-4 shrink-0 mt-2 md:mt-0 ml-7 md:ml-0">
-                                        <button class="text-sm font-medium text-blue-600 hover:text-blue-800 transition">Další informace</button>
-                                        <button class="text-sm font-medium text-blue-600 hover:text-blue-800 transition">OK</button>
-                                    </div>
-                                </div>
                                 <p class="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1">Aktuální</p>
                                 <span class="inline-block bg-gray-100 text-gray-500 px-2 py-1 rounded text-sm italic" id="val-date">Nenastaveno</span>
                             </div>
@@ -1274,23 +1363,146 @@
                                 <h4 class="text-lg font-normal text-gray-900 mb-2">Telefonní číslo</h4>
                                 <p class="text-sm text-gray-500 mb-6">Zadejte přímé číslo do vaší firmy. <a href="#" class="text-blue-600 hover:underline">Další informace</a></p>
                                 
-                                <div class="flex gap-4 mb-6">
-                                    <div class="border border-gray-300 rounded-md px-4 py-3 flex items-center gap-2 cursor-pointer hover:bg-gray-50 transition bg-white shrink-0">
-                                        <img src="https://flagcdn.com/w20/cz.png" alt="CZ" class="w-5 h-auto">
-                                        <i class="fa-solid fa-caret-down text-gray-500"></i>
+                                <div class="flex gap-4 mb-4 items-center">
+                                    <div class="relative">
+                                        <div class="border border-gray-300 rounded-md px-4 py-3 flex items-center gap-2 cursor-pointer hover:bg-gray-50 transition bg-white w-24 focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600" onclick="document.getElementById('country-dropdown-primary').classList.toggle('hidden')">
+                                            <img src="https://flagcdn.com/w20/cz.png" alt="CZ" id="selected-flag-primary" class="w-5 h-auto">
+                                            <i class="fa-solid fa-caret-down text-gray-500 text-xs ml-auto"></i>
+                                        </div>
+                                        <!-- Rozbalovací seznam předvoleb -->
+                                        <div id="country-dropdown-primary" class="absolute top-full left-0 mt-1 w-64 bg-white border border-gray-200 rounded-md shadow-lg hidden z-20 max-h-60 overflow-y-auto">
+                                            <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-3 text-sm bg-blue-50 text-blue-600" onclick="selectCountry('primary', 'cz', '+420')">
+                                                <img src="https://flagcdn.com/w20/cz.png" alt="CZ" class="w-5 h-auto"> Česko (+420)
+                                            </div>
+                                            <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-3 text-sm text-gray-700 border-b border-gray-100" onclick="selectCountry('primary', 'sk', '+421')">
+                                                <img src="https://flagcdn.com/w20/sk.png" alt="SK" class="w-5 h-auto"> Slovensko (+421)
+                                            </div>
+                                            <!-- Seznam dalších států -->
+                                            <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-3 text-sm text-gray-700" onclick="selectCountry('primary', 'af', '+93')">
+                                                <img src="https://flagcdn.com/w20/af.png" alt="AF" class="w-5 h-auto"> Afghánistán (+93)
+                                            </div>
+                                            <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-3 text-sm text-gray-700" onclick="selectCountry('primary', 'ax', '+358')">
+                                                <img src="https://flagcdn.com/w20/ax.png" alt="AX" class="w-5 h-auto"> Ålandy (+358)
+                                            </div>
+                                            <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-3 text-sm text-gray-700" onclick="selectCountry('primary', 'al', '+355')">
+                                                <img src="https://flagcdn.com/w20/al.png" alt="AL" class="w-5 h-auto"> Albánie (+355)
+                                            </div>
+                                            <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-3 text-sm text-gray-700" onclick="selectCountry('primary', 'dz', '+213')">
+                                                <img src="https://flagcdn.com/w20/dz.png" alt="DZ" class="w-5 h-auto"> Alžírsko (+213)
+                                            </div>
+                                            <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-3 text-sm text-gray-700" onclick="selectCountry('primary', 'as', '+1')">
+                                                <img src="https://flagcdn.com/w20/as.png" alt="AS" class="w-5 h-auto"> Americká Samoa (+1)
+                                            </div>
+                                            <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-3 text-sm text-gray-700" onclick="selectCountry('primary', 'vi', '+1')">
+                                                <img src="https://flagcdn.com/w20/vi.png" alt="VI" class="w-5 h-auto"> Americké Panenské ostrovy (+1)
+                                            </div>
+                                            <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-3 text-sm text-gray-700" onclick="selectCountry('primary', 'ad', '+376')">
+                                                <img src="https://flagcdn.com/w20/ad.png" alt="AD" class="w-5 h-auto"> Andorra (+376)
+                                            </div>
+                                            <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-3 text-sm text-gray-700" onclick="selectCountry('primary', 'ao', '+244')">
+                                                <img src="https://flagcdn.com/w20/ao.png" alt="AO" class="w-5 h-auto"> Angola (+244)
+                                            </div>
+                                            <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-3 text-sm text-gray-700" onclick="selectCountry('primary', 'ai', '+1')">
+                                                <img src="https://flagcdn.com/w20/ai.png" alt="AI" class="w-5 h-auto"> Anguilla (+1)
+                                            </div>
+                                            <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-3 text-sm text-gray-700" onclick="selectCountry('primary', 'ar', '+54')">
+                                                <img src="https://flagcdn.com/w20/ar.png" alt="AR" class="w-5 h-auto"> Argentina (+54)
+                                            </div>
+                                            <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-3 text-sm text-gray-700" onclick="selectCountry('primary', 'am', '+374')">
+                                                <img src="https://flagcdn.com/w20/am.png" alt="AM" class="w-5 h-auto"> Arménie (+374)
+                                            </div>
+                                            <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-3 text-sm text-gray-700" onclick="selectCountry('primary', 'au', '+61')">
+                                                <img src="https://flagcdn.com/w20/au.png" alt="AU" class="w-5 h-auto"> Austrálie (+61)
+                                            </div>
+                                            <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-3 text-sm text-gray-700" onclick="selectCountry('primary', 'at', '+43')">
+                                                <img src="https://flagcdn.com/w20/at.png" alt="AT" class="w-5 h-auto"> Rakousko (+43)
+                                            </div>
+                                            <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-3 text-sm text-gray-700" onclick="selectCountry('primary', 'be', '+32')">
+                                                <img src="https://flagcdn.com/w20/be.png" alt="BE" class="w-5 h-auto"> Belgie (+32)
+                                            </div>
+                                            <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-3 text-sm text-gray-700" onclick="selectCountry('primary', 'br', '+54')">
+                                                <img src="https://flagcdn.com/w20/br.png" alt="BR" class="w-5 h-auto"> Brazílie (+55)
+                                            </div>
+                                            <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-3 text-sm text-gray-700" onclick="selectCountry('primary', 'bg', '+359')">
+                                                <img src="https://flagcdn.com/w20/bg.png" alt="BG" class="w-5 h-auto"> Bulharsko (+359)
+                                            </div>
+                                            <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-3 text-sm text-gray-700" onclick="selectCountry('primary', 'hr', '+385')">
+                                                <img src="https://flagcdn.com/w20/hr.png" alt="HR" class="w-5 h-auto"> Chorvatsko (+385)
+                                            </div>
+                                            <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-3 text-sm text-gray-700" onclick="selectCountry('primary', 'dk', '+45')">
+                                                <img src="https://flagcdn.com/w20/dk.png" alt="DK" class="w-5 h-auto"> Dánsko (+45)
+                                            </div>
+                                            <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-3 text-sm text-gray-700" onclick="selectCountry('primary', 'ee', '+32')">
+                                                <img src="https://flagcdn.com/w20/ee.png" alt="EE" class="w-5 h-auto"> Estonsko (+372)
+                                            </div>
+                                            <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-3 text-sm text-gray-700" onclick="selectCountry('primary', 'fi', '+358')">
+                                                <img src="https://flagcdn.com/w20/fi.png" alt="FI" class="w-5 h-auto"> Finsko (+358)
+                                            </div>
+                                            <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-3 text-sm text-gray-700" onclick="selectCountry('primary', 'fr', '+33')">
+                                                <img src="https://flagcdn.com/w20/fr.png" alt="FR" class="w-5 h-auto"> Francie (+33)
+                                            </div>
+                                            <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-3 text-sm text-gray-700" onclick="selectCountry('primary', 'de', '+49')">
+                                                <img src="https://flagcdn.com/w20/de.png" alt="DE" class="w-5 h-auto"> Německo (+49)
+                                            </div>
+                                            <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-3 text-sm text-gray-700" onclick="selectCountry('primary', 'gb', '+44')">
+                                                <img src="https://flagcdn.com/w20/gb.png" alt="GB" class="w-5 h-auto"> Velká Británie (+44)
+                                            </div>
+                                            <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-3 text-sm text-gray-700" onclick="selectCountry('primary', 'gr', '+30')">
+                                                <img src="https://flagcdn.com/w20/gr.png" alt="GR" class="w-5 h-auto"> Řecko (+30)
+                                            </div>
+                                            <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-3 text-sm text-gray-700" onclick="selectCountry('primary', 'hu', '+36')">
+                                                <img src="https://flagcdn.com/w20/hu.png" alt="HU" class="w-5 h-auto"> Maďarsko (+36)
+                                            </div>
+                                            <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-3 text-sm text-gray-700" onclick="selectCountry('primary', 'it', '+39')">
+                                                <img src="https://flagcdn.com/w20/it.png" alt="IT" class="w-5 h-auto"> Itálie (+39)
+                                            </div>
+                                            <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-3 text-sm text-gray-700" onclick="selectCountry('primary', 'jp', '+81')">
+                                                <img src="https://flagcdn.com/w20/jp.png" alt="JP" class="w-5 h-auto"> Japonsko (+81)
+                                            </div>
+                                            <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-3 text-sm text-gray-700" onclick="selectCountry('primary', 'lv', '+371')">
+                                                <img src="https://flagcdn.com/w20/lv.png" alt="LV" class="w-5 h-auto"> Lotyšsko (+371)
+                                            </div>
+                                            <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-3 text-sm text-gray-700" onclick="selectCountry('primary', 'lt', '+370')">
+                                                <img src="https://flagcdn.com/w20/lt.png" alt="LT" class="w-5 h-auto"> Litva (+370)
+                                            </div>
+                                            <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-3 text-sm text-gray-700" onclick="selectCountry('primary', 'nl', '+39')">
+                                                <img src="https://flagcdn.com/w20/nl.png" alt="NL" class="w-5 h-auto"> Nizozemsko (+31)
+                                            </div>
+                                            <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-3 text-sm text-gray-700" onclick="selectCountry('primary', 'pl', '+48')">
+                                                <img src="https://flagcdn.com/w20/pl.png" alt="PL" class="w-5 h-auto"> Polsko (+48)
+                                            </div>
+                                            <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-3 text-sm text-gray-700" onclick="selectCountry('primary', 'pt', '+48')">
+                                                <img src="https://flagcdn.com/w20/pt.png" alt="PT" class="w-5 h-auto"> Portugalsko (+351)
+                                            </div>
+                                            <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-3 text-sm text-gray-700" onclick="selectCountry('primary', 'ro', '+40')">
+                                                <img src="https://flagcdn.com/w20/ro.png" alt="RO" class="w-5 h-auto"> Rumunsko (+40)
+                                            </div>
+                                            <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-3 text-sm text-gray-700" onclick="selectCountry('primary', 'es', '+34')">
+                                                <img src="https://flagcdn.com/w20/es.png" alt="ES" class="w-5 h-auto"> Španělsko (+34)
+                                            </div>
+                                            <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-3 text-sm text-gray-700" onclick="selectCountry('primary', 'se', '+46')">
+                                                <img src="https://flagcdn.com/w20/se.png" alt="SE" class="w-5 h-auto"> Švédsko (+46)
+                                            </div>
+                                            <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-3 text-sm text-gray-700" onclick="selectCountry('primary', 'us', '+1')">
+                                                <img src="https://flagcdn.com/w20/us.png" alt="US" class="w-5 h-auto"> USA (+1)
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="relative border border-gray-300 rounded-md px-3 py-3 flex-1 bg-white focus-within:border-brand-500 focus-within:ring-1 focus-within:ring-brand-500 transition">
+                                    <div class="relative border border-gray-300 rounded-md px-3 py-3 flex-1 bg-white focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600 transition">
                                         <label class="absolute -top-2 left-2 bg-white px-1 text-[11px] text-gray-500">Primární telefon</label>
                                         <input type="text" id="input-phone" class="w-full text-base outline-none text-gray-900" value="" placeholder="Zadejte telefon">
                                     </div>
                                 </div>
 
-                                <button class="flex items-center gap-2 text-blue-600 font-medium text-sm hover:underline mb-8">
+                                <!-- Kontejner pro další telefony -->
+                                <div id="secondary-phones-container"></div>
+
+                                <button onclick="addSecondaryPhone()" class="flex items-center gap-2 text-blue-600 font-medium text-sm hover:underline mb-8 mt-2">
                                     <i class="fa-solid fa-plus text-lg"></i> Přidat tel. číslo
                                 </button>
                                 
                                 <div class="flex gap-3">
-                                    <button onclick="saveInlineEdit('edit-block-phone', 'input-phone', 'val-phone')" class="bg-blue-600 text-white px-6 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition">Uložit</button>
+                                    <button onclick="saveInlineEditPhone()" class="bg-blue-600 text-white px-6 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition">Uložit</button>
                                     <button onclick="toggleInlineEdit('edit-block-phone')" class="bg-white border border-gray-300 text-blue-600 px-6 py-2 rounded-md text-sm font-medium hover:bg-gray-50 transition">Zrušit</button>
                                 </div>
                             </div>
@@ -1358,14 +1570,41 @@
                             <!-- In-line Edit Container -->
                             <div class="inline-edit-container">
                                 <h4 class="text-lg font-normal text-gray-900 mb-2">Profily na sociálních sítích</h4>
-                                <p class="text-sm text-gray-500 mb-6">Přidejte odkazy na vaše firemní profily.</p>
+                                <p class="text-sm text-gray-500 mb-6">Získejte si důvěru zákazníků tím, že budete sdílet své profily na sociálních sítích.<br><a href="#" class="text-blue-600 hover:underline">Další informace o profilech na sociálních sítích</a></p>
                                 
-                                <div class="border border-gray-300 rounded-md px-3 py-3 focus-within:border-brand-500 focus-within:ring-1 focus-within:ring-brand-500 transition bg-white mb-6">
-                                    <input type="text" id="input-social" class="w-full text-base outline-none text-gray-900" value="" placeholder="https://...">
+                                <div id="social-profiles-container">
+                                    <!-- Výchozí 1. profil -->
+                                    <div class="flex items-center gap-4 mb-4 social-profile-row">
+                                        <div class="relative border border-gray-300 rounded-md bg-white w-48 shrink-0">
+                                            <label class="absolute -top-2 left-2 bg-white px-1 text-[11px] text-gray-500">Profil na sociální síti</label>
+                                            <select class="w-full text-base outline-none text-gray-900 bg-transparent py-3 pl-10 pr-8 appearance-none cursor-pointer social-platform-select" onchange="updateSocialIcon(this)">
+                                                <option value="facebook" data-icon="fa-facebook" class="text-blue-600">Facebook</option>
+                                                <option value="twitter" data-icon="fa-x-twitter" class="text-black">Twitter</option>
+                                                <option value="youtube" data-icon="fa-youtube" class="text-red-600">YouTube</option>
+                                                <option value="instagram" data-icon="fa-instagram" class="text-pink-600">Instagram</option>
+                                                <option value="linkedin" data-icon="fa-linkedin" class="text-blue-700">LinkedIn</option>
+                                                <option value="pinterest" data-icon="fa-pinterest" class="text-red-500">Pinterest</option>
+                                                <option value="tiktok" data-icon="fa-tiktok" class="text-black">TikTok</option>
+                                            </select>
+                                            <i class="fa-brands fa-facebook text-blue-600 absolute left-3 top-1/2 transform -translate-y-1/2 text-lg pointer-events-none platform-icon"></i>
+                                            <i class="fa-solid fa-caret-down absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 pointer-events-none"></i>
+                                        </div>
+                                        <div class="relative border border-gray-300 rounded-md px-3 py-3 flex-1 bg-white focus-within:border-brand-500 focus-within:ring-1 focus-within:ring-brand-500 transition">
+                                            <label class="absolute -top-2 left-2 bg-white px-1 text-[11px] text-gray-500">Webová adresa</label>
+                                            <input type="url" class="w-full text-base outline-none text-gray-900 social-url-input" value="" placeholder="Webová adresa">
+                                        </div>
+                                        <button onclick="this.closest('.social-profile-row').remove()" class="w-10 h-10 flex items-center justify-center text-gray-500 hover:bg-gray-100 rounded-full transition shrink-0">
+                                            <i class="fa-solid fa-trash-can text-lg"></i>
+                                        </button>
+                                    </div>
                                 </div>
                                 
+                                <button onclick="addSocialProfile()" class="flex items-center gap-2 text-blue-600 font-medium text-sm hover:underline mb-8 mt-2">
+                                    <i class="fa-solid fa-plus text-lg"></i> Přidat profil na sociální síti
+                                </button>
+                                
                                 <div class="flex gap-3">
-                                    <button onclick="saveInlineEdit('edit-block-social', 'input-social', 'val-social')" class="bg-blue-600 text-white px-6 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition">Uložit</button>
+                                    <button onclick="saveInlineEditSocial()" class="bg-blue-600 text-white px-6 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition">Uložit</button>
                                     <button onclick="toggleInlineEdit('edit-block-social')" class="bg-white border border-gray-300 text-blue-600 px-6 py-2 rounded-md text-sm font-medium hover:bg-gray-50 transition">Zrušit</button>
                                 </div>
                             </div>
@@ -1664,12 +1903,12 @@
                                     <div class="flex items-center gap-3 time-row">
                                         <div class="relative border border-gray-300 rounded px-3 py-2 w-32 focus-within:border-brand-500 focus-within:ring-1 focus-within:ring-brand-500 transition-colors bg-white">
                                             <label class="absolute -top-2 left-2 bg-white px-1 text-[10px] text-gray-500">Otevírá:</label>
-                                            <input type="text" class="w-full text-sm outline-none text-gray-900 bg-transparent" value="" placeholder="7:30">
+                                            <input type="text" class="w-full text-sm outline-none text-gray-900 bg-transparent" value="7:30">
                                         </div>
                                         <span class="text-gray-400">-</span>
                                         <div class="relative border border-gray-300 rounded px-3 py-2 w-32 focus-within:border-brand-500 focus-within:ring-1 focus-within:ring-brand-500 transition-colors bg-white">
                                             <label class="absolute -top-2 left-2 bg-white px-1 text-[10px] text-gray-500">Zavírá:</label>
-                                            <input type="text" class="w-full text-sm outline-none text-gray-900 bg-transparent" value="" placeholder="16:00">
+                                            <input type="text" class="w-full text-sm outline-none text-gray-900 bg-transparent" value="16:00">
                                         </div>
                                         <button onclick="addTimeRow(this)" class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors"><i class="fa-solid fa-plus"></i></button>
                                     </div>` : ''}
@@ -1752,12 +1991,12 @@
                                     <div class="flex items-center gap-3 time-row">
                                         <div class="relative border border-gray-300 rounded px-3 py-2 w-32 focus-within:border-brand-500 focus-within:ring-1 focus-within:ring-brand-500 transition-colors bg-white">
                                             <label class="absolute -top-2 left-2 bg-white px-1 text-[10px] text-gray-500">Otevírá:</label>
-                                            <input type="text" class="w-full text-sm outline-none text-gray-900 bg-transparent" value="" placeholder="7:30">
+                                            <input type="text" class="w-full text-sm outline-none text-gray-900 bg-transparent" value="7:30">
                                         </div>
                                         <span class="text-gray-400">-</span>
                                         <div class="relative border border-gray-300 rounded px-3 py-2 w-32 focus-within:border-brand-500 focus-within:ring-1 focus-within:ring-brand-500 transition-colors bg-white">
                                             <label class="absolute -top-2 left-2 bg-white px-1 text-[10px] text-gray-500">Zavírá:</label>
-                                            <input type="text" class="w-full text-sm outline-none text-gray-900 bg-transparent" value="" placeholder="16:00">
+                                            <input type="text" class="w-full text-sm outline-none text-gray-900 bg-transparent" value="16:00">
                                         </div>
                                         <button onclick="addTimeRow(this)" class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors"><i class="fa-solid fa-plus"></i></button>
                                     </div>
@@ -2113,6 +2352,205 @@
             btn.closest('.secondary-category-row').remove();
         }
 
+        // --- Logika pro telefony a předvolby ---
+        let secondaryPhoneCount = 0;
+
+        function selectCountry(typeId, countryCode, prefix) {
+            // Skrytí roletky
+            document.getElementById(`country-dropdown-${typeId}`).classList.add('hidden');
+            // Změna vlajky
+            document.getElementById(`selected-flag-${typeId}`).src = `https://flagcdn.com/w20/${countryCode}.png`;
+        }
+
+        // Zavření roletek předvoleb kliknutím jinam
+        document.addEventListener('click', function(event) {
+            const dropdowns = document.querySelectorAll('[id^="country-dropdown-"]');
+            dropdowns.forEach(dropdown => {
+                if (!dropdown.contains(event.target) && !dropdown.previousElementSibling.contains(event.target)) {
+                    dropdown.classList.add('hidden');
+                }
+            });
+        });
+
+        function addSecondaryPhone() {
+            secondaryPhoneCount++;
+            const container = document.getElementById('secondary-phones-container');
+            const dropId = `secondary-${secondaryPhoneCount}`;
+            
+            const rowHtml = `
+                <div class="flex gap-4 mb-4 secondary-phone-row items-center">
+                    <div class="relative">
+                        <div class="border border-gray-300 rounded-md px-4 py-3 flex items-center gap-2 cursor-pointer hover:bg-gray-50 transition bg-white w-24 focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600" onclick="document.getElementById('country-dropdown-${dropId}').classList.toggle('hidden')">
+                            <img src="https://flagcdn.com/w20/cz.png" alt="CZ" id="selected-flag-${dropId}" class="w-5 h-auto">
+                            <i class="fa-solid fa-caret-down text-gray-500 text-xs ml-auto"></i>
+                        </div>
+                        <!-- Rozbalovací seznam předvoleb (Další) -->
+                        <div id="country-dropdown-${dropId}" class="absolute top-full left-0 mt-1 w-64 bg-white border border-gray-200 rounded-md shadow-lg hidden z-20 max-h-60 overflow-y-auto">
+                            <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-3 text-sm bg-blue-50 text-blue-600" onclick="selectCountry('${dropId}', 'cz', '+420')">
+                                <img src="https://flagcdn.com/w20/cz.png" alt="CZ" class="w-5 h-auto"> Česko (+420)
+                            </div>
+                            <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-3 text-sm text-gray-700 border-b border-gray-100" onclick="selectCountry('${dropId}', 'sk', '+421')">
+                                <img src="https://flagcdn.com/w20/sk.png" alt="SK" class="w-5 h-auto"> Slovensko (+421)
+                            </div>
+                            <!-- Výběr dalších států dle screenshotu a abecedy -->
+                            <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-3 text-sm text-gray-700" onclick="selectCountry('${dropId}', 'af', '+93')">
+                                <img src="https://flagcdn.com/w20/af.png" alt="AF" class="w-5 h-auto"> Afghánistán (+93)
+                            </div>
+                            <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-3 text-sm text-gray-700" onclick="selectCountry('${dropId}', 'ax', '+358')">
+                                <img src="https://flagcdn.com/w20/ax.png" alt="AX" class="w-5 h-auto"> Ålandy (+358)
+                            </div>
+                            <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-3 text-sm text-gray-700" onclick="selectCountry('${dropId}', 'al', '+355')">
+                                <img src="https://flagcdn.com/w20/al.png" alt="AL" class="w-5 h-auto"> Albánie (+355)
+                            </div>
+                            <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-3 text-sm text-gray-700" onclick="selectCountry('${dropId}', 'dz', '+213')">
+                                <img src="https://flagcdn.com/w20/dz.png" alt="DZ" class="w-5 h-auto"> Alžírsko (+213)
+                            </div>
+                            <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-3 text-sm text-gray-700" onclick="selectCountry('${dropId}', 'as', '+1')">
+                                <img src="https://flagcdn.com/w20/as.png" alt="AS" class="w-5 h-auto"> Americká Samoa (+1)
+                            </div>
+                            <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-3 text-sm text-gray-700" onclick="selectCountry('${dropId}', 'vi', '+1')">
+                                <img src="https://flagcdn.com/w20/vi.png" alt="VI" class="w-5 h-auto"> Americké Panenské ostrovy (+1)
+                            </div>
+                            <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-3 text-sm text-gray-700" onclick="selectCountry('${dropId}', 'ad', '+376')">
+                                <img src="https://flagcdn.com/w20/ad.png" alt="AD" class="w-5 h-auto"> Andorra (+376)
+                            </div>
+                            <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-3 text-sm text-gray-700" onclick="selectCountry('${dropId}', 'ao', '+244')">
+                                <img src="https://flagcdn.com/w20/ao.png" alt="AO" class="w-5 h-auto"> Angola (+244)
+                            </div>
+                            <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-3 text-sm text-gray-700" onclick="selectCountry('${dropId}', 'ai', '+1')">
+                                <img src="https://flagcdn.com/w20/ai.png" alt="AI" class="w-5 h-auto"> Anguilla (+1)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative border border-gray-300 rounded-md px-3 py-3 flex-1 bg-white focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600 transition">
+                        <label class="absolute -top-2 left-2 bg-white px-1 text-[11px] text-gray-500">Další telefon</label>
+                        <input type="text" class="w-full text-base outline-none text-gray-900 input-phone-secondary" value="" placeholder="">
+                    </div>
+                    <button onclick="this.closest('.secondary-phone-row').remove()" class="w-10 h-10 flex items-center justify-center text-gray-900 hover:bg-gray-100 rounded-full transition shrink-0">
+                        <i class="fa-solid fa-trash-can text-xl"></i>
+                    </button>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', rowHtml);
+        }
+
+        function saveInlineEditPhone() {
+            const primary = document.getElementById('input-phone').value;
+            
+            // Posbíráme všechny další telefony
+            const secondaryInputs = document.querySelectorAll('.input-phone-secondary');
+            let secondaryText = '';
+            secondaryInputs.forEach((input, index) => {
+                if (input.value.trim() !== '') {
+                    secondaryText += input.value.trim();
+                    if (index < secondaryInputs.length - 1) {
+                        secondaryText += ', ';
+                    }
+                }
+            });
+
+            const displayEl = document.getElementById('val-phone');
+            
+            if (!primary || primary.trim() === '') {
+                displayEl.innerText = 'Nenastaveno';
+                displayEl.classList.add('italic', 'text-gray-400');
+                displayEl.classList.remove('text-gray-600');
+            } else {
+                let text = primary;
+                if (secondaryText !== '') {
+                    text += `, ${secondaryText}`;
+                }
+                displayEl.innerText = text;
+                displayEl.classList.remove('italic', 'text-gray-400');
+                displayEl.classList.add('text-gray-600');
+            }
+            
+            showToast('Telefonní číslo uloženo.');
+            toggleInlineEdit('edit-block-phone');
+        }
+
+        // --- Logika pro sociální sítě ---
+        function updateSocialIcon(selectEl) {
+            const iconEl = selectEl.parentElement.querySelector('.platform-icon');
+            const selectedOption = selectEl.options[selectEl.selectedIndex];
+            const iconClass = selectedOption.getAttribute('data-icon');
+            
+            // Vymazání předchozích tříd ikony
+            iconEl.className = `fa-brands ${iconClass} absolute left-3 top-1/2 transform -translate-y-1/2 text-lg pointer-events-none platform-icon`;
+            
+            // Aplikace barvy podle zvolené sítě
+            if(selectEl.value === 'facebook') iconEl.classList.add('text-blue-600');
+            else if(selectEl.value === 'youtube') iconEl.classList.add('text-red-600');
+            else if(selectEl.value === 'instagram') iconEl.classList.add('text-pink-600');
+            else if(selectEl.value === 'linkedin') iconEl.classList.add('text-blue-700');
+            else if(selectEl.value === 'pinterest') iconEl.classList.add('text-red-500');
+            else iconEl.classList.add('text-black'); // twitter, tiktok
+        }
+
+        function addSocialProfile() {
+            const container = document.getElementById('social-profiles-container');
+            const rowHtml = `
+                <div class="flex items-center gap-4 mb-4 social-profile-row">
+                    <div class="relative border border-gray-300 rounded-md bg-white w-48 shrink-0">
+                        <label class="absolute -top-2 left-2 bg-white px-1 text-[11px] text-gray-500">Profil na sociální síti</label>
+                        <select class="w-full text-base outline-none text-gray-900 bg-transparent py-3 pl-10 pr-8 appearance-none cursor-pointer social-platform-select" onchange="updateSocialIcon(this)">
+                            <option value="facebook" data-icon="fa-facebook" class="text-blue-600">Facebook</option>
+                            <option value="twitter" data-icon="fa-x-twitter" class="text-black">Twitter</option>
+                            <option value="youtube" data-icon="fa-youtube" class="text-red-600">YouTube</option>
+                            <option value="instagram" data-icon="fa-instagram" class="text-pink-600">Instagram</option>
+                            <option value="linkedin" data-icon="fa-linkedin" class="text-blue-700">LinkedIn</option>
+                            <option value="pinterest" data-icon="fa-pinterest" class="text-red-500">Pinterest</option>
+                            <option value="tiktok" data-icon="fa-tiktok" class="text-black">TikTok</option>
+                        </select>
+                        <i class="fa-brands fa-facebook text-blue-600 absolute left-3 top-1/2 transform -translate-y-1/2 text-lg pointer-events-none platform-icon"></i>
+                        <i class="fa-solid fa-caret-down absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 pointer-events-none"></i>
+                    </div>
+                    <div class="relative border border-gray-300 rounded-md px-3 py-3 flex-1 bg-white focus-within:border-brand-500 focus-within:ring-1 focus-within:ring-brand-500 transition">
+                        <label class="absolute -top-2 left-2 bg-white px-1 text-[11px] text-gray-500">Webová adresa</label>
+                        <input type="url" class="w-full text-base outline-none text-gray-900 social-url-input" value="" placeholder="Webová adresa">
+                    </div>
+                    <button onclick="this.closest('.social-profile-row').remove()" class="w-10 h-10 flex items-center justify-center text-gray-500 hover:bg-gray-100 rounded-full transition shrink-0">
+                        <i class="fa-solid fa-trash-can text-lg"></i>
+                    </button>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', rowHtml);
+        }
+
+        function saveInlineEditSocial() {
+            const container = document.getElementById('social-profiles-container');
+            const inputs = container.querySelectorAll('.social-url-input');
+            let firstValid = '';
+            
+            inputs.forEach(input => {
+                if(input.value.trim() !== '' && firstValid === '') {
+                    firstValid = input.value.trim();
+                }
+            });
+
+            const displayEl = document.getElementById('val-social');
+            if (firstValid === '') {
+                displayEl.innerText = 'Nenastaveno';
+                displayEl.classList.add('italic', 'text-gray-400');
+                displayEl.classList.remove('text-gray-600');
+            } else {
+                let text = firstValid;
+                // Zobrazíme počet dalších uložených sítí
+                let validCount = 0;
+                inputs.forEach(input => { if (input.value.trim() !== '') validCount++; });
+                if (validCount > 1) {
+                    text += ` (a dalších ${validCount - 1} profilů)`;
+                }
+                
+                displayEl.innerText = text;
+                displayEl.classList.remove('italic', 'text-gray-400');
+                displayEl.classList.add('text-gray-600');
+            }
+            
+            showToast('Sociální sítě úspěšně uloženy.');
+            toggleInlineEdit('edit-block-social');
+        }
+
         // Uložení specifické pro Datum otevření
         function saveInlineEditDate() {
             const day = document.getElementById('input-date-day').value;
@@ -2179,12 +2617,12 @@
                         <div class="flex items-center gap-3 time-row mt-2">
                             <div class="relative border border-gray-300 rounded px-3 py-2 w-32 focus-within:border-brand-500 focus-within:ring-1 focus-within:ring-brand-500 transition-colors bg-white">
                                 <label class="absolute -top-2 left-2 bg-white px-1 text-[10px] text-gray-500">Otevírá:</label>
-                                <input type="text" class="w-full text-sm outline-none text-gray-900 bg-transparent" value="" placeholder="7:30">
+                                <input type="text" class="w-full text-sm outline-none text-gray-900 bg-transparent" value="7:30">
                             </div>
                             <span class="text-gray-400">-</span>
                             <div class="relative border border-gray-300 rounded px-3 py-2 w-32 focus-within:border-brand-500 focus-within:ring-1 focus-within:ring-brand-500 transition-colors bg-white">
                                 <label class="absolute -top-2 left-2 bg-white px-1 text-[10px] text-gray-500">Zavírá:</label>
-                                <input type="text" class="w-full text-sm outline-none text-gray-900 bg-transparent" value="" placeholder="16:00">
+                                <input type="text" class="w-full text-sm outline-none text-gray-900 bg-transparent" value="16:00">
                             </div>
                             <button onclick="addTimeRow(this)" class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors"><i class="fa-solid fa-plus"></i></button>
                         </div>
@@ -2200,12 +2638,12 @@
                 <div class="flex items-center gap-3 time-row mt-2">
                     <div class="relative border border-gray-300 rounded px-3 py-2 w-32 focus-within:border-brand-500 focus-within:ring-1 focus-within:ring-brand-500 transition-colors bg-white">
                         <label class="absolute -top-2 left-2 bg-white px-1 text-[10px] text-gray-500">Otevírá:</label>
-                        <input type="text" class="w-full text-sm outline-none text-gray-900 bg-transparent" value="" placeholder="12:00">
+                        <input type="text" class="w-full text-sm outline-none text-gray-900 bg-transparent" value="12:00">
                     </div>
                     <span class="text-gray-400">-</span>
                     <div class="relative border border-gray-300 rounded px-3 py-2 w-32 focus-within:border-brand-500 focus-within:ring-1 focus-within:ring-brand-500 transition-colors bg-white">
                         <label class="absolute -top-2 left-2 bg-white px-1 text-[10px] text-gray-500">Zavírá:</label>
-                        <input type="text" class="w-full text-sm outline-none text-gray-900 bg-transparent" value="" placeholder="17:00">
+                        <input type="text" class="w-full text-sm outline-none text-gray-900 bg-transparent" value="17:00">
                     </div>
                     <button onclick="removeTimeRow(this)" class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-full transition-colors"><i class="fa-regular fa-trash-can"></i></button>
                 </div>
@@ -2216,6 +2654,56 @@
         function removeTimeRow(btn) {
             btn.closest('.time-row').remove();
         }
+
+        // Generování 10 fiktivních profilů
+        function generateProfiles() {
+            const tbody = document.getElementById('profiles-tbody');
+            const modalList = document.getElementById('modal-branch-list');
+            let html = '';
+            let modalHtml = '';
+
+            for (let i = 1; i <= 10; i++) {
+                const name = i === 1 ? 'VIEW CZECH' : `Business Power s.r.o. - Pobočka ${i}`;
+                const web = i === 1 ? 'http://viewcz.com/' : `http://www.business-power.cz/pobocka${i}`;
+                const street = i === 1 ? 'Chrastavská 231' : `Bucharova ${2650 + i}/12`;
+                const city = i === 1 ? 'Liberec' : 'Praha 13';
+                const pid = `ID-${1000 + i}`;
+
+                html += `
+                <tr class="hover:bg-gray-50/50 transition group">
+                    <td class="py-4 px-6"><input type="checkbox" class="w-4 h-4 rounded border-gray-300 text-brand-600 focus:ring-brand-500"></td>
+                    <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap profile-id">${pid}</td>
+                    <td class="py-4 px-6 text-sm text-gray-900 font-medium profile-name">${name}</td>
+                    <td class="py-4 px-6 text-sm text-gray-600 profile-street">${street}</td>
+                    <td class="py-4 px-6 text-sm text-gray-600 profile-city">${city}</td>
+                    <td class="py-4 px-6 text-right whitespace-nowrap">
+                        <div class="flex items-center justify-end gap-2">
+                            <button onclick="showToast('Otevírám statistiky')" class="text-gray-400 hover:text-brand-600 p-2 transition" title="Statistiky"><i class="fa-solid fa-chart-simple"></i></button>
+                            <button onclick="showToast('Otevírám profil v Mapách')" class="text-gray-400 hover:text-brand-600 p-2 transition" title="Zobrazit v Google Mapách"><i class="fa-solid fa-map-location-dot"></i></button>
+                            <button onclick="showToast('Otevírám profil ve Vyhledávači')" class="text-gray-400 hover:text-brand-600 p-2 transition" title="Zobrazit v Google Vyhledávači"><i class="fa-brands fa-google"></i></button>
+                            <button onclick="openProfileEditModal()" class="text-gray-400 hover:text-brand-600 p-2 transition" title="Upravit profil"><i class="fa-solid fa-pen"></i></button>
+                        </div>
+                    </td>
+                </tr>`;
+
+                modalHtml += `
+                <label class="flex items-center gap-3 p-3 hover:bg-green-50 border-b border-gray-100 cursor-pointer transition branch-item">
+                    <input type="checkbox" class="w-4 h-4 rounded border-gray-300 text-brand-600 focus:ring-brand-500">
+                    <div>
+                        <p class="text-sm font-medium text-gray-900">${name}</p>
+                        <p class="text-xs text-gray-500">${street}, ${city}</p>
+                    </div>
+                </label>`;
+            }
+            tbody.innerHTML = html;
+            modalList.innerHTML = modalHtml;
+        }
+
+        // Inicializace při načtení
+        window.onload = function() {
+            generateProfiles();
+        };
+
     </script>
 </body>
 </html>
