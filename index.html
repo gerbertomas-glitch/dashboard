@@ -93,6 +93,13 @@
         .editable-block:hover { background-color: #f9fafb; }
         .editable-block .edit-icon { opacity: 0; transition: opacity 0.2s; }
         .editable-block:hover .edit-icon { opacity: 1; }
+
+        /* Nové styly pro in-line editaci (Google styl) */
+        .inline-edit-container { display: none; }
+        .is-editing .inline-edit-container { display: block; }
+        .is-editing .display-container { display: none; }
+        .is-editing.editable-block { background-color: transparent; cursor: default; padding-bottom: 1.5rem; }
+        .is-editing.editable-block:hover { background-color: transparent; }
     </style>
 </head>
 <body class="font-sans text-gray-900 h-screen flex overflow-hidden antialiased">
@@ -1165,57 +1172,160 @@
                         <h3 class="text-base font-medium text-gray-900 mb-4">O vaší firmě</h3>
                         
                         <!-- Název firmy -->
-                        <div class="editable-block group p-4 -mx-4 rounded-lg flex justify-between items-start border-b border-gray-100" onclick="editProfileField('Název firmy', 'AUTOSKLO K+M spol. s r.o.')">
-                            <div>
-                                <p class="text-sm font-medium text-gray-900 mb-1">Název firmy</p>
-                                <p class="text-sm text-gray-600">AUTOSKLO K+M spol. s r.o.</p>
+                        <div class="editable-block group p-4 -mx-4 rounded-lg border-b border-gray-100" id="edit-block-name">
+                            <div class="display-container flex justify-between items-start" onclick="toggleInlineEdit('edit-block-name')">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900 mb-1">Název firmy</p>
+                                    <p class="text-sm text-gray-600" id="val-name">AUTOSKLO K+M spol. s r.o.</p>
+                                </div>
+                                <i class="fa-solid fa-pen text-gray-400 edit-icon mt-1 group-hover:text-brand-600"></i>
                             </div>
-                            <i class="fa-solid fa-pen text-gray-400 edit-icon mt-1 group-hover:text-brand-600"></i>
+                            <!-- In-line Edit Container -->
+                            <div class="inline-edit-container">
+                                <h4 class="text-lg font-normal text-gray-900 mb-2">Název firmy</h4>
+                                <p class="text-sm text-gray-500 mb-4">Zadejte název firmy tak, jak jej vidí zákazníci ve skutečném světě. <a href="#" class="text-blue-600 hover:underline">Další informace</a></p>
+                                
+                                <div class="border border-gray-300 rounded-md px-3 py-3 focus-within:border-brand-500 focus-within:ring-1 focus-within:ring-brand-500 transition bg-white mb-6">
+                                    <input type="text" id="input-name" class="w-full text-base outline-none text-gray-900" value="AUTOSKLO K+M spol. s r.o.">
+                                </div>
+                                
+                                <div class="flex gap-3">
+                                    <button onclick="saveInlineEdit('edit-block-name', 'input-name', 'val-name')" class="bg-blue-600 text-white px-6 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition">Uložit</button>
+                                    <button onclick="toggleInlineEdit('edit-block-name')" class="bg-white border border-gray-300 text-blue-600 px-6 py-2 rounded-md text-sm font-medium hover:bg-gray-50 transition">Zrušit</button>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- Obchodní kategorie -->
-                        <div class="editable-block group p-4 -mx-4 rounded-lg flex justify-between items-start border-b border-gray-100" onclick="editProfileField('Obchodní kategorie', 'Autoskloservis')">
-                            <div>
-                                <p class="text-sm font-medium text-gray-900 mb-1">Obchodní kategorie</p>
-                                <div class="flex items-center gap-2 mb-1">
-                                    <p class="text-sm text-gray-600">Autoskloservis</p>
-                                    <span class="text-[10px] font-bold text-gray-900 border border-gray-200 bg-white px-1.5 py-0.5 rounded shadow-sm">PRIMÁRNÍ</span>
+                        <div class="editable-block group p-4 -mx-4 rounded-lg border-b border-gray-100" id="edit-block-category">
+                            <div class="display-container flex justify-between items-start" onclick="toggleInlineEdit('edit-block-category')">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900 mb-1">Obchodní kategorie</p>
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <p class="text-sm text-gray-600" id="val-category-primary">Autoskloservis</p>
+                                        <span class="text-[10px] font-bold text-gray-900 border border-gray-200 bg-white px-1.5 py-0.5 rounded shadow-sm">PRIMÁRNÍ</span>
+                                    </div>
+                                    <p class="text-sm text-gray-600" id="val-category-secondary">Opravna autoskel</p>
                                 </div>
-                                <p class="text-sm text-gray-600">Opravna autoskel</p>
+                                <i class="fa-solid fa-pen text-gray-400 edit-icon mt-1 group-hover:text-brand-600"></i>
                             </div>
-                            <i class="fa-solid fa-pen text-gray-400 edit-icon mt-1 group-hover:text-brand-600"></i>
+                            <!-- In-line Edit Container -->
+                            <div class="inline-edit-container">
+                                <h4 class="text-lg font-normal text-gray-900 mb-2">Obchodní kategorie</h4>
+                                <p class="text-sm text-gray-500 mb-6">Pomozte zákazníkům najít vaši firmu podle oboru. <a href="#" class="text-blue-600 hover:underline">Další informace</a></p>
+                                
+                                <div class="relative border border-blue-500 rounded-md px-3 py-3 mb-6 bg-white shadow-sm ring-1 ring-blue-500">
+                                    <label class="absolute -top-2 left-2 bg-white px-1 text-[11px] text-blue-600">Primární kategorie*</label>
+                                    <input type="text" id="input-category-primary" class="w-full text-base outline-none text-gray-900" value="Autoskloservis">
+                                </div>
+                                
+                                <div class="flex items-center gap-4 mb-6">
+                                    <div class="relative border border-gray-300 rounded-md px-3 py-3 flex-1 bg-white focus-within:border-brand-500 focus-within:ring-1 focus-within:ring-brand-500 transition">
+                                        <label class="absolute -top-2 left-2 bg-white px-1 text-[11px] text-gray-500">Další kategorie</label>
+                                        <input type="text" id="input-category-secondary" class="w-full text-base outline-none text-gray-900" value="Opravna autoskel">
+                                    </div>
+                                    <button class="w-10 h-10 flex items-center justify-center text-gray-900 hover:bg-gray-100 rounded-full transition shrink-0"><i class="fa-solid fa-xmark text-xl"></i></button>
+                                </div>
+
+                                <button class="flex items-center gap-2 text-blue-600 font-medium text-sm hover:underline mb-8">
+                                    <i class="fa-solid fa-plus text-lg"></i> Přidat další kategorii
+                                </button>
+                                
+                                <div class="flex gap-3">
+                                    <button onclick="saveInlineEditCategory()" class="bg-blue-600 text-white px-6 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition">Uložit</button>
+                                    <button onclick="toggleInlineEdit('edit-block-category')" class="bg-white border border-gray-300 text-blue-600 px-6 py-2 rounded-md text-sm font-medium hover:bg-gray-50 transition">Zrušit</button>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- Popis -->
-                        <div class="editable-block group p-4 -mx-4 rounded-lg flex justify-between items-start border-b border-gray-100" onclick="editProfileField('Popis', 'Autoskloservis K+M se od roku 1992 specializuje na prodej, montáž a opravy autoskel pro osobní i užitková vozidla. Díky dlouholetým zkušenostem a odbornému týmu poskytuje rychlé, kvalitní a spolehlivé služby. Servis zajišťuje opravy poškozených skel i jejich kompletní výměny pro osobní automobily, nákladní vozy, autobusy i stavební techniku. Při práci využívá kvalitní autoskla od renomovaných světových výrobců, jako jsou Pilkington, AGC, Saint-Gobain Sekurit, Fuyao či Glavista, a profesionální montážní materiály. Prioritou společnosti je vysoká kvalita provedení, bezpečnost a maximální spokojenost zákazníků.')">
-                            <div class="pr-4">
-                                <p class="text-sm font-medium text-gray-900 mb-1">Popis</p>
-                                <p class="text-sm text-gray-600 text-justify">Autoskloservis K+M se od roku 1992 specializuje na prodej, montáž a opravy autoskel pro osobní i užitková vozidla. Díky dlouholetým zkušenostem a odbornému týmu poskytuje rychlé, kvalitní a spolehlivé služby. Servis zajišťuje opravy poškozených skel i jejich kompletní výměny pro osobní automobily, nákladní vozy, autobusy i stavební techniku. Při práci využívá kvalitní autoskla od renomovaných světových výrobců, jako jsou Pilkington, AGC, Saint-Gobain Sekurit, Fuyao či Glavista, a profesionální montážní materiály. Prioritou společnosti je vysoká kvalita provedení, bezpečnost a maximální spokojenost zákazníků.</p>
+                        <div class="editable-block group p-4 -mx-4 rounded-lg border-b border-gray-100" id="edit-block-desc">
+                            <div class="display-container flex justify-between items-start" onclick="toggleInlineEdit('edit-block-desc')">
+                                <div class="pr-4">
+                                    <p class="text-sm font-medium text-gray-900 mb-1">Popis</p>
+                                    <p class="text-sm text-gray-600 text-justify" id="val-desc">Autoskloservis K+M se od roku 1992 specializuje na prodej, montáž a opravy autoskel pro osobní i užitková vozidla. Díky dlouholetým zkušenostem a odbornému týmu poskytuje rychlé, kvalitní a spolehlivé služby. Servis zajišťuje opravy poškozených skel i jejich kompletní výměny pro osobní automobily, nákladní vozy, autobusy i stavební techniku. Při práci využívá kvalitní autoskla od renomovaných světových výrobců, jako jsou Pilkington, AGC, Saint-Gobain Sekurit, Fuyao či Glavista, a profesionální montážní materiály. Prioritou společnosti je vysoká kvalita provedení, bezpečnost a maximální spokojenost zákazníků.</p>
+                                </div>
+                                <i class="fa-solid fa-pen text-gray-400 edit-icon mt-1 group-hover:text-brand-600"></i>
                             </div>
-                            <i class="fa-solid fa-pen text-gray-400 edit-icon mt-1 group-hover:text-brand-600"></i>
+                            <!-- In-line Edit Container -->
+                            <div class="inline-edit-container">
+                                <h4 class="text-lg font-normal text-gray-900 mb-2">Popis</h4>
+                                <p class="text-sm text-gray-500 mb-4">Popište svou firmu zákazníkům na Googlu. <a href="#" class="text-blue-600 hover:underline">Další informace</a></p>
+                                
+                                <div class="border border-gray-300 rounded-md px-3 py-3 focus-within:border-brand-500 focus-within:ring-1 focus-within:ring-brand-500 transition bg-white mb-2">
+                                    <textarea id="input-desc" class="w-full text-base outline-none text-gray-900 h-40 resize-none text-justify">Autoskloservis K+M se od roku 1992 specializuje na prodej, montáž a opravy autoskel pro osobní i užitková vozidla. Díky dlouholetým zkušenostem a odbornému týmu poskytuje rychlé, kvalitní a spolehlivé služby. Servis zajišťuje opravy poškozených skel i jejich kompletní výměny pro osobní automobily, nákladní vozy, autobusy i stavební techniku. Při práci využívá kvalitní autoskla od renomovaných světových výrobců, jako jsou Pilkington, AGC, Saint-Gobain Sekurit, Fuyao či Glavista, a profesionální montážní materiály. Prioritou společnosti je vysoká kvalita provedení, bezpečnost a maximální spokojenost zákazníků.</textarea>
+                                </div>
+                                <p class="text-xs text-gray-500 text-right mb-6">615/750</p>
+                                
+                                <div class="flex gap-3">
+                                    <button onclick="saveInlineEdit('edit-block-desc', 'input-desc', 'val-desc', true)" class="bg-blue-600 text-white px-6 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition">Uložit</button>
+                                    <button onclick="toggleInlineEdit('edit-block-desc')" class="bg-white border border-gray-300 text-blue-600 px-6 py-2 rounded-md text-sm font-medium hover:bg-gray-50 transition">Zrušit</button>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- Datum otevření -->
-                        <div class="editable-block group p-4 -mx-4 rounded-lg border-b border-gray-100" onclick="editProfileField('Datum otevření', '1. března 2013')">
-                            <div class="flex items-center gap-2 mb-3">
+                        <div class="editable-block group p-4 -mx-4 rounded-lg border-b border-gray-100" id="edit-block-date">
+                            <div class="display-container flex items-center gap-2 mb-3 cursor-pointer" onclick="toggleInlineEdit('edit-block-date')">
                                 <p class="text-sm font-medium text-gray-900">Datum otevření</p>
                                 <i class="fa-solid fa-pen text-gray-400 text-xs edit-icon hidden group-hover:block group-hover:text-brand-600"></i>
                             </div>
                             
-                            <!-- Google Info Box -->
-                            <div class="flex items-start md:items-center justify-between gap-4 p-4 bg-white border border-gray-200 rounded-lg mb-3 shadow-sm">
-                                <div class="flex items-start gap-3">
-                                    <i class="fa-solid fa-circle-info text-blue-600 mt-0.5 md:mt-0"></i>
-                                    <p class="text-sm text-gray-900">Google aktualizoval vaše datum otevření.</p>
+                            <div class="display-container">
+                                <!-- Google Info Box -->
+                                <div class="flex items-start md:items-center justify-between gap-4 p-4 bg-white border border-gray-200 rounded-lg mb-3 shadow-sm">
+                                    <div class="flex items-start gap-3">
+                                        <i class="fa-solid fa-circle-info text-blue-600 mt-0.5 md:mt-0"></i>
+                                        <p class="text-sm text-gray-900">Google aktualizoval vaše datum otevření.</p>
+                                    </div>
+                                    <div class="flex gap-4 shrink-0 mt-2 md:mt-0 ml-7 md:ml-0">
+                                        <button class="text-sm font-medium text-blue-600 hover:text-blue-800 transition">Další informace</button>
+                                        <button class="text-sm font-medium text-blue-600 hover:text-blue-800 transition">OK</button>
+                                    </div>
                                 </div>
-                                <div class="flex gap-4 shrink-0 mt-2 md:mt-0 ml-7 md:ml-0">
-                                    <button class="text-sm font-medium text-blue-600 hover:text-blue-800 transition">Další informace</button>
-                                    <button class="text-sm font-medium text-blue-600 hover:text-blue-800 transition">OK</button>
+                                <p class="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1">Aktuální</p>
+                                <span class="inline-block bg-blue-50 text-gray-900 px-2 py-1 rounded text-sm" id="val-date">1. března 2013</span>
+                            </div>
+
+                            <!-- In-line Edit Container -->
+                            <div class="inline-edit-container">
+                                <h4 class="text-lg font-normal text-gray-900 mb-2">Datum otevření</h4>
+                                <p class="text-sm text-gray-500 mb-6">Přidejte datum, odkdy na této máte nebo budete mít otevřeno. <a href="#" class="text-blue-600 hover:underline">Další informace</a></p>
+                                
+                                <div class="flex gap-4 mb-6">
+                                    <div class="relative border border-gray-300 rounded-md px-3 py-3 w-28 focus-within:border-brand-500 focus-within:ring-1 focus-within:ring-brand-500 transition bg-white">
+                                        <label class="absolute -top-2 left-2 bg-white px-1 text-[11px] text-gray-500">Rok*</label>
+                                        <input type="text" id="input-date-year" class="w-full text-base outline-none text-gray-900" value="2013">
+                                        <p class="absolute -bottom-5 left-1 text-xs text-gray-500">Povinné</p>
+                                    </div>
+                                    <div class="relative border border-gray-300 rounded-md px-3 py-3 w-40 focus-within:border-brand-500 focus-within:ring-1 focus-within:ring-brand-500 transition bg-white">
+                                        <label class="absolute -top-2 left-2 bg-white px-1 text-[11px] text-gray-500">Měsíc*</label>
+                                        <select id="input-date-month" class="w-full text-base outline-none text-gray-900 bg-transparent appearance-none cursor-pointer">
+                                            <option value="ledna">ledna</option>
+                                            <option value="února">února</option>
+                                            <option value="března" selected>března</option>
+                                            <option value="dubna">dubna</option>
+                                        </select>
+                                        <i class="fa-solid fa-caret-down absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 pointer-events-none"></i>
+                                        <p class="absolute -bottom-5 left-1 text-xs text-gray-500">Povinné</p>
+                                    </div>
+                                    <div class="relative border border-gray-300 rounded-md px-3 py-3 w-24 focus-within:border-brand-500 focus-within:ring-1 focus-within:ring-brand-500 transition bg-white">
+                                        <label class="absolute -top-2 left-2 bg-white px-1 text-[11px] text-gray-500">Den</label>
+                                        <select id="input-date-day" class="w-full text-base outline-none text-gray-900 bg-transparent appearance-none cursor-pointer">
+                                            <option value="1" selected>1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                        </select>
+                                        <i class="fa-solid fa-caret-down absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 pointer-events-none"></i>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex gap-4 items-center pt-4">
+                                    <button onclick="saveInlineEditDate()" class="bg-blue-600 text-white px-6 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition">Uložit</button>
+                                    <button onclick="toggleInlineEdit('edit-block-date')" class="bg-white border border-gray-300 text-blue-600 px-6 py-2 rounded-md text-sm font-medium hover:bg-gray-50 transition">Zrušit</button>
+                                    <button class="text-blue-600 text-sm font-medium hover:underline ml-2">Smazat</button>
                                 </div>
                             </div>
-                            
-                            <p class="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1">Aktuální</p>
-                            <span class="inline-block bg-blue-50 text-gray-900 px-2 py-1 rounded text-sm">1. března 2013</span>
                         </div>
                     </div>
 
@@ -1224,12 +1334,114 @@
                         <h3 class="text-base font-medium text-gray-900 mb-4">Kontaktní údaje</h3>
                         
                         <!-- Telefonní číslo -->
-                        <div class="editable-block group p-4 -mx-4 rounded-lg flex justify-between items-start border-b border-gray-100" onclick="editProfileField('Telefonní číslo', '734 705 823')">
-                            <div>
-                                <p class="text-sm font-medium text-gray-900 mb-1">Telefonní číslo</p>
-                                <p class="text-sm text-gray-600">734 705 823</p>
+                        <div class="editable-block group p-4 -mx-4 rounded-lg border-b border-gray-100" id="edit-block-phone">
+                            <div class="display-container flex justify-between items-start" onclick="toggleInlineEdit('edit-block-phone')">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900 mb-1">Telefonní číslo</p>
+                                    <p class="text-sm text-gray-600" id="val-phone">734 705 823</p>
+                                </div>
+                                <i class="fa-solid fa-pen text-gray-400 edit-icon mt-1 group-hover:text-brand-600"></i>
                             </div>
-                            <i class="fa-solid fa-pen text-gray-400 edit-icon mt-1 group-hover:text-brand-600"></i>
+                            <!-- In-line Edit Container -->
+                            <div class="inline-edit-container">
+                                <h4 class="text-lg font-normal text-gray-900 mb-2">Telefonní číslo</h4>
+                                <p class="text-sm text-gray-500 mb-6">Zadejte přímé číslo do vaší firmy. <a href="#" class="text-blue-600 hover:underline">Další informace</a></p>
+                                
+                                <div class="flex gap-4 mb-6">
+                                    <div class="border border-gray-300 rounded-md px-4 py-3 flex items-center gap-2 cursor-pointer hover:bg-gray-50 transition bg-white shrink-0">
+                                        <img src="https://flagcdn.com/w20/cz.png" alt="CZ" class="w-5 h-auto">
+                                        <i class="fa-solid fa-caret-down text-gray-500"></i>
+                                    </div>
+                                    <div class="relative border border-gray-300 rounded-md px-3 py-3 flex-1 bg-white focus-within:border-brand-500 focus-within:ring-1 focus-within:ring-brand-500 transition">
+                                        <label class="absolute -top-2 left-2 bg-white px-1 text-[11px] text-gray-500">Primární telefon</label>
+                                        <input type="text" id="input-phone" class="w-full text-base outline-none text-gray-900" value="734 705 823">
+                                    </div>
+                                </div>
+
+                                <button class="flex items-center gap-2 text-blue-600 font-medium text-sm hover:underline mb-8">
+                                    <i class="fa-solid fa-plus text-lg"></i> Přidat tel. číslo
+                                </button>
+                                
+                                <div class="flex gap-3">
+                                    <button onclick="saveInlineEdit('edit-block-phone', 'input-phone', 'val-phone')" class="bg-blue-600 text-white px-6 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition">Uložit</button>
+                                    <button onclick="toggleInlineEdit('edit-block-phone')" class="bg-white border border-gray-300 text-blue-600 px-6 py-2 rounded-md text-sm font-medium hover:bg-gray-50 transition">Zrušit</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Chat -->
+                        <div class="editable-block group p-4 -mx-4 rounded-lg border-b border-gray-100" id="edit-block-chat">
+                            <div class="display-container flex justify-between items-start" onclick="toggleInlineEdit('edit-block-chat')">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900 mb-1">Chat</p>
+                                    <p class="text-sm text-gray-600">Přidat</p>
+                                </div>
+                                <i class="fa-solid fa-pen text-gray-400 edit-icon mt-1 group-hover:text-brand-600"></i>
+                            </div>
+                            <!-- In-line Edit Container -->
+                            <div class="inline-edit-container">
+                                <h4 class="text-lg font-normal text-gray-900 mb-2">Chat</h4>
+                                <p class="text-sm text-gray-500 mb-6">Umožněte zákazníkům chatovat s vaší firmou prostřednictvím SMS nebo jiných aplikací.<br><a href="#" class="text-blue-600 hover:underline">Další informace</a></p>
+                                
+                                <button class="flex items-center gap-2 text-blue-600 font-medium text-sm hover:underline mb-8">
+                                    <i class="fa-solid fa-plus"></i> Přidat chat
+                                </button>
+                                
+                                <div class="flex gap-3">
+                                    <button onclick="toggleInlineEdit('edit-block-chat'); showToast('Chat nastavení uloženo')" class="bg-blue-600 text-white px-6 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition">Uložit</button>
+                                    <button onclick="toggleInlineEdit('edit-block-chat')" class="bg-white border border-gray-300 text-blue-600 px-6 py-2 rounded-md text-sm font-medium hover:bg-gray-50 transition">Zrušit</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Web -->
+                        <div class="editable-block group p-4 -mx-4 rounded-lg border-b border-gray-100" id="edit-block-web">
+                            <div class="display-container flex justify-between items-start" onclick="toggleInlineEdit('edit-block-web')">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900 mb-1">Web</p>
+                                    <p class="text-sm text-gray-600" id="val-web">http://www.autosklokm.cz/</p>
+                                </div>
+                                <i class="fa-solid fa-pen text-gray-400 edit-icon mt-1 group-hover:text-brand-600"></i>
+                            </div>
+                            <!-- In-line Edit Container -->
+                            <div class="inline-edit-container">
+                                <h4 class="text-lg font-normal text-gray-900 mb-2">Web</h4>
+                                <p class="text-sm text-gray-500 mb-6">Zadejte odkaz na své webové stránky. <a href="#" class="text-blue-600 hover:underline">Další informace</a></p>
+                                
+                                <div class="border border-gray-300 rounded-md px-3 py-3 focus-within:border-brand-500 focus-within:ring-1 focus-within:ring-brand-500 transition bg-white mb-6">
+                                    <input type="text" id="input-web" class="w-full text-base outline-none text-gray-900" value="http://www.autosklokm.cz/">
+                                </div>
+                                
+                                <div class="flex gap-3">
+                                    <button onclick="saveInlineEdit('edit-block-web', 'input-web', 'val-web')" class="bg-blue-600 text-white px-6 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition">Uložit</button>
+                                    <button onclick="toggleInlineEdit('edit-block-web')" class="bg-white border border-gray-300 text-blue-600 px-6 py-2 rounded-md text-sm font-medium hover:bg-gray-50 transition">Zrušit</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sociální sítě -->
+                        <div class="editable-block group p-4 -mx-4 rounded-lg border-b border-gray-100" id="edit-block-social">
+                            <div class="display-container flex justify-between items-start" onclick="toggleInlineEdit('edit-block-social')">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900 mb-1">Profily na sociálních sítích</p>
+                                    <p class="text-sm text-gray-600" id="val-social">https://www.facebook.com/autosklokm.cz/</p>
+                                </div>
+                                <i class="fa-solid fa-pen text-gray-400 edit-icon mt-1 group-hover:text-brand-600"></i>
+                            </div>
+                            <!-- In-line Edit Container -->
+                            <div class="inline-edit-container">
+                                <h4 class="text-lg font-normal text-gray-900 mb-2">Profily na sociálních sítích</h4>
+                                <p class="text-sm text-gray-500 mb-6">Přidejte odkazy na vaše firemní profily.</p>
+                                
+                                <div class="border border-gray-300 rounded-md px-3 py-3 focus-within:border-brand-500 focus-within:ring-1 focus-within:ring-brand-500 transition bg-white mb-6">
+                                    <input type="text" id="input-social" class="w-full text-base outline-none text-gray-900" value="https://www.facebook.com/autosklokm.cz/">
+                                </div>
+                                
+                                <div class="flex gap-3">
+                                    <button onclick="saveInlineEdit('edit-block-social', 'input-social', 'val-social')" class="bg-blue-600 text-white px-6 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition">Uložit</button>
+                                    <button onclick="toggleInlineEdit('edit-block-social')" class="bg-white border border-gray-300 text-blue-600 px-6 py-2 rounded-md text-sm font-medium hover:bg-gray-50 transition">Zrušit</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -1796,6 +2008,67 @@
                 });
             });
         });
+
+        // --- Nová logika In-line editace (Google Styl) ---
+        function toggleInlineEdit(blockId) {
+            // Zavřít všechny ostatní otevřené editační bloky
+            const allBlocks = document.querySelectorAll('.editable-block.is-editing');
+            allBlocks.forEach(b => {
+                if (b.id !== blockId) b.classList.remove('is-editing');
+            });
+
+            // Otevřít/Zavřít ten kliknutý
+            const block = document.getElementById(blockId);
+            block.classList.toggle('is-editing');
+            
+            if(block.classList.contains('is-editing')) {
+                // Najít první input/textarea a zaměřit se na něj pro rychlé psaní
+                const firstInput = block.querySelector('input, textarea');
+                if(firstInput) {
+                    setTimeout(() => firstInput.focus(), 50);
+                }
+            }
+        }
+
+        // Funkce pro uložení hodnoty z in-line editoru zpět do textu
+        function saveInlineEdit(blockId, inputId, valId, isTextarea = false) {
+            const inputVal = document.getElementById(inputId).value;
+            const displayEl = document.getElementById(valId);
+            
+            // Oříznutí delších textů (např. u popisu), pokud jsou moc dlouhé
+            if(isTextarea && inputVal.length > 250) {
+                displayEl.innerText = inputVal.substring(0, 250) + '...';
+            } else {
+                displayEl.innerText = inputVal;
+            }
+            
+            showToast('Změny pole byly uloženy.');
+            toggleInlineEdit(blockId);
+        }
+
+        // Uložení specifické pro Obchodní kategorie
+        function saveInlineEditCategory() {
+            const primary = document.getElementById('input-category-primary').value;
+            const secondary = document.getElementById('input-category-secondary').value;
+            
+            document.getElementById('val-category-primary').innerText = primary;
+            document.getElementById('val-category-secondary').innerText = secondary;
+            
+            showToast('Kategorie úspěšně aktualizovány.');
+            toggleInlineEdit('edit-block-category');
+        }
+
+        // Uložení specifické pro Datum otevření
+        function saveInlineEditDate() {
+            const day = document.getElementById('input-date-day').value;
+            const month = document.getElementById('input-date-month').value;
+            const year = document.getElementById('input-date-year').value;
+            
+            document.getElementById('val-date').innerText = `${day}. ${month} ${year}`;
+            
+            showToast('Datum otevření aktualizováno.');
+            toggleInlineEdit('edit-block-date');
+        }
 
         function editProfileField(label, currentValue) {
             const modal = document.getElementById('quick-edit-modal');
