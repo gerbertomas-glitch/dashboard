@@ -6,7 +6,7 @@
     <title>Dashboard | View</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome pro ikony (žádné emotikony) -->
+    <!-- FontAwesome pro ikony -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts: Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -45,6 +45,10 @@
             border-color: #d1d5db;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
         }
+        
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 10px; }
     </style>
 </head>
 <body class="font-sans text-gray-900 h-screen flex overflow-hidden antialiased">
@@ -64,10 +68,10 @@
         </div>
 
         <!-- Navigace -->
-        <nav class="flex-1 overflow-y-auto py-6 px-4 flex flex-col gap-1">
+        <nav class="flex-1 overflow-y-auto py-6 px-4 flex flex-col gap-1 custom-scrollbar">
             <p class="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Menu</p>
             
-            <a href="https://gerbertomas-glitch.github.io/editacefirmy/" id="nav-dashboard" class="flex items-center gap-3 bg-green-50 text-brand-600 px-3 py-2.5 rounded-lg font-medium transition">
+            <a href="dashboard.html" id="nav-dashboard" class="flex items-center gap-3 bg-green-50 text-brand-600 px-3 py-2.5 rounded-lg font-medium transition">
                 <i class="fa-solid fa-layer-group w-5 text-center text-brand-600"></i> Přehled
             </a>
             
@@ -78,9 +82,10 @@
                     </div>
                 </button>
                 <div id="gmb-submenu" class="flex flex-col gap-1 pl-11 pr-3 max-h-0 overflow-hidden opacity-0 transition-all duration-300">
-                    <a href="#" onclick="showToast('Otevírám Seznam profilů...')" class="block py-1.5 text-sm text-gray-500 hover:text-gray-900 transition font-medium">Seznam profilů</a>
-                    <a href="#" onclick="showToast('Otevírám Google příspěvky')" class="block py-1.5 text-sm text-gray-500 hover:text-gray-900 transition font-medium">Google příspěvky</a>
-                    <a href="#" onclick="showToast('Otevírám Statistiky')" class="block py-1.5 text-sm text-gray-500 hover:text-gray-900 transition font-medium">Statistiky</a>
+                    <a href="seznam-profilu.html" class="block py-1.5 text-sm text-gray-500 hover:text-gray-900 transition font-medium">Seznam profilů</a>
+                    <a href="gmb-recenze.html" class="block py-1.5 text-sm text-gray-500 hover:text-gray-900 transition font-medium">Správa recenzí</a>
+                    <a href="gmb-prispevky.html" class="block py-1.5 text-sm text-gray-500 hover:text-gray-900 transition font-medium">Google Novinky</a>
+                    <a href="gmb-statistiky.html" class="block py-1.5 text-sm text-gray-500 hover:text-gray-900 transition font-medium">Statistiky</a>
                 </div>
             </div>
 
@@ -91,8 +96,8 @@
                     </div>
                 </button>
                 <div id="sv-submenu" class="flex flex-col gap-1 pl-11 pr-3 max-h-0 overflow-hidden opacity-0 transition-all duration-300">
-                    <a href="#" onclick="showToast('Otevírám Moji virtuální prohlídku')" class="block py-1.5 text-sm text-gray-500 hover:text-gray-900 transition font-medium">Moje virtuální prohlídka</a>
-                    <a href="#" onclick="showToast('Otevírám Statistiku Street View')" class="block py-1.5 text-sm text-gray-500 hover:text-gray-900 transition font-medium">Statistika</a>
+                    <a href="sv-prohlidka.html" class="block py-1.5 text-sm text-gray-500 hover:text-gray-900 transition font-medium">Moje virtuální prohlídka</a>
+                    <a href="sv-statistiky.html" class="block py-1.5 text-sm text-gray-500 hover:text-gray-900 transition font-medium">Statistika</a>
                 </div>
             </div>
             
@@ -103,8 +108,8 @@
                     </div>
                 </button>
                 <div id="nfc-submenu" class="flex flex-col gap-1 pl-11 pr-3 max-h-0 overflow-hidden opacity-0 transition-all duration-300">
-                    <a href="#" onclick="showToast('Otevírám Seznam produktů')" class="block py-1.5 text-sm text-gray-500 hover:text-gray-900 transition font-medium">Seznam produktů</a>
-                    <a href="#" onclick="showToast('Otevírám Statistiky NFC')" class="block py-1.5 text-sm text-gray-500 hover:text-gray-900 transition font-medium">Statistika</a>
+                    <a href="nfc-seznam.html" class="block py-1.5 text-sm text-gray-500 hover:text-gray-900 transition font-medium">Seznam produktů</a>
+                    <a href="nfc-statistiky.html" class="block py-1.5 text-sm text-gray-500 hover:text-gray-900 transition font-medium">Statistika</a>
                 </div>
             </div>
 
@@ -115,15 +120,14 @@
                     </div>
                 </button>
                 <div id="ads-submenu" class="flex flex-col gap-1 pl-11 pr-3 max-h-0 overflow-hidden opacity-0 transition-all duration-300">
-                    <a href="#" onclick="showToast('Otevírám Moje kampaně')" class="block py-1.5 text-sm text-gray-500 hover:text-gray-900 transition font-medium">Moje kampaně</a>
-                    <a href="#" onclick="showToast('Otevírám Statistiku Ads')" class="block py-1.5 text-sm text-gray-500 hover:text-gray-900 transition font-medium">Statistika</a>
+                    <a href="ads-kampane.html" class="block py-1.5 text-sm text-gray-500 hover:text-gray-900 transition font-medium">Moje kampaně</a>
+                    <a href="ads-statistiky.html" class="block py-1.5 text-sm text-gray-500 hover:text-gray-900 transition font-medium">Statistika</a>
                 </div>
             </div>
 
             <div class="h-px bg-border my-4 mx-3"></div>
             
-            <!-- EXTERNÍ ODKAZY NA NASAZENOU VERZI (Fakturace a Nastavení) -->
-            <a href="https://gerbertomas-glitch.github.io/editacefirmy/?tab=tab-spolecnost" id="nav-nastaveni" class="flex items-center gap-3 text-gray-600 hover:bg-gray-50 hover:text-gray-900 px-3 py-2.5 rounded-lg font-medium transition">
+            <a href="nastaveni.html" id="nav-nastaveni" class="flex items-center gap-3 text-gray-600 hover:bg-gray-50 hover:text-gray-900 px-3 py-2.5 rounded-lg font-medium transition">
                 <i class="fa-solid fa-gear w-5 text-center"></i> Nastavení
             </a>
         </nav>
@@ -163,8 +167,7 @@
                     <span class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-surface"></span>
                 </button>
                 
-                <!-- ODKAZ NA EXTERNÍ KARTU KLIENTA/SPOLEČNOSTI -->
-                <a href="https://gerbertomas-glitch.github.io/editacefirmy/?tab=tab-spolecnost" class="flex items-center gap-3 hover:opacity-80 transition group">
+                <a href="nastaveni.html" class="flex items-center gap-3 hover:opacity-80 transition group">
                     <div class="text-right hidden sm:block">
                         <p class="text-sm font-semibold text-gray-900 leading-none">Business Power s.r.o.</p>
                         <p class="text-[11px] text-gray-500 mt-1">IČO: 27177572</p>
@@ -177,26 +180,49 @@
             </div>
         </header>
 
-        <!-- HLAVNÍ PLOCHA (POUZE DASHBOARD) -->
+        <!-- HLAVNÍ PLOCHA -->
         <main class="flex-1 overflow-y-auto p-4 sm:p-8 relative bg-gray-100">
             
             <div class="max-w-6xl mx-auto space-y-8 block">
-                <h2 class="text-sm font-semibold text-gray-900 uppercase tracking-wide pt-4">Vaše služby</h2>
+                
+                <!-- PLATFORM TIER BANNER -->
+                <div class="bg-white border border-gray-200 rounded-xl p-4 sm:p-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shadow-sm relative overflow-hidden">
+                    <div class="absolute left-0 top-0 w-1.5 h-full bg-brand-500" id="tier-color-bar"></div>
+                    <div class="flex items-center gap-4 pl-2">
+                        <div class="w-12 h-12 rounded-full bg-brand-50 text-brand-600 flex items-center justify-center text-xl shrink-0" id="tier-icon-container">
+                            <i class="fa-solid fa-wand-magic-sparkles" id="tier-icon"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500 font-bold uppercase tracking-wider mb-0.5">Tarif platformy View</p>
+                            <div class="flex items-center gap-2">
+                                <h2 class="text-xl font-bold text-gray-900" id="current-tier-name">VIEW SMART</h2>
+                                <span class="px-2 py-0.5 rounded bg-green-50 text-green-600 text-[10px] font-bold uppercase tracking-wider border border-green-100">Aktivní</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="openPricingModal()" class="w-full sm:w-auto bg-white border border-gray-300 text-gray-700 py-2 px-5 rounded-lg text-sm font-bold hover:bg-gray-50 transition shadow-sm flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-arrow-up-right-dots"></i> Změnit tarif
+                    </button>
+                </div>
+
+                <h2 class="text-sm font-semibold text-gray-900 uppercase tracking-wide pt-2">Vaše služby</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
                     <!-- GMB KARTA -->
-                    <div class="card-minimal flex flex-col p-6">
-                        <div class="flex justify-between items-start mb-8">
+                    <div class="card-minimal flex flex-col p-6 relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-brand-50 rounded-bl-full -mr-10 -mt-10 transition-transform group-hover:scale-110 z-0"></div>
+                        
+                        <div class="flex justify-between items-start mb-6 relative z-10">
                             <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded border border-green-200 bg-green-50 flex items-center justify-center text-brand-600">
+                                <div class="w-10 h-10 rounded border border-green-200 bg-green-50 flex items-center justify-center text-brand-600 shrink-0">
                                     <i class="fa-brands fa-google text-xl"></i>
                                 </div>
-                                <h3 class="font-bold text-gray-900 text-lg">Firemní Google profil</h3>
+                                <h3 class="font-bold text-gray-900 text-lg leading-tight">Firemní Google profil</h3>
                             </div>
-                            <span class="px-2.5 py-1 rounded bg-green-50 text-brand-600 text-[10px] font-bold uppercase tracking-wider">Aktivní</span>
+                            <span class="px-2.5 py-1 rounded bg-green-50 text-brand-600 text-[10px] font-bold uppercase tracking-wider border border-green-100">Aktivní</span>
                         </div>
                         
-                        <div class="grid grid-cols-2 gap-4 mb-8">
+                        <div class="grid grid-cols-2 gap-4 mb-8 relative z-10">
                             <div>
                                 <p class="text-xs text-gray-500 uppercase tracking-wider mb-1">Počet profilů</p>
                                 <p class="text-2xl font-semibold text-gray-900">10</p>
@@ -209,12 +235,12 @@
                             </div>
                         </div>
 
-                        <div class="mt-auto flex flex-col gap-3">
+                        <div class="mt-auto flex flex-col gap-3 relative z-10">
                             <div class="flex gap-3">
-                                <button onclick="showToast('Otevírám správu profilů...')" class="flex-1 bg-brand-500 border border-transparent text-white py-2 rounded-lg text-sm font-medium hover:bg-brand-600 transition shadow-sm">Spravovat</button>
-                                <button onclick="showToast('Otevírám statistiky...')" class="flex-1 border border-gray-300 bg-white text-gray-700 py-2 rounded-lg text-sm font-medium hover:bg-gray-100 transition shadow-sm">Statistiky</button>
+                                <a href="seznam-profilu.html" class="flex-1 bg-brand-500 border border-transparent text-white py-2 rounded-lg text-sm font-medium hover:bg-brand-600 transition shadow-sm text-center">Spravovat</a>
+                                <a href="gmb-statistiky.html" class="flex-1 border border-gray-300 bg-white text-gray-700 py-2 rounded-lg text-sm font-medium hover:bg-gray-100 transition shadow-sm text-center">Statistiky</a>
                             </div>
-                            <button onclick="showToast('Přesměrovávám na doobjednávku...')" class="w-full bg-white border border-gray-300 text-gray-700 py-2 rounded-lg text-sm font-medium hover:bg-gray-100 transition shadow-sm">Doobjednat</button>
+                            <button onclick="showToast('Otevírám poptávkový formulář pro další služby...')" class="w-full bg-white border border-gray-300 text-gray-700 py-2 rounded-lg text-sm font-medium hover:bg-gray-100 transition shadow-sm">Doobjednat služby</button>
                         </div>
                     </div>
 
@@ -222,12 +248,12 @@
                     <div class="card-minimal flex flex-col p-6">
                         <div class="flex justify-between items-start mb-8">
                             <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded border border-green-200 bg-green-50 flex items-center justify-center text-brand-600">
+                                <div class="w-10 h-10 rounded border border-gray-200 bg-gray-50 flex items-center justify-center text-gray-700">
                                     <i class="fa-solid fa-wifi text-xl"></i>
                                 </div>
                                 <h3 class="font-bold text-gray-900 text-lg">NFC Produkty</h3>
                             </div>
-                            <span class="px-2.5 py-1 rounded bg-green-50 text-brand-600 text-[10px] font-bold uppercase tracking-wider">Aktivní</span>
+                            <span class="px-2.5 py-1 rounded bg-green-50 text-brand-600 text-[10px] font-bold uppercase tracking-wider border border-green-100">Aktivní</span>
                         </div>
                         
                         <div class="grid grid-cols-2 gap-4 mb-8">
@@ -245,10 +271,10 @@
 
                         <div class="mt-auto flex flex-col gap-3">
                             <div class="flex gap-3">
-                                <button onclick="showToast('Otevírám správu produktů...')" class="flex-1 bg-brand-500 border border-transparent text-white py-2 rounded-lg text-sm font-medium hover:bg-brand-600 transition shadow-sm">Spravovat</button>
-                                <button onclick="showToast('Otevírám statistiky...')" class="flex-1 border border-gray-300 bg-white text-gray-700 py-2 rounded-lg text-sm font-medium hover:bg-gray-100 transition shadow-sm">Statistiky</button>
+                                <a href="nfc-seznam.html" class="flex-1 bg-gray-800 border border-transparent text-white py-2 rounded-lg text-sm font-medium hover:bg-gray-900 transition shadow-sm text-center">Spravovat</a>
+                                <a href="nfc-statistiky.html" class="flex-1 border border-gray-300 bg-white text-gray-700 py-2 rounded-lg text-sm font-medium hover:bg-gray-100 transition shadow-sm text-center">Statistiky</a>
                             </div>
-                            <button onclick="showToast('Přesměrovávám na doobjednávku...')" class="w-full bg-white border border-gray-300 text-gray-700 py-2 rounded-lg text-sm font-medium hover:bg-gray-100 transition shadow-sm">Doobjednat</button>
+                            <button onclick="showToast('Otevírám poptávkový formulář...')" class="w-full bg-white border border-gray-300 text-gray-700 py-2 rounded-lg text-sm font-medium hover:bg-gray-100 transition shadow-sm">Doobjednat stojánky</button>
                         </div>
                     </div>
                 </div>
@@ -264,15 +290,15 @@
                                 </div>
                                 <h3 class="font-bold text-gray-900 text-lg">Google Street View</h3>
                             </div>
-                            <span class="px-2.5 py-1 rounded bg-gray-200 text-gray-600 text-[10px] font-bold uppercase tracking-wider">Neaktivní</span>
+                            <span class="px-2.5 py-1 rounded bg-gray-200 text-gray-600 text-[10px] font-bold uppercase tracking-wider border border-gray-300">Neaktivní</span>
                         </div>
                         <div class="mb-6 flex-1">
                             <p class="text-sm text-gray-600">Zákazníci preferují vizuální obsah. Pozvěte je k sobě dovnitř přímo z Google Map a zvyšte důvěru.</p>
                         </div>
                         <div class="mt-auto">
-                            <button onclick="showToast('Přesměrovávám na objednávku...')" class="w-full bg-brand-500 border border-transparent text-white py-2 rounded-lg text-sm font-medium hover:bg-brand-600 transition shadow-sm">
+                            <a href="sv-prohlidka.html" class="w-full bg-white border border-gray-300 text-gray-800 py-2 rounded-lg text-sm font-bold hover:bg-gray-100 transition shadow-sm flex items-center justify-center">
                                 Zjistit více a objednat
-                            </button>
+                            </a>
                         </div>
                     </div>
 
@@ -285,13 +311,13 @@
                                 </div>
                                 <h3 class="font-bold text-gray-900 text-lg">Google Ads</h3>
                             </div>
-                            <span class="px-2.5 py-1 rounded bg-gray-200 text-gray-600 text-[10px] font-bold uppercase tracking-wider">Neaktivní</span>
+                            <span class="px-2.5 py-1 rounded bg-gray-200 text-gray-600 text-[10px] font-bold uppercase tracking-wider border border-gray-300">Neaktivní</span>
                         </div>
                         <div class="mb-6 flex-1">
                             <p class="text-sm text-gray-600">Okamžitá návštěvnost. Dostaňte se na první pozici ve vyhledávání pomocí přesně cílené reklamy.</p>
                         </div>
                         <div class="mt-auto">
-                            <button onclick="showToast('Odesílám žádost...')" class="w-full bg-brand-500 border border-transparent text-white py-2 rounded-lg text-sm font-medium hover:bg-brand-600 transition shadow-sm">
+                            <button onclick="showToast('Odesílám žádost o konzultaci...')" class="w-full bg-white border border-gray-300 text-gray-800 py-2 rounded-lg text-sm font-bold hover:bg-gray-100 transition shadow-sm flex items-center justify-center">
                                 Vyžádat konzultaci
                             </button>
                         </div>
@@ -300,6 +326,152 @@
             </div>
 
         </main>
+    </div>
+
+    <!-- MODÁLNÍ OKNO: VÝBĚR TARIFU -->
+    <div id="pricing-modal" class="fixed inset-0 bg-gray-900/70 z-[70] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300 px-4">
+        <div class="bg-gray-50 rounded-2xl shadow-2xl w-full max-w-5xl transform scale-95 transition-transform duration-300 overflow-hidden flex flex-col max-h-[95vh]">
+            
+            <div class="px-6 py-5 border-b border-gray-200 flex justify-between items-center bg-white shrink-0">
+                <div>
+                    <h3 class="text-xl font-bold text-gray-900">Správa platformy - Výběr tarifu</h3>
+                    <p class="text-sm text-gray-500 mt-1">Vyberte si tarif, který nejlépe sedí vašemu podnikání a času.</p>
+                </div>
+                <button onclick="closePricingModal()" class="text-gray-400 hover:text-gray-600 transition p-2 bg-gray-100 rounded-full hover:bg-gray-200">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            
+            <div class="p-6 overflow-y-auto flex-1 custom-scrollbar relative">
+                
+                <!-- KARTY S TARIFY -->
+                <div id="pricing-cards-view" class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch transition-opacity duration-300">
+                    
+                    <!-- TARIF: FREE -->
+                    <div class="bg-white border border-gray-200 rounded-2xl p-6 flex flex-col shadow-sm relative group hover:shadow-md transition">
+                        <div class="mb-4">
+                            <span class="px-2.5 py-1 bg-gray-100 text-gray-600 rounded text-[10px] font-bold uppercase tracking-wider border border-gray-200">Klientská zóna</span>
+                            <h4 class="text-xl font-bold text-gray-900 mt-3">VIEW FREE</h4>
+                            <p class="text-xs text-gray-500 mt-1">Mějte přehled zcela zdarma</p>
+                        </div>
+                        <div class="mb-6 flex items-baseline gap-1">
+                            <span class="text-3xl font-extrabold text-gray-900">0 Kč</span>
+                            <span class="text-sm text-gray-500 font-medium">/ měs.</span>
+                        </div>
+                        <div class="flex-1">
+                            <ul class="space-y-3 text-sm text-gray-700">
+                                <li class="flex items-start gap-2"><i class="fa-solid fa-check text-green-500 mt-0.5"></i> Dashboard a přehled statistik</li>
+                                <li class="flex items-start gap-2"><i class="fa-solid fa-check text-green-500 mt-0.5"></i> Sledování výkonu NFC</li>
+                                <li class="flex items-start gap-2"><i class="fa-solid fa-check text-green-500 mt-0.5"></i> Možnost rychlého dokupu HW/Služeb</li>
+                                <li class="flex items-start gap-2 opacity-40"><i class="fa-solid fa-xmark text-gray-400 mt-0.5"></i> Generování odpovědí přes AI</li>
+                                <li class="flex items-start gap-2 opacity-40"><i class="fa-solid fa-xmark text-gray-400 mt-0.5"></i> Porovnávání poboček a grafy</li>
+                            </ul>
+                        </div>
+                        <button onclick="showTierDetails('free')" class="w-full mt-8 bg-white border border-gray-300 text-gray-700 py-2.5 rounded-xl text-sm font-bold hover:bg-gray-50 transition shadow-sm">
+                            Zobrazit detail tarifu
+                        </button>
+                    </div>
+
+                    <!-- TARIF: SMART -->
+                    <div class="bg-white border-2 border-brand-500 rounded-2xl p-6 flex flex-col shadow-lg relative transform md:-translate-y-2">
+                        <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-brand-500 text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest shadow-sm">
+                            Nejoblíbenější
+                        </div>
+                        <div class="mb-4 mt-2">
+                            <span class="px-2.5 py-1 bg-brand-50 text-brand-600 rounded text-[10px] font-bold uppercase tracking-wider border border-brand-100"><i class="fa-solid fa-wand-magic-sparkles mr-1"></i> Software (DIY)</span>
+                            <h4 class="text-xl font-bold text-gray-900 mt-3">VIEW SMART</h4>
+                            <p class="text-xs text-gray-500 mt-1">Šetřete čas s umělou inteligencí</p>
+                        </div>
+                        <div class="mb-6 flex items-baseline gap-1">
+                            <span class="text-3xl font-extrabold text-gray-900">490 Kč</span>
+                            <span class="text-sm text-gray-500 font-medium">/ měs. / pobočka</span>
+                        </div>
+                        <div class="flex-1">
+                            <ul class="space-y-3 text-sm text-gray-700">
+                                <li class="flex items-start gap-2"><i class="fa-solid fa-check text-green-500 mt-0.5"></i> Vše z tarifu FREE</li>
+                                <li class="flex items-start gap-2 font-bold text-brand-700"><i class="fa-solid fa-wand-magic-sparkles text-brand-500 mt-0.5"></i> AI Asistent na recenze (Neomezeně)</li>
+                                <li class="flex items-start gap-2"><i class="fa-solid fa-check text-green-500 mt-0.5"></i> Šablony a automatizace</li>
+                                <li class="flex items-start gap-2"><i class="fa-solid fa-check text-green-500 mt-0.5"></i> Detailní grafy a porovnávání</li>
+                                <li class="flex items-start gap-2 opacity-40"><i class="fa-solid fa-xmark text-gray-400 mt-0.5"></i> Práce lidského správce</li>
+                            </ul>
+                        </div>
+                        <button onclick="showTierDetails('smart')" class="w-full mt-8 bg-brand-500 text-white py-2.5 rounded-xl text-sm font-bold hover:bg-brand-600 transition shadow-md">
+                            Zobrazit detail tarifu
+                        </button>
+                    </div>
+
+                    <!-- TARIF: FULL-SERVICE -->
+                    <div class="bg-gray-900 border border-gray-800 rounded-2xl p-6 flex flex-col shadow-xl relative text-white">
+                        <div class="mb-4">
+                            <span class="px-2.5 py-1 bg-yellow-400/20 text-yellow-400 rounded text-[10px] font-bold uppercase tracking-wider border border-yellow-400/30"><i class="fa-solid fa-crown mr-1"></i> Služba na klíč</span>
+                            <h4 class="text-xl font-bold text-white mt-3">FULL-SERVICE</h4>
+                            <p class="text-xs text-gray-400 mt-1">Nechte veškerou práci na nás</p>
+                        </div>
+                        <div class="mb-6 flex items-baseline gap-1">
+                            <span class="text-3xl font-extrabold text-white">od 990 Kč</span>
+                            <span class="text-sm text-gray-400 font-medium">/ měs. / pobočka</span>
+                        </div>
+                        <div class="flex-1">
+                            <ul class="space-y-3 text-sm text-gray-300">
+                                <li class="flex items-start gap-2"><i class="fa-solid fa-check text-yellow-400 mt-0.5"></i> Software VIEW SMART zdarma</li>
+                                <li class="flex items-start gap-2 font-bold text-white"><i class="fa-solid fa-user-tie text-yellow-400 mt-0.5"></i> Váš osobní živý správce</li>
+                                <li class="flex items-start gap-2"><i class="fa-solid fa-check text-yellow-400 mt-0.5"></i> Nahlašování SPAMu a řešení krizí</li>
+                                <li class="flex items-start gap-2"><i class="fa-solid fa-check text-yellow-400 mt-0.5"></i> Tvorba novinek copywriterem</li>
+                                <li class="flex items-start gap-2"><i class="fa-solid fa-check text-yellow-400 mt-0.5"></i> Pravidelná SEO optimalizace</li>
+                            </ul>
+                        </div>
+                        <button onclick="showTierDetails('full')" class="w-full mt-8 bg-white text-gray-900 py-2.5 rounded-xl text-sm font-bold hover:bg-gray-100 transition shadow-sm">
+                            Zobrazit detail tarifu
+                        </button>
+                    </div>
+                </div>
+                
+                <p id="pricing-cards-footer" class="text-center text-xs text-gray-500 mt-6">Změna softwarového tarifu proběhne okamžitě. U služby Full-Service Vás bude kontaktovat Váš obchodník.</p>
+
+                <!-- DETAIL TARIFU (Skryté by default) -->
+                <div id="pricing-detail-view" class="hidden flex-col h-full bg-gray-50">
+                    <div class="mb-4">
+                        <button onclick="hideTierDetails()" class="text-gray-500 hover:text-brand-600 font-medium text-sm flex items-center gap-2 transition bg-white px-4 py-2 rounded-lg shadow-sm border border-gray-200">
+                            <i class="fa-solid fa-arrow-left"></i> Zpět na výběr tarifů
+                        </button>
+                    </div>
+                    
+                    <div class="bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 shadow-sm flex flex-col md:flex-row gap-8 flex-1">
+                        <!-- Levý sloupec: Představení a CTA -->
+                        <div class="w-full md:w-1/3 flex flex-col">
+                            <span id="detail-badge" class="px-3 py-1 bg-gray-100 text-gray-600 rounded text-[10px] font-bold uppercase tracking-wider w-max mb-4 border border-gray-200">Základní verze</span>
+                            <h4 id="detail-name" class="text-3xl font-extrabold text-gray-900 mb-2">VIEW FREE</h4>
+                            <p id="detail-desc" class="text-sm text-gray-500 mb-8 leading-relaxed">Mějte přehled zcela zdarma.</p>
+                            
+                            <div class="mb-8 p-4 bg-gray-50 rounded-xl border border-gray-100 text-center">
+                                <span id="detail-price" class="text-4xl font-extrabold text-gray-900 block mb-1">0 Kč</span>
+                                <span id="detail-subtitle" class="text-sm text-gray-500 font-medium block">/ měs.</span>
+                            </div>
+                            
+                            <button id="detail-cta" class="w-full mt-auto bg-brand-500 text-white py-3.5 rounded-xl text-sm font-bold hover:bg-brand-600 transition shadow-md">
+                                Potvrdit výběr
+                            </button>
+                        </div>
+                        
+                        <!-- Pravý sloupec: Vlastnosti -->
+                        <div class="w-full md:w-2/3 md:border-l border-gray-100 md:pl-8 overflow-y-auto pr-2 custom-scrollbar">
+                            <h5 class="font-bold text-gray-900 mb-4 text-sm uppercase tracking-wide">Co tento tarif obsahuje:</h5>
+                            <ul id="detail-features" class="space-y-3 mb-8">
+                                <!-- Generováno z JS -->
+                            </ul>
+
+                            <div id="detail-missing-container">
+                                <h5 class="font-bold text-gray-900 mb-4 text-sm uppercase tracking-wide">Co není v ceně (omezení):</h5>
+                                <ul id="detail-missing" class="space-y-3">
+                                    <!-- Generováno z JS -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
 
     <!-- TOAST NOTIFIKACE -->
@@ -343,7 +515,7 @@
         </div>
         <div class="flex-1 p-4 overflow-y-auto h-64 bg-white flex flex-col gap-3">
             <div class="self-start max-w-[85%] bg-gray-100 rounded-2xl rounded-tl-sm px-4 py-2 text-sm text-gray-800">
-                Dobrý den, jsem Michaela. S čím vám mohu dnes pomoci?
+                Dobrý den, potřebujete poradit s tarify v aplikaci?
             </div>
         </div>
         <div class="p-3 border-t border-border bg-gray-50 flex items-center gap-2">
@@ -408,6 +580,178 @@
                 chatWindow.classList.add('opacity-100', 'translate-y-0');
             }
             isChatOpen = !isChatOpen;
+        }
+
+        // DATA PRO TARIFY
+        const tierData = {
+            'free': {
+                name: 'VIEW FREE',
+                badge: 'Klientská zóna',
+                badgeClass: 'bg-gray-100 text-gray-600 border-gray-200',
+                desc: 'Základní přehled o vašich profilech a NFC produktech. Ideální pro nahlížení do statistik bez nutnosti cokoliv platit.',
+                price: '0 Kč',
+                subtitle: '/ měs.',
+                cta: 'Aktivovat tarif VIEW FREE',
+                btnClass: 'bg-gray-800 text-white hover:bg-gray-900',
+                features: [
+                    'Přístup do klientského Dashboardu a vizualizace dat',
+                    'Základní statistiky výkonu (Zobrazení, Interakce na Google)',
+                    'Sledování počtu pípnutí a výkonu zakoupených NFC produktů',
+                    'Přímý nákup hw/služeb a chat s obchodníkem'
+                ],
+                missing: [
+                    'Generování chytrých odpovědí přes AI Asistenta',
+                    'Pokročilé detailní statistiky, grafy a porovnávání poboček',
+                    'Šablony a pravidla pro automatizaci odpovědí',
+                    'Plánování Google Novinek a příspěvků',
+                    'Lidská správa profilu a řešení SPAMu s podporou Google'
+                ]
+            },
+            'smart': {
+                name: 'VIEW SMART',
+                badge: 'Software (DIY)',
+                badgeClass: 'bg-brand-50 text-brand-600 border-brand-100',
+                desc: 'Šetřete svůj čas. Spravujte si profil sami, ale s maximální efektivitou a plnou paletou chytrých AI nástrojů.',
+                price: '490 Kč',
+                subtitle: '/ měs. / pobočka',
+                cta: 'Změnit tarif na VIEW SMART',
+                btnClass: 'bg-brand-500 text-white hover:bg-brand-600',
+                features: [
+                    '<strong>Vše z tarifu VIEW FREE v ceně</strong>',
+                    'Neomezený AI Asistent pro inteligentní generování odpovědí na recenze',
+                    'Tvorba, správa a rotace vlastních šablon odpovědí',
+                    'Automatizace odpovědí na recenze bez textu (dle počtu hvězdiček)',
+                    'Kalendář pro plánování a hromadné publikování Google Novinek',
+                    'Detailní grafy a nástroj pro vzájemné porovnávání poboček'
+                ],
+                missing: [
+                    'Osobní živý správce přidělený k vašemu účtu',
+                    'Aktivní odstraňování SPAMu a řešení problémů napřímo s Googlem',
+                    'Tvorba kreativních příspěvků profesionálním copywriterem',
+                    'Trvalá SEO optimalizace textů v profilu'
+                ]
+            },
+            'full': {
+                name: 'VIEW FULL-SERVICE',
+                badge: 'Služba na klíč',
+                badgeClass: 'bg-yellow-50 text-yellow-700 border-yellow-200',
+                desc: 'Kompletní řešení bez jakýchkoliv starostí. Veškerou operativu a boj s algoritmy přebírají naši zkušení specialisté z View.',
+                price: 'od 990 Kč',
+                subtitle: '/ měs. / pobočka',
+                cta: 'Vyžádat nacenění od obchodníka',
+                btnClass: 'bg-gray-900 text-white hover:bg-black',
+                features: [
+                    '<strong>Kompletní aplikace VIEW SMART zdarma k dispozici</strong>',
+                    'Přidělený osobní živý správce pro údržbu vašich profilů',
+                    'Ruční řešení krizových situací, komentářů a omezování škod',
+                    'Aktivní boj proti SPAMu a falešným recenzím (komunikace s Google)',
+                    'Pravidelná tvorba novinek, fotek a příspěvků od profesionálního copywritera',
+                    'Trvalá SEO optimalizace profilu pro posun na přední lokální pozice ve vyhledávání'
+                ],
+                missing: []
+            }
+        };
+
+        // ZOBRAZENÍ / SKRYTÍ DETAILU V MODÁLU
+        function openPricingModal() {
+            hideTierDetails(); // Vždy začínáme přehledem karet
+            const modal = document.getElementById('pricing-modal');
+            const modalContent = modal.querySelector('div');
+            
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            setTimeout(() => modalContent.classList.remove('scale-95'), 10);
+        }
+
+        function closePricingModal() {
+            const modal = document.getElementById('pricing-modal');
+            const modalContent = modal.querySelector('div');
+            
+            modalContent.classList.add('scale-95');
+            setTimeout(() => modal.classList.add('opacity-0', 'pointer-events-none'), 300);
+        }
+
+        function showTierDetails(tierKey) {
+            const cardsView = document.getElementById('pricing-cards-view');
+            const cardsFooter = document.getElementById('pricing-cards-footer');
+            const detailView = document.getElementById('pricing-detail-view');
+            
+            // Naplnění dat
+            const data = tierData[tierKey];
+            
+            const badge = document.getElementById('detail-badge');
+            badge.className = `px-3 py-1 rounded text-[10px] font-bold uppercase tracking-wider w-max mb-4 border ${data.badgeClass}`;
+            badge.innerHTML = data.badge;
+            
+            document.getElementById('detail-name').innerText = data.name;
+            document.getElementById('detail-desc').innerText = data.desc;
+            document.getElementById('detail-price').innerText = data.price;
+            document.getElementById('detail-subtitle').innerText = data.subtitle;
+            
+            const ctaBtn = document.getElementById('detail-cta');
+            ctaBtn.innerText = data.cta;
+            ctaBtn.className = `w-full mt-auto py-3.5 rounded-xl text-sm font-bold transition shadow-md ${data.btnClass}`;
+            ctaBtn.onclick = () => selectTier(data.name);
+
+            const featsList = document.getElementById('detail-features');
+            featsList.innerHTML = data.features.map(f => `<li class="flex items-start gap-3"><i class="fa-solid fa-check text-green-500 mt-0.5"></i> <span class="text-sm text-gray-700">${f}</span></li>`).join('');
+
+            const missingList = document.getElementById('detail-missing');
+            const missingContainer = document.getElementById('detail-missing-container');
+            if(data.missing.length > 0) {
+                missingContainer.classList.remove('hidden');
+                missingList.innerHTML = data.missing.map(f => `<li class="flex items-start gap-3 opacity-60"><i class="fa-solid fa-xmark text-gray-400 mt-0.5"></i> <span class="text-sm text-gray-500">${f}</span></li>`).join('');
+            } else {
+                missingContainer.classList.add('hidden');
+            }
+
+            // Přepnutí views
+            cardsView.classList.add('hidden');
+            cardsFooter.classList.add('hidden');
+            detailView.classList.remove('hidden');
+            detailView.classList.add('flex');
+            
+            // Odscrollování nahoru uvnitř modálu
+            const scrollContainer = document.querySelector('#pricing-modal .overflow-y-auto');
+            if(scrollContainer) scrollContainer.scrollTop = 0;
+        }
+
+        function hideTierDetails() {
+            const cardsView = document.getElementById('pricing-cards-view');
+            const cardsFooter = document.getElementById('pricing-cards-footer');
+            const detailView = document.getElementById('pricing-detail-view');
+            
+            detailView.classList.add('hidden');
+            detailView.classList.remove('flex');
+            
+            cardsView.classList.remove('hidden');
+            cardsFooter.classList.remove('hidden');
+        }
+
+        // AKCE VÝBĚRU TARIFU
+        function selectTier(tierName) {
+            if(tierName === 'VIEW FULL-SERVICE') {
+                showToast('Váš požadavek na ocenění byl odeslán. Obchodník se Vám brzy ozve.');
+            } else {
+                const nameEl = document.getElementById('current-tier-name');
+                const iconContainer = document.getElementById('tier-icon-container');
+                const iconEl = document.getElementById('tier-icon');
+                const colorBar = document.getElementById('tier-color-bar');
+                
+                nameEl.innerText = tierName;
+                
+                if(tierName === 'VIEW FREE') {
+                    iconContainer.className = 'w-12 h-12 rounded-full bg-gray-100 text-gray-500 flex items-center justify-center text-xl shrink-0';
+                    iconEl.className = 'fa-solid fa-cube';
+                    colorBar.className = 'absolute left-0 top-0 w-1.5 h-full bg-gray-400';
+                    showToast('Váš tarif byl změněn na ' + tierName);
+                } else if (tierName === 'VIEW SMART') {
+                    iconContainer.className = 'w-12 h-12 rounded-full bg-brand-50 text-brand-600 flex items-center justify-center text-xl shrink-0';
+                    iconEl.className = 'fa-solid fa-wand-magic-sparkles';
+                    colorBar.className = 'absolute left-0 top-0 w-1.5 h-full bg-brand-500';
+                    showToast('Váš tarif byl změněn na ' + tierName);
+                }
+            }
+            closePricingModal();
         }
     </script>
 </body>
